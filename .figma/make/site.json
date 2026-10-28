@@ -1,0 +1,10 @@
+{
+  "description": "Browse and order locally made food and crafts, while home cooks and artisans manage products, track sales, and price items profitably.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

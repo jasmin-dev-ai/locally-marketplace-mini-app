@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Manrope:wght@500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+:root {
+  /* Design System Theme Tokens */
+  --bg-cream: #FAF6F0;       /* Soft Cream / Off-White */
+  --card-taupe: #EFE9E1;     /* Warm Taupe / Light Beige */
+  --primary-espresso: #3B2219; /* Rich Espresso Brown */
+  --accent-terracotta: #C85A32; /* Warm Terracotta / Burnt Orange */
+
+  /* Neutral & Utility Shades */
+  --surface-paper: #FFFDF9;
+  --text-muted: #6F574E;
+  --border-subtle: #E6DED5;
+  --peach-soft: #F5D6C9;
+  --mint-soft: #DCE8D5;
+  --mint-text: #2D4E37;
+  
+  /* Telegram safe areas */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: var(--bg-cream);
+    color: var(--primary-espresso);
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent bouncy scroll in Telegram WebApp */
+    overscroll-behavior-y: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 700;
+  }
+
+  button, input, textarea, select {
+    font-family: inherit;
+  }
+}
+
+/* Telegram Mini App & Scrollbar Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Telegram Mini App Desktop Frame Preview Wrapper */
+.telegram-mini-app-shell {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-cream);
+  position: relative;
+  overflow-x: hidden;
+}
+
+@media (min-width: 640px) {
+  body {
+    background: #E8E2D9;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 0;
+  }
+
+  .telegram-mini-app-shell {
+    max-width: 420px;
+    min-height: 844px;
+    max-height: 92vh;
+    border-radius: 36px;
+    box-shadow: 0 24px 70px rgba(59, 34, 25, 0.22), 0 0 0 1px rgba(59, 34, 25, 0.08);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
