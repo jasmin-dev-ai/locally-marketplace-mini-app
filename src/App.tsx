@@ -8,6 +8,7 @@ import { MenuPage } from './pages/MenuPage'
 import { CartPage } from './pages/CartPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { OrderTrackingPage } from './pages/OrderTrackingPage'
+import { AdminDashboard } from './pages/AdminDashboard'
 import { CartDrawer } from './components/cart/CartDrawer'
 import { ProductDetailModal } from './components/product/ProductDetailModal'
 import { Order, Product } from './types'
@@ -40,6 +41,7 @@ function LocallyApp() {
   const { t } = useLanguage()
 
   const [activeOrder, setActiveOrder] = React.useState<Order | null>(null)
+  const [isAdminOpen, setIsAdminOpen] = React.useState<boolean>(false)
 
   // Ensure Telegram WebApp theme matches Locally palette
   useEffect(() => {
@@ -49,7 +51,12 @@ function LocallyApp() {
 
   // Lifecycle sync for Telegram native BackButton
   useEffect(() => {
-    if (activeOrder) {
+    if (isAdminOpen) {
+      backButton.show(() => {
+        haptic.selection()
+        setIsAdminOpen(false)
+      })
+    } else if (activeOrder) {
       backButton.show(() => {
         haptic.selection()
         setActiveOrder(null)
@@ -76,12 +83,12 @@ function LocallyApp() {
     return () => {
       backButton.hide()
     }
-  }, [activeOrder, selectedProduct, isCartDrawerOpen, activeTab, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, backButton, haptic])
+  }, [isAdminOpen, activeOrder, selectedProduct, isCartDrawerOpen, activeTab, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, backButton, haptic])
 
   // Lifecycle sync for Telegram native MainButton
   useEffect(() => {
-    // Hide main button on order tracking screen
-    if (activeOrder) {
+    // Hide main button on admin panel or order tracking screen
+    if (isAdminOpen || activeOrder) {
       mainButton.hide()
       return () => mainButton.hide()
     }
@@ -142,7 +149,7 @@ function LocallyApp() {
     return () => {
       mainButton.hide()
     }
-  }, [activeOrder, activeTab, totalItems, total, selectedProduct, isCartDrawerOpen, mainButton, haptic, addItem, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, t])
+  }, [isAdminOpen, activeOrder, activeTab, totalItems, total, selectedProduct, isCartDrawerOpen, mainButton, haptic, addItem, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, t])
 
   const handleProductClick = (product: Product) => {
     haptic.selection()
@@ -151,6 +158,18 @@ function LocallyApp() {
 
   return (
     <div className="telegram-mini-app-shell relative flex flex-col justify-between">
+      {/* Admin Dashboard Fullscreen Overlay */}
+      {isAdminOpen && (
+        <div className="absolute inset-0 z-50">
+          <AdminDashboard
+            onClose={() => {
+              haptic.selection()
+              setIsAdminOpen(false)
+            }}
+          />
+        </div>
+      )}
+
       {/* Order Tracking Fullscreen Overlay */}
       {activeOrder && (
         <div className="absolute inset-0 z-50">
@@ -179,7 +198,14 @@ function LocallyApp() {
             setActiveOrder(order)
           }} />
         )}
-        {activeTab === 'profile' && <ProfilePage />}
+        {activeTab === 'profile' && (
+          <ProfilePage
+            onOpenAdmin={() => {
+              haptic.selection()
+              setIsAdminOpen(true)
+            }}
+          />
+        )}
       </div>
 
       {/* Sticky Bottom Navigation Bar */}

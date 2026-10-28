@@ -7,11 +7,17 @@ import { MOCK_USER } from '../data/mockData'
 import { useTelegram } from '../context/TelegramContext'
 import { useLanguage } from '../context/LanguageContext'
 import { triggerHaptic } from '../utils/telegram'
+import { isAdminUser } from '../services/adminService'
 
-export const ProfilePage: React.FC = () => {
+interface ProfilePageProps {
+  onOpenAdmin?: () => void
+}
+
+export const ProfilePage: React.FC<ProfilePageProps> = ({ onOpenAdmin }) => {
   const { user: tgUser, haptic } = useTelegram()
   const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState<'orders' | 'seller'>('orders')
+  const isAdmin = isAdminUser(tgUser)
 
   // Sample order history
   const orderHistory = [
@@ -84,7 +90,54 @@ export const ProfilePage: React.FC = () => {
               📍 {MOCK_USER.address}
             </p>
           </div>
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('medium')
+                onOpenAdmin?.()
+              }}
+              className="w-9 h-9 rounded-full bg-[#3B2219] text-[#FFFDF9] flex items-center justify-center text-sm hover:bg-[#C85A32] transition-colors shadow-xs shrink-0"
+              title={t.admin.panelTitle}
+            >
+              🛡️
+            </button>
+          )}
         </div>
+
+        {/* Discreet Admin Panel Access Card (Authorized Admin Only) */}
+        {isAdmin && (
+          <div className="p-4 rounded-[24px] bg-[#3B2219] text-[#FFFDF9] border border-[#C85A32]/40 shadow-xs flex items-center justify-between animate-in fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#C85A32] flex items-center justify-center text-lg shadow-xs">
+                🛡️
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xs font-black font-['Manrope'] tracking-wide">
+                    {t.admin.panelTitle}
+                  </h3>
+                  <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#C85A32] text-white">
+                    ADMIN
+                  </span>
+                </div>
+                <p className="text-[10px] text-[#EFE9E1]/80">
+                  {t.admin.security.authorizedAs}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('medium')
+                onOpenAdmin?.()
+              }}
+              className="px-3.5 py-1.5 rounded-xl bg-[#FFFDF9] text-[#3B2219] text-xs font-black hover:bg-[#FAF6F0] transition-transform active:scale-95 shadow-xs font-['Manrope']"
+            >
+              Dashboard ➔
+            </button>
+          </div>
+        )}
 
         {/* Stats Row */}
         <div className="grid grid-cols-3 gap-2 text-center">

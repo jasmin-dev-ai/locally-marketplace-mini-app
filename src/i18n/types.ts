@@ -182,4 +182,56 @@ export interface TranslationSchema {
     proceedToCheckout: string
     checkout: string
   }
+  admin: {
+    panelTitle: string
+    accessDeniedTitle: string
+    accessDeniedDesc: string
+    backToApp: string
+    metrics: {
+      totalRevenue: string
+      activeOrders: string
+      totalProducts: string
+      registeredMakers: string
+    }
+    tabs: {
+      orders: string
+      products: string
+      analytics: string
+    }
+    orders: {
+      title: string
+      filterAll: string
+      filterActive: string
+      filterCompleted: string
+      orderId: string
+      customer: string
+      items: string
+      total: string
+      status: string
+      action: string
+      markPreparing: string
+      markDelivering: string
+      markDelivered: string
+      cancelOrder: string
+      statusUpdated: string
+    }
+    products: {
+      title: string
+      addNew: string
+      inStock: string
+      outOfStock: string
+      toggleStock: string
+      price: string
+      category: string
+      productAdded: string
+      formTitle: string
+      formPrice: string
+      formCategory: string
+    }
+    security: {
+      authorizedAs: string
+      whitelistNotice: string
+      developerMode: string
+    }
+  }
 }
