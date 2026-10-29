@@ -234,4 +234,34 @@ export interface TranslationSchema {
       developerMode: string
     }
   }
+  location: {
+    selectLocation: string
+    detectLocation: string
+    detecting: string
+    detectSuccess: string
+    detectError: string
+    manualInputPlaceholder: string
+    popularDistricts: string
+    saveAddress: string
+    defaultPlaceholder: string
+  }
+  onboarding: {
+    welcomeTitle: string
+    welcomeSubtitle: string
+    chooseRoleTitle: string
+    buyerTitle: string
+    buyerDesc: string
+    buyerFeature1: string
+    buyerFeature2: string
+    buyerAction: string
+    sellerTitle: string
+    sellerDesc: string
+    sellerFeature1: string
+    sellerFeature2: string
+    sellerAction: string
+    currentRole: string
+    switchRole: string
+    sellerModeActive: string
+    buyerModeActive: string
+  }
 }

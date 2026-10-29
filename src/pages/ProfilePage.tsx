@@ -7,7 +7,8 @@ import { MOCK_USER } from '../data/mockData'
 import { useTelegram } from '../context/TelegramContext'
 import { useLanguage } from '../context/LanguageContext'
 import { triggerHaptic } from '../utils/telegram'
-import { isAdminUser } from '../services/adminService'
+import { isAdminUser, openTelegramSupport } from '../services/adminService'
+import { getUserRole, saveUserRole, UserRole } from '../services/roleService'
 
 interface ProfilePageProps {
   onOpenAdmin?: () => void
@@ -16,8 +17,23 @@ interface ProfilePageProps {
 export const ProfilePage: React.FC<ProfilePageProps> = ({ onOpenAdmin }) => {
   const { user: tgUser, haptic } = useTelegram()
   const { t } = useLanguage()
-  const [activeTab, setActiveTab] = useState<'orders' | 'seller'>('orders')
+  const [userRole, setUserRole] = useState<UserRole>(() => getUserRole() || 'buyer')
+  const [activeTab, setActiveTab] = useState<'orders' | 'seller'>(() =>
+    getUserRole() === 'seller' ? 'seller' : 'orders'
+  )
   const isAdmin = isAdminUser(tgUser)
+
+  const handleToggleRole = () => {
+    triggerHaptic('medium')
+    const nextRole: UserRole = userRole === 'seller' ? 'buyer' : 'seller'
+    saveUserRole(nextRole)
+    setUserRole(nextRole)
+    if (nextRole === 'seller') {
+      setActiveTab('seller')
+    } else {
+      setActiveTab('orders')
+    }
+  }
 
   // Sample order history
   const orderHistory = [
@@ -167,6 +183,35 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onOpenAdmin }) => {
           </div>
         </div>
 
+        {/* Role Switcher Card (Buyer vs Seller / Artisan) */}
+        <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-[#EFE9E1] flex items-center justify-center text-xl shadow-xs">
+              {userRole === 'seller' ? '👩‍🍳' : '🛍️'}
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h3 className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                  {userRole === 'seller' ? t.onboarding.sellerTitle : t.onboarding.buyerTitle}
+                </h3>
+                <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full ${userRole === 'seller' ? 'bg-[#C85A32] text-white' : 'bg-[#EFE9E1] text-[#3B2219]'}`}>
+                  {userRole.toUpperCase()}
+                </span>
+              </div>
+              <p className="text-[10px] text-[#6F574E] mt-0.5">
+                {userRole === 'seller' ? t.onboarding.sellerModeActive : t.onboarding.buyerModeActive}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleToggleRole}
+            className="px-3 py-1.5 rounded-xl bg-[#3B2219] text-[#FFFDF9] text-xs font-bold hover:bg-[#2C1810] transition-transform active:scale-95 shadow-xs font-['Manrope']"
+          >
+            {t.onboarding.switchRole}
+          </button>
+        </div>
+
         {/* Sleek Language Switcher Card */}
         <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
           <div className="flex items-center justify-between">
@@ -272,7 +317,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onOpenAdmin }) => {
               fullWidth
               onClick={() => {
                 haptic.impact('medium')
-                window.Telegram?.WebApp?.openTelegramLink?.('https://t.me/locally_support_bot')
+                openTelegramSupport()
               }}
             >
               {t.profile.openStoreButton}
@@ -287,14 +332,14 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onOpenAdmin }) => {
               💬 {t.profile.supportTitle}
             </h4>
             <p className="text-[10px] text-[#6F574E] mt-0.5">
-              {t.profile.supportDesc}
+              {t.profile.supportDesc} (@murxamidinova_jasmin)
             </p>
           </div>
           <button
             type="button"
             onClick={() => {
               triggerHaptic('light')
-              window.Telegram?.WebApp?.openTelegramLink?.('https://t.me/locally_support_bot')
+              openTelegramSupport()
             }}
             className="px-3 py-1.5 rounded-[12px] bg-[#EFE9E1] text-[#3B2219] text-xs font-bold hover:bg-[#E6DED5] transition-colors"
           >

@@ -8,6 +8,35 @@ export interface LanguageSwitcherProps {
   className?: string
 }
 
+export function getLanguageCodeDisplay(code: Locale): string {
+  switch (code) {
+    case 'uz-Latn':
+      return 'UZ'
+    case 'uz-Cyrl':
+      return 'ЎЗ'
+    case 'ru':
+      return 'RU'
+    case 'en':
+      return 'EN'
+    default:
+      return 'EN'
+  }
+}
+
+export function getLanguageFlag(code: Locale): string {
+  switch (code) {
+    case 'uz-Latn':
+    case 'uz-Cyrl':
+      return '🇺🇿'
+    case 'ru':
+      return '🇷🇺'
+    case 'en':
+      return '🇬🇧'
+    default:
+      return '🇺🇿'
+  }
+}
+
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   variant = 'pills',
   className = '',
@@ -33,32 +62,35 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
 
   const handleSelect = (code: Locale) => {
     if (code !== locale) {
-      triggerHaptic('impact', 'medium')
+      triggerHaptic('medium')
       setLocale(code)
     }
     setIsOpen(false)
   }
 
-  // 1. Sleek Segmented Pill Grid for Profile Page
+  // 1. Sleek Segmented Pill Grid for Profile Page & Onboarding
   if (variant === 'pills') {
     return (
       <div className={`space-y-2 ${className}`}>
         <div className="grid grid-cols-2 gap-2">
           {locales.map((lang) => {
             const isActive = lang.code === locale
+            const flag = getLanguageFlag(lang.code)
+            const codeDisplay = getLanguageCodeDisplay(lang.code)
+
             return (
               <button
                 key={lang.code}
                 type="button"
                 onClick={() => handleSelect(lang.code)}
-                className={`relative flex items-center gap-2.5 p-3 rounded-[16px] text-left transition-all duration-200 active:scale-[0.98] ${
+                className={`relative flex items-center gap-2.5 p-3 rounded-[18px] text-left transition-all duration-200 active:scale-[0.98] ${
                   isActive
-                    ? 'bg-[#3B2219] text-white shadow-md border-transparent ring-2 ring-[#C85A32]/40'
-                    : 'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5] hover:border-[#C85A32]/30 hover:bg-[#FAF6F0]'
+                    ? 'bg-[#3B2219] text-white shadow-md ring-2 ring-[#C85A32]/50'
+                    : 'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5] hover:border-[#C85A32]/40 hover:bg-[#FAF6F0]'
                 }`}
               >
-                <span className="text-xl shrink-0 leading-none" role="img" aria-label={lang.label}>
-                  {lang.flag}
+                <span className="text-2xl shrink-0 leading-none" role="img" aria-label={lang.label}>
+                  {flag}
                 </span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
@@ -69,12 +101,18 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                     >
                       {lang.nativeName}
                     </span>
-                    {isActive && (
-                      <span className="w-2 h-2 rounded-full bg-[#C85A32] shrink-0 ml-1 shadow-xs" />
-                    )}
+                    <span
+                      className={`text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-md shrink-0 ml-1 ${
+                        isActive
+                          ? 'bg-[#C85A32] text-white'
+                          : 'bg-[#EFE9E1] text-[#6F574E]'
+                      }`}
+                    >
+                      {codeDisplay}
+                    </span>
                   </div>
                   <span
-                    className={`block text-[10px] ${
+                    className={`block text-[10px] mt-0.5 ${
                       isActive ? 'text-[#EFE9E1]/80' : 'text-[#8E7C74]'
                     }`}
                   >
@@ -90,6 +128,9 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   }
 
   // 2. Compact Dropdown Pill for Header
+  const activeFlag = getLanguageFlag(currentLanguage.code)
+  const activeCodeDisplay = getLanguageCodeDisplay(currentLanguage.code)
+
   return (
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
@@ -98,17 +139,15 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
           triggerHaptic('light')
           setIsOpen(!isOpen)
         }}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-all text-xs font-bold"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-all text-xs font-bold hover:border-[#C85A32]/40"
         aria-label="Switch Language"
         aria-expanded={isOpen}
       >
-        <span className="text-sm leading-none">{currentLanguage.flag}</span>
-        <span className="font-['Manrope'] text-[11px] uppercase tracking-wider text-[#3B2219]">
-          {currentLanguage.code === 'uz-Latn'
-            ? 'UZ'
-            : currentLanguage.code === 'uz-Cyrl'
-            ? 'ЎЗ'
-            : currentLanguage.code.toUpperCase()}
+        <span className="text-base leading-none" role="img" aria-label="Country Flag">
+          {activeFlag}
+        </span>
+        <span className="font-['Manrope'] text-[11px] font-extrabold uppercase tracking-wider text-[#3B2219]">
+          {activeCodeDisplay}
         </span>
         <svg
           className={`w-3 h-3 text-[#6F574E] transition-transform duration-200 ${
@@ -127,41 +166,42 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-44 rounded-[18px] bg-[#FFFDF9] border border-[#E6DED5] shadow-[0_12px_36px_rgba(59,34,25,0.14)] p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute right-0 mt-2 w-48 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-[0_12px_36px_rgba(59,34,25,0.16)] p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
           <div className="px-2.5 py-1 text-[9px] uppercase font-extrabold tracking-widest text-[#8E7C74]">
             Select Language
           </div>
           <div className="space-y-0.5">
             {locales.map((lang) => {
               const isActive = lang.code === locale
+              const flag = getLanguageFlag(lang.code)
+              const codeDisplay = getLanguageCodeDisplay(lang.code)
+
               return (
                 <button
                   key={lang.code}
                   type="button"
                   onClick={() => handleSelect(lang.code)}
-                  className={`w-full flex items-center justify-between px-2.5 py-2 rounded-[12px] text-left transition-colors ${
+                  className={`w-full flex items-center justify-between px-2.5 py-2 rounded-[14px] text-left transition-colors ${
                     isActive
-                      ? 'bg-[#3B2219] text-white font-bold'
+                      ? 'bg-[#3B2219] text-white font-bold shadow-xs'
                       : 'text-[#3B2219] hover:bg-[#FAF6F0]'
                   }`}
                 >
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="text-base leading-none">{lang.flag}</span>
-                    <span className="text-xs truncate">{lang.nativeName}</span>
+                    <span className="text-lg leading-none" role="img" aria-label={lang.label}>
+                      {flag}
+                    </span>
+                    <span className="text-xs truncate font-['Manrope']">{lang.nativeName}</span>
                   </div>
-                  {isActive && (
-                    <svg
-                      className="w-4 h-4 text-[#C85A32] shrink-0"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  )}
+                  <span
+                    className={`text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-md ${
+                      isActive
+                        ? 'bg-[#C85A32] text-white'
+                        : 'bg-[#EFE9E1] text-[#6F574E]'
+                    }`}
+                  >
+                    {codeDisplay}
+                  </span>
                 </button>
               )
             })}

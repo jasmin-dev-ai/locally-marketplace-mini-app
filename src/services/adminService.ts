@@ -11,7 +11,20 @@ const STORAGE_ADMIN_PRODUCTS = 'locally_admin_products'
 const ENV_ADMIN_CHAT_ID = import.meta.env.VITE_TELEGRAM_ADMIN_CHAT_ID as string | undefined
 const ENV_ADMIN_USERNAME = import.meta.env.VITE_TELEGRAM_ADMIN_USERNAME as string | undefined
 
+export const TELEGRAM_SUPPORT_USERNAME = 'murxamidinova_jasmin'
+export const TELEGRAM_SUPPORT_URL = 'https://t.me/murxamidinova_jasmin'
+
+export function openTelegramSupport(): void {
+  const url = TELEGRAM_SUPPORT_URL
+  if (window.Telegram?.WebApp?.openTelegramLink) {
+    window.Telegram.WebApp.openTelegramLink(url)
+  } else {
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+}
+
 const DEFAULT_WHITELIST_USERNAMES = [
+  'murxamidinova_jasmin',
   'jasmin_dev',
   'jasminamurxamidinova08',
   'asadbekorolov',
