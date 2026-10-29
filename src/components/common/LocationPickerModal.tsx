@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { MapPin, Navigation, Map, Search, Check, X, Compass, Info, Phone } from 'lucide-react'
+import { MapPin, Navigation, Building2, Search, Check, X, Compass, Info, Phone } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
 import { triggerHaptic } from '../../utils/telegram'
 import {
   saveUserLocation,
   detectGPSLocation,
   searchLocations,
-  SearchableLocation,
-  KNOWN_LOCATIONS,
   formatCleanCityDistrict,
+  CITIES_LIST,
+  getDistrictsByCity,
 } from '../../services/locationService'
 
 export interface LocationPickerModalProps {
@@ -18,7 +18,7 @@ export interface LocationPickerModalProps {
   onLocationSelected: (location: string) => void
 }
 
-type PickerTab = 'gps' | 'map' | 'search'
+type PickerTab = 'gps' | 'city_district' | 'search'
 
 export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
   isOpen,
@@ -30,7 +30,8 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
   const [activeTab, setActiveTab] = useState<PickerTab>('gps')
   const [searchQuery, setSearchQuery] = useState('')
   const [isDetecting, setIsDetecting] = useState(false)
-  const [selectedMapDistrict, setSelectedMapDistrict] = useState(
+  const [selectedCity, setSelectedCity] = useState('Toshkent')
+  const [selectedLocation, setSelectedLocation] = useState(
     currentLocation || 'Toshkent, Mirobod tumani'
   )
 
@@ -54,6 +55,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
     }
   }
 
+  const cityDistricts = getDistrictsByCity(selectedCity)
   const filteredLocations = searchLocations(searchQuery)
 
   return (
@@ -123,16 +125,16 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
             type="button"
             onClick={() => {
               triggerHaptic('selection')
-              setActiveTab('map')
+              setActiveTab('city_district')
             }}
             className={`flex-1 py-2 rounded-[12px] flex items-center justify-center gap-1.5 transition-all ${
-              activeTab === 'map'
+              activeTab === 'city_district'
                 ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
                 : 'text-[#6F574E] hover:text-[#3B2219]'
             }`}
           >
-            <Map className="w-3.5 h-3.5 text-[#3B2219]" />
-            <span>Xarita</span>
+            <Building2 className="w-3.5 h-3.5 text-[#3B2219]" />
+            <span>Shahar / Tuman</span>
           </button>
 
           <button
@@ -212,58 +214,102 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
           </div>
         )}
 
-        {/* Tab 2: Pick on Visual Map */}
-        {activeTab === 'map' && (
-          <div className="space-y-3 animate-in fade-in duration-200">
-            {/* Visual Stylized Map Zone */}
-            <div className="relative h-44 rounded-[22px] overflow-hidden border border-[#E6DED5] bg-[#EFE9E1] shadow-inner p-3 flex flex-col justify-between">
-              {/* Map Canvas Background Grid */}
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#3B2219_1px,transparent_1px)] [background-size:14px_14px]" />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#FAF6F0]/80 via-transparent to-[#FAF6F0]/50" />
-
-              {/* Center Pin Indicator */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-                <div className="w-10 h-10 rounded-full bg-[#C85A32] text-white flex items-center justify-center shadow-lg border-2 border-white animate-bounce">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div className="w-4 h-1.5 rounded-full bg-black/20 blur-xs mt-1" />
-              </div>
-
-              {/* Map Floating District Badge */}
-              <div className="relative z-20 flex justify-between items-start">
-                <span className="px-2.5 py-1 rounded-full bg-[#FFFDF9]/90 backdrop-blur-md border border-[#E6DED5] text-[10px] font-extrabold text-[#3B2219] shadow-xs">
-                  {selectedMapDistrict}
-                </span>
-                <span className="text-[10px] font-bold text-[#6F574E] bg-white/70 px-2 py-0.5 rounded-md">
-                  Toshkent
-                </span>
-              </div>
-
-              {/* Bottom Quick Select Pills */}
-              <div className="relative z-20 flex gap-1.5 overflow-x-auto no-scrollbar pt-2">
-                {KNOWN_LOCATIONS.slice(0, 5).map((loc) => (
-                  <button
-                    key={loc.district}
-                    type="button"
-                    onClick={() => {
-                      triggerHaptic('light')
-                      setSelectedMapDistrict(loc.formatted)
-                    }}
-                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold shrink-0 transition-all ${
-                      selectedMapDistrict === loc.formatted
-                        ? 'bg-[#3B2219] text-white shadow-xs'
-                        : 'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5]'
-                    }`}
-                  >
-                    {loc.district}
-                  </button>
-                ))}
+        {/* Tab 2: Clean City & District Selection */}
+        {activeTab === 'city_district' && (
+          <div className="space-y-3.5 animate-in fade-in duration-200">
+            {/* City Selector Pills */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-extrabold text-[#8E7C74] uppercase tracking-wider px-1">
+                Shaharni tanlang
+              </span>
+              <div className="grid grid-cols-4 gap-1.5">
+                {CITIES_LIST.map((city) => {
+                  const isCityActive = selectedCity === city
+                  return (
+                    <button
+                      key={city}
+                      type="button"
+                      onClick={() => {
+                        triggerHaptic('selection')
+                        setSelectedCity(city)
+                        const firstDist = getDistrictsByCity(city)[0]
+                        if (firstDist) {
+                          setSelectedLocation(firstDist.formatted)
+                        }
+                      }}
+                      className={`py-2 px-1 rounded-[14px] text-xs font-extrabold transition-all text-center truncate ${
+                        isCityActive
+                          ? 'bg-[#3B2219] text-white shadow-xs'
+                          : 'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5] hover:border-[#C85A32]/40'
+                      }`}
+                    >
+                      {city}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
+            {/* District List for Selected City */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-extrabold text-[#8E7C74] uppercase tracking-wider px-1">
+                Tumanni tanlang ({selectedCity})
+              </span>
+              <div className="space-y-1.5 max-h-48 overflow-y-auto no-scrollbar">
+                {cityDistricts.map((loc) => {
+                  const isSelected = selectedLocation === loc.formatted
+                  return (
+                    <button
+                      key={loc.district}
+                      type="button"
+                      onClick={() => {
+                        triggerHaptic('light')
+                        setSelectedLocation(loc.formatted)
+                      }}
+                      className={`w-full flex items-center justify-between p-2.5 rounded-[16px] text-left transition-all ${
+                        isSelected
+                          ? 'bg-[#FFFDF9] border-2 border-[#C85A32] shadow-xs'
+                          : 'bg-[#FFFDF9] border border-[#E6DED5] hover:bg-[#FAF6F0]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                            isSelected
+                              ? 'bg-[#C85A32] text-white'
+                              : 'bg-[#EFE9E1] text-[#6F574E]'
+                          }`}
+                        >
+                          <MapPin className="w-3 h-3" />
+                        </div>
+                        <span className="text-xs font-bold text-[#3B2219] font-['Manrope']">
+                          {loc.district}
+                        </span>
+                      </div>
+                      {isSelected && <Check className="w-4 h-4 text-[#C85A32]" />}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Selected Location Summary Badge */}
+            <div className="p-2.5 rounded-[14px] bg-[#EFE9E1] border border-[#E6DED5] flex items-center justify-between">
+              <div className="flex items-center gap-2 min-w-0">
+                <MapPin className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
+                <span className="text-xs font-extrabold text-[#3B2219] truncate font-['Manrope']">
+                  {selectedLocation}
+                </span>
+              </div>
+              <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md bg-[#FFFDF9] text-[#6F574E] shrink-0">
+                Tanlangan
+              </span>
+            </div>
+
+            {/* Confirmation Button */}
             <button
               type="button"
-              onClick={() => handleConfirmLocation(selectedMapDistrict)}
+              onClick={() => handleConfirmLocation(selectedLocation)}
               className="w-full py-3 px-4 rounded-[16px] bg-[#3B2219] hover:bg-[#2C1810] text-[#FFFDF9] flex items-center justify-center gap-2 text-xs font-extrabold shadow-sm active:scale-[0.98] transition-all font-['Manrope']"
             >
               <Check className="w-4 h-4 text-[#C85A32]" />

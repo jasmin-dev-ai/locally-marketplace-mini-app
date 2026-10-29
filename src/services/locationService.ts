@@ -6,6 +6,8 @@ export interface SearchableLocation {
   formatted: string
 }
 
+export const CITIES_LIST = ['Toshkent', 'Samarqand', 'Buxoro', 'Xiva']
+
 export const KNOWN_LOCATIONS: SearchableLocation[] = [
   { city: 'Toshkent', district: 'Mirobod tumani', formatted: 'Toshkent, Mirobod tumani' },
   { city: 'Toshkent', district: 'Chilonzor tumani', formatted: 'Toshkent, Chilonzor tumani' },
@@ -18,9 +20,17 @@ export const KNOWN_LOCATIONS: SearchableLocation[] = [
   { city: 'Toshkent', district: 'Sergeli tumani', formatted: 'Toshkent, Sergeli tumani' },
   { city: 'Toshkent', district: 'Yashnobod tumani', formatted: 'Toshkent, Yashnobod tumani' },
   { city: 'Samarqand', district: 'Registon hududi', formatted: 'Samarqand, Registon' },
-  { city: 'Buxoro', district: 'Eski shahar', formatted: 'Buxoro, Qadimiy shahar' },
+  { city: 'Samarqand', district: 'Siyob bozori', formatted: 'Samarqand, Siyob bozori' },
+  { city: 'Samarqand', district: 'Bog‘ishamol', formatted: 'Samarqand, Bog‘ishamol' },
+  { city: 'Buxoro', district: 'Eski shahar', formatted: 'Buxoro, Eski shahar' },
+  { city: 'Buxoro', district: 'Labi Hovuz', formatted: 'Buxoro, Labi Hovuz' },
   { city: 'Xiva', district: 'Ichan-Qal‘a', formatted: 'Xiva, Ichan-Qal‘a' },
+  { city: 'Xiva', district: 'Dishan-Qal‘a', formatted: 'Xiva, Dishan-Qal‘a' },
 ]
+
+export function getDistrictsByCity(city: string): SearchableLocation[] {
+  return KNOWN_LOCATIONS.filter((l) => l.city.toLowerCase() === city.toLowerCase())
+}
 
 /**
  * Cleanly formats city and district, completely stripping raw IP leakage or static dots.
@@ -133,7 +143,7 @@ export async function detectGPSLocation(): Promise<string> {
  */
 export function searchLocations(query: string): SearchableLocation[] {
   const clean = query.trim().toLowerCase()
-  if (!clean) return KNOWN_LOCATIONS.slice(0, 5)
+  if (!clean) return KNOWN_LOCATIONS
   return KNOWN_LOCATIONS.filter(
     (loc) =>
       loc.formatted.toLowerCase().includes(clean) ||

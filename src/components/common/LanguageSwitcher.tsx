@@ -111,13 +111,15 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                       {codeDisplay}
                     </span>
                   </div>
-                  <span
-                    className={`block text-[10px] mt-0.5 ${
-                      isActive ? 'text-[#EFE9E1]/80' : 'text-[#8E7C74]'
-                    }`}
-                  >
-                    {lang.label}
-                  </span>
+                  {lang.label !== lang.nativeName && (
+                    <span
+                      className={`block text-[10px] mt-0.5 ${
+                        isActive ? 'text-[#EFE9E1]/80' : 'text-[#8E7C74]'
+                      }`}
+                    >
+                      {lang.label}
+                    </span>
+                  )}
                 </div>
               </button>
             )

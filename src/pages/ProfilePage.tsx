@@ -30,6 +30,7 @@ import {
   openTelegramSupport,
   getUserVendorApplication,
   VendorApplication,
+  getPublicMarketplaceProducts,
 } from '../services/adminService'
 import { getUserRole, saveUserRole, UserRole } from '../services/roleService'
 import { VendorRegistrationModal } from '../components/vendor/VendorRegistrationModal'
@@ -86,7 +87,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   }, {})
 
   // Filter and localize favorite products
-  const favoriteProducts = MOCK_PRODUCTS.filter((p) =>
+  const favoriteProducts = getPublicMarketplaceProducts().filter((p) =>
     favorites.includes(p.id)
   ).map(getLocalizedProduct)
 

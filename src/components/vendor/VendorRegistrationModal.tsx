@@ -56,17 +56,17 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
     {
       value: 'craft_certificate',
       label: currentLocale === 'ru' ? 'Свидетельство ремесленника ("Hunarmand")' : 'Hunarmand guvohnomasi bor',
-      desc: currentLocale === 'ru' ? 'Официальный статус члена ассоциации ремесленников' : 'Hunarmandlar uyushmasi rasmiy a’zosi',
+      desc: currentLocale === 'ru' ? 'Официальный статус члена ассоциации ремесленников' : 'Hunarmandlar uyuşmasi rasmiy aʼzosi',
     },
     {
       value: 'individual_entrepreneur',
-      label: currentLocale === 'ru' ? 'ИП / Самозанятый' : 'YTT / O‘zini o‘zi band qilgan',
-      desc: currentLocale === 'ru' ? 'Индивидуальный предприниматель или самозанятый гражданин' : 'Rasmiy soliq to‘lovchi yoki ro‘yxatdan o‘tgan tadbirkor',
+      label: currentLocale === 'ru' ? 'ИП / Самозанятый' : 'YTT / Oʻzini oʻzi band qilgan',
+      desc: currentLocale === 'ru' ? 'Индивидуальный предприниматель или самозанятый гражданин' : 'Rasmiy soliq toʻlovçi yoki roʻyxatdan oʻtgan tadbirkor',
     },
     {
       value: 'home_artisan',
-      label: currentLocale === 'ru' ? 'Домашний кулинар / Мастер' : 'Uy sharoitida tayyorlovchi',
-      desc: currentLocale === 'ru' ? 'Приготовление свежих блюд и ремесел на дому' : 'Oila davrasida toza va halol mahsulotlar tayyorlovchi usta',
+      label: currentLocale === 'ru' ? 'Домашний кулинар / Мастер' : 'Uy şaroitida tayyorlovçi',
+      desc: currentLocale === 'ru' ? 'Приготовление свежих блюд и ремесел на дому' : 'Oila davrasida toza va halol mahsulotlar tayyorlovçi usta',
     },
   ]
 
@@ -121,12 +121,12 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             </div>
             <div>
               <h3 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
-                {displayApp ? 'Do‘kon arizasi holati' : 'Ustaxona / Do‘kon ochish'}
+                {displayApp ? 'Doʻkon arizasi holati' : 'Ustaxona / Doʻkon oçiş'}
               </h3>
               <p className="text-[11px] text-[#6F574E]">
                 {displayApp
-                  ? 'Administrator tekshiruvi jarayoni'
-                  : 'Mahalliy hunarmandlar bozorida o‘z vitrinangizni yarating'}
+                  ? 'Administrator tekşiruvi jarayoni'
+                  : 'Mahalliy hunarmandlar bozorida oʻz vitrinangizni yarating'}
               </p>
             </div>
           </div>
@@ -244,7 +244,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             <div>
               <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1">
                 <Store className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span>Do‘kon yoki ustaxona nomi *</span>
+                <span>Doʻkon yoki ustaxona nomi *</span>
               </label>
               <input
                 type="text"
@@ -260,7 +260,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             <div>
               <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1.5">
                 <Tag className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span>Asosiy yo‘nalish (Toifa) *</span>
+                <span>Asosiy yoʻnaliş (Toifa) *</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {categories.map((c) => (
@@ -332,7 +332,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               <div>
                 <label className="text-[10px] font-bold text-[#3B2219] flex items-center gap-1 mb-1">
                   <User className="w-3 h-3 text-[#C85A32]" />
-                  <span>Ism sharifingiz *</span>
+                  <span>Ism şarifingiz *</span>
                 </label>
                 <input
                   type="text"
@@ -383,7 +383,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               size="lg"
               fullWidth
             >
-              Arizani yuborish
+              Arizani yuboriş
             </Button>
           </form>
         )}

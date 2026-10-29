@@ -241,9 +241,14 @@ export function getAdminProducts(): Product[] {
 export function saveAdminProducts(products: Product[]): void {
   try {
     localStorage.setItem(STORAGE_ADMIN_PRODUCTS, JSON.stringify(products))
+    window.dispatchEvent(new CustomEvent('locally_products_updated', { detail: products }))
   } catch {
     // Ignore
   }
+}
+
+export function getPublicMarketplaceProducts(): Product[] {
+  return getAdminProducts()
 }
 
 export function toggleProductStock(productId: string): Product[] {
@@ -408,17 +413,57 @@ export function updateVendorApplicationStatus(
   reason?: string
 ): VendorApplication[] {
   const current = getVendorApplications()
-  const updated = current.map((app) =>
-    app.id === appId
-      ? {
-          ...app,
-          status,
-          reviewedAt: new Date().toISOString(),
-          rejectionReason: reason || app.rejectionReason,
-        }
-      : app
-  )
+  let newlyApprovedApp: VendorApplication | undefined
+
+  const updated = current.map((app) => {
+    if (app.id === appId) {
+      if (status === 'approved') newlyApprovedApp = app
+      return {
+        ...app,
+        status,
+        reviewedAt: new Date().toISOString(),
+        rejectionReason: reason || app.rejectionReason,
+      }
+    }
+    return app
+  })
+
   saveVendorApplications(updated)
+
+  // When approved by Admin, publish vendor's shop to marketplace products!
+  if (newlyApprovedApp && status === 'approved') {
+    const app = newlyApprovedApp
+    const products = getAdminProducts()
+    const alreadyExists = products.some((p) => p.seller.name.toLowerCase() === app.shopName.toLowerCase())
+
+    if (!alreadyExists) {
+      addAdminProduct({
+        title: `${app.shopName} Saralangan Toʻplami`,
+        description: app.description || 'Hunarmand tomonidan mehr bilan tayyorlangan tabiiy mahsulot.',
+        price: 45000,
+        category: (app.category as any) || 'crafts',
+        categoryId: (app.category as any) || 'crafts',
+        imageUrl:
+          app.category === 'bakery'
+            ? 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80'
+            : app.category === 'sweets'
+            ? 'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=600&auto=format&fit=crop&q=80'
+            : 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&auto=format&fit=crop&q=80',
+        rating: 5.0,
+        reviewsCount: 1,
+        inStock: true,
+        seller: {
+          id: `seller-${app.id.toLowerCase()}`,
+          name: app.shopName,
+          initials: app.shopName.slice(0, 2).toUpperCase(),
+          rating: 5.0,
+          isVerified: true,
+          productsCount: 1,
+        },
+      })
+    }
+  }
+
   return updated
 }
 

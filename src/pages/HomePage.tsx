@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ArrowRight, Check, Star, Search, ShoppingBag } from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { SearchBar } from '../components/common/SearchBar'
@@ -8,7 +8,8 @@ import { Button } from '../components/common/Button'
 import { useCart } from '../context/CartContext'
 import { useTelegram } from '../context/TelegramContext'
 import { useLanguage } from '../context/LanguageContext'
-import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData'
+import { MOCK_CATEGORIES } from '../data/mockData'
+import { getPublicMarketplaceProducts } from '../services/adminService'
 import { Product } from '../types'
 import { triggerHaptic } from '../utils/telegram'
 
@@ -39,14 +40,28 @@ export const HomePage: React.FC<HomePageProps> = ({
     totalItems,
   } = useCart()
 
+  const [productsList, setProductsList] = useState<Product[]>(() => getPublicMarketplaceProducts())
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setProductsList(getPublicMarketplaceProducts())
+    }
+    window.addEventListener('locally_products_updated', handleUpdate)
+    window.addEventListener('locally_vendor_apps_updated', handleUpdate)
+    return () => {
+      window.removeEventListener('locally_products_updated', handleUpdate)
+      window.removeEventListener('locally_vendor_apps_updated', handleUpdate)
+    }
+  }, [])
+
   // Build quantity map for quick lookup
   const cartQuantities = items.reduce<Record<string, number>>((acc, item) => {
     acc[item.product.id] = item.quantity
     return acc
   }, {})
 
-  // Localize all mock products
-  const localizedProducts = MOCK_PRODUCTS.map(getLocalizedProduct)
+  // Localize all marketplace products
+  const localizedProducts = productsList.map(getLocalizedProduct)
 
   // Filter products by selected category and search term
   const filteredProducts = localizedProducts.filter((product) => {

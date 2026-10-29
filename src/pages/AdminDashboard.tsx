@@ -91,6 +91,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     haptic.notification('success')
     const updated = updateVendorApplicationStatus(appId, 'approved')
     setApplications(updated)
+    setProducts(getAdminProducts())
     setMetrics(computeAdminMetrics())
     showToast(`Ariza #${appId} tasdiqlandi! Do'kon bozorga qo'shildi.`)
   }

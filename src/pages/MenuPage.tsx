@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ArrowUpDown, Check, ChevronDown, PackageSearch } from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { SearchBar } from '../components/common/SearchBar'
@@ -6,7 +6,8 @@ import { CategoryFilter } from '../components/product/CategoryFilter'
 import { ProductGrid } from '../components/product/ProductGrid'
 import { useCart } from '../context/CartContext'
 import { useLanguage } from '../context/LanguageContext'
-import { MOCK_CATEGORIES, MOCK_PRODUCTS } from '../data/mockData'
+import { MOCK_CATEGORIES } from '../data/mockData'
+import { getPublicMarketplaceProducts } from '../services/adminService'
 import { Product } from '../types'
 import { triggerHaptic } from '../utils/telegram'
 
@@ -29,6 +30,20 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
     searchQuery,
     setSearchQuery,
   } = useCart()
+
+  const [productsList, setProductsList] = useState<Product[]>(() => getPublicMarketplaceProducts())
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setProductsList(getPublicMarketplaceProducts())
+    }
+    window.addEventListener('locally_products_updated', handleUpdate)
+    window.addEventListener('locally_vendor_apps_updated', handleUpdate)
+    return () => {
+      window.removeEventListener('locally_products_updated', handleUpdate)
+      window.removeEventListener('locally_vendor_apps_updated', handleUpdate)
+    }
+  }, [])
 
   const [sortBy, setSortBy] = useState<SortOption>('recommended')
   const [activeTag, setActiveTag] = useState<string>('all')
@@ -55,8 +70,8 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
     return acc
   }, {})
 
-  // Localize all mock products
-  const localizedProducts = MOCK_PRODUCTS.map(getLocalizedProduct)
+  // Localize all marketplace products
+  const localizedProducts = productsList.map(getLocalizedProduct)
 
   // Filter & sort products
   const filteredProducts = localizedProducts.filter((product) => {
