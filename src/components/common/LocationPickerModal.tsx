@@ -99,7 +99,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
         <div className="p-3.5 rounded-[18px] bg-[#FAF0DC] border border-[#E5A118]/30 flex items-start gap-2.5">
           <Info className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
           <p className="text-[11px] text-[#2D231E] leading-relaxed font-medium">
-            Ushbu ma'lumotlar buyurtmangizni aniq manzilga yetkazib berish va kurier siz bilan bog'lanishi uchun kerak.
+            Uşbu maʼlumotlar buyurtmangizni aniq manzilga yetkazib beriş va kuryer siz bilan boğlanişi uçun kerak.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
             }`}
           >
             <Building2 className="w-3.5 h-3.5 text-[#2D231E]" />
-            <span>Shahar / Tuman</span>
+            <span>Şahar / Tuman</span>
           </button>
 
           <button
@@ -220,7 +220,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
             {/* City Selector Pills */}
             <div className="space-y-1.5">
               <span className="text-[10px] font-extrabold text-[#7A6B63] uppercase tracking-wider px-1">
-                Shaharni tanlang
+                Şaharni tanlang
               </span>
               <div className="grid grid-cols-4 gap-1.5">
                 {CITIES_LIST.map((city) => {

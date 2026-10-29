@@ -132,10 +132,10 @@ const INITIAL_ADMIN_ORDERS: Order[] = [
     totalAmount: 124000,
     status: 'preparing',
     createdAt: new Date(Date.now() - 1000 * 60 * 25).toISOString(),
-    deliveryAddress: 'Mirobod tumani, 4-blok, 42-xonadon, Toshkent',
+    deliveryAddress: 'Mirobod tumani, 4-blok, 42-xonadon, Toşkent',
     deliveryTimeSlot: 'Bugun, 17:00 – 18:30',
     paymentMethod: 'telegram_pay',
-    customerNotes: 'Eshik qoʻngʻirogʻini 2 marta chaling',
+    customerNotes: 'Eşik qönğiroğini 2 marta çaling',
   },
   {
     id: 'LOC-912405',
@@ -151,7 +151,7 @@ const INITIAL_ADMIN_ORDERS: Order[] = [
     totalAmount: 170000,
     status: 'confirmed',
     createdAt: new Date(Date.now() - 1000 * 60 * 10).toISOString(),
-    deliveryAddress: 'Yunusobod, 11-mavze, 18-uy, Toshkent',
+    deliveryAddress: 'Yunusobod, 11-mavze, 18-uy, Toşkent',
     deliveryTimeSlot: 'Bugun, 18:00 – 19:30',
     paymentMethod: 'click',
   },
@@ -173,7 +173,7 @@ const INITIAL_ADMIN_ORDERS: Order[] = [
     totalAmount: 154000,
     status: 'delivering',
     createdAt: new Date(Date.now() - 1000 * 60 * 55).toISOString(),
-    deliveryAddress: 'Buyuk Ipak Yoʻli, 45-uy, Toshkent',
+    deliveryAddress: 'Buyuk Ipak Yöli, 45-uy, Toşkent',
     deliveryTimeSlot: 'Bugun, 16:00 – 17:30',
     paymentMethod: 'payme',
   },
@@ -191,7 +191,7 @@ const INITIAL_ADMIN_ORDERS: Order[] = [
     totalAmount: 185000,
     status: 'completed',
     createdAt: new Date(Date.now() - 1000 * 60 * 180).toISOString(),
-    deliveryAddress: 'Chorsu maydoni, Hunarmandlar rastasi, Toshkent',
+    deliveryAddress: 'Çorsu maydoni, Hunarmandlar rastasi, Toşkent',
     deliveryTimeSlot: 'Kecha, 15:00',
     paymentMethod: 'cash_on_delivery',
   },
@@ -438,7 +438,7 @@ export function updateVendorApplicationStatus(
 
     if (!alreadyExists) {
       addAdminProduct({
-        title: `${app.shopName} Saralangan Toʻplami`,
+        title: `${app.shopName} Saralangan Töplami`,
         description: app.description || 'Hunarmand tomonidan mehr bilan tayyorlangan tabiiy mahsulot.',
         price: 45000,
         category: (app.category as any) || 'crafts',

@@ -491,7 +491,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                   size="sm"
                 >
                   {vendorApp.status === 'approved'
-                    ? 'TASDIQLANGAN DO‘KON'
+                    ? 'TASDIQLANGAN DÖKON'
                     : vendorApp.status === 'rejected'
                     ? 'RAD ETILDI'
                     : 'ARIZA KUTILMOQDA'}
@@ -506,10 +506,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <p className="text-xs text-[#EFE9E1]/80 mt-1 leading-relaxed">
                 {vendorApp
                   ? vendorApp.status === 'pending'
-                    ? 'Do‘kon arizangiz ma’muriyat tomonidan ko‘rib chiqilmoqda. Tasdiqlangach, mahsulotlaringiz katalogda ko‘rinadi.'
+                    ? 'Dökon arizangiz maʼmuriyat tomonidan körib çiqilmoqda. Tasdiqlangaç, mahsulotlaringiz katalogda körinadi.'
                     : vendorApp.status === 'approved'
-                    ? 'Do‘koningiz tasdiqlangan va faol! Yangi mahsulotlarni joylab sotuvni boshlashingiz mumkin.'
-                    : 'Arizangiz ma’muriyat tomonidan qayta ko‘rib chiqish uchun yuborildi.'
+                    ? 'Dökoningiz tasdiqlangan va faol! Yangi mahsulotlarni joylab sotuvni boşlaşingiz mumkin.'
+                    : 'Arizangiz maʼmuriyat tomonidan qayta körib çiqiş uçun yuborildi.'
                   : t.profile.becomeSellerDesc}
               </p>
             </div>
@@ -523,7 +523,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 setIsVendorModalOpen(true)
               }}
             >
-              {vendorApp ? 'Arizani ko‘rish' : t.profile.openStoreButton}
+              {vendorApp ? 'Arizani köriş' : t.profile.openStoreButton}
             </Button>
           </div>
         )}
@@ -636,7 +636,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <h5 className="text-[11px] font-bold text-[#2D231E]">1,000 ball</h5>
-                  <p className="text-[10px] text-[#7A6B63]">10,000 so'mlik chegirma vaucheri</p>
+                  <p className="text-[10px] text-[#7A6B63]">10,000 sömlik çegirma vauçeri</p>
                 </div>
               </div>
 
@@ -646,7 +646,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <h5 className="text-[11px] font-bold text-[#2D231E]">1,500 ball</h5>
-                  <p className="text-[10px] text-[#7A6B63]">Bepul kuryer orqali yetkazib berish</p>
+                  <p className="text-[10px] text-[#7A6B63]">Bepul kuryer orqali yetkazib beriş</p>
                 </div>
               </div>
 
@@ -656,7 +656,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <h5 className="text-[11px] font-bold text-[#2D231E]">3,000 ball</h5>
-                  <p className="text-[10px] text-[#7A6B63]">Doimiy 5% VIP chegirma barcha buyurtmalarga</p>
+                  <p className="text-[10px] text-[#7A6B63]">Doimiy 5% VIP çegirma barça buyurtmalarga</p>
                 </div>
               </div>
             </div>

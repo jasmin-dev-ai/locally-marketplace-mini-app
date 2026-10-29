@@ -6,26 +6,26 @@ export interface SearchableLocation {
   formatted: string
 }
 
-export const CITIES_LIST = ['Toshkent', 'Samarqand', 'Buxoro', 'Xiva']
+export const CITIES_LIST = ['Toşkent', 'Samarqand', 'Buxoro', 'Xiva']
 
 export const KNOWN_LOCATIONS: SearchableLocation[] = [
-  { city: 'Toshkent', district: 'Mirobod tumani', formatted: 'Toshkent, Mirobod tumani' },
-  { city: 'Toshkent', district: 'Chilonzor tumani', formatted: 'Toshkent, Chilonzor tumani' },
-  { city: 'Toshkent', district: 'Yunusobod tumani', formatted: 'Toshkent, Yunusobod tumani' },
-  { city: 'Toshkent', district: 'Mirzo Ulug‘bek tumani', formatted: 'Toshkent, Mirzo Ulug‘bek tumani' },
-  { city: 'Toshkent', district: 'Yakkasaroy tumani', formatted: 'Toshkent, Yakkasaroy tumani' },
-  { city: 'Toshkent', district: 'Shayxontohur tumani', formatted: 'Toshkent, Shayxontohur tumani' },
-  { city: 'Toshkent', district: 'Olmazor tumani', formatted: 'Toshkent, Olmazor tumani' },
-  { city: 'Toshkent', district: 'Uchtepa tumani', formatted: 'Toshkent, Uchtepa tumani' },
-  { city: 'Toshkent', district: 'Sergeli tumani', formatted: 'Toshkent, Sergeli tumani' },
-  { city: 'Toshkent', district: 'Yashnobod tumani', formatted: 'Toshkent, Yashnobod tumani' },
+  { city: 'Toşkent', district: 'Mirobod tumani', formatted: 'Toşkent, Mirobod tumani' },
+  { city: 'Toşkent', district: 'Çilonzor tumani', formatted: 'Toşkent, Çilonzor tumani' },
+  { city: 'Toşkent', district: 'Yunusobod tumani', formatted: 'Toşkent, Yunusobod tumani' },
+  { city: 'Toşkent', district: 'Mirzo Uluğbek tumani', formatted: 'Toşkent, Mirzo Uluğbek tumani' },
+  { city: 'Toşkent', district: 'Yakkasaroy tumani', formatted: 'Toşkent, Yakkasaroy tumani' },
+  { city: 'Toşkent', district: 'Şayxontohur tumani', formatted: 'Toşkent, Şayxontohur tumani' },
+  { city: 'Toşkent', district: 'Olmazor tumani', formatted: 'Toşkent, Olmazor tumani' },
+  { city: 'Toşkent', district: 'Uçtepa tumani', formatted: 'Toşkent, Uçtepa tumani' },
+  { city: 'Toşkent', district: 'Sergeli tumani', formatted: 'Toşkent, Sergeli tumani' },
+  { city: 'Toşkent', district: 'Yaşnobod tumani', formatted: 'Toşkent, Yaşnobod tumani' },
   { city: 'Samarqand', district: 'Registon hududi', formatted: 'Samarqand, Registon' },
   { city: 'Samarqand', district: 'Siyob bozori', formatted: 'Samarqand, Siyob bozori' },
-  { city: 'Samarqand', district: 'Bog‘ishamol', formatted: 'Samarqand, Bog‘ishamol' },
-  { city: 'Buxoro', district: 'Eski shahar', formatted: 'Buxoro, Eski shahar' },
+  { city: 'Samarqand', district: 'Boğişamol', formatted: 'Samarqand, Boğişamol' },
+  { city: 'Buxoro', district: 'Eski şahar', formatted: 'Buxoro, Eski şahar' },
   { city: 'Buxoro', district: 'Labi Hovuz', formatted: 'Buxoro, Labi Hovuz' },
-  { city: 'Xiva', district: 'Ichan-Qal‘a', formatted: 'Xiva, Ichan-Qal‘a' },
-  { city: 'Xiva', district: 'Dishan-Qal‘a', formatted: 'Xiva, Dishan-Qal‘a' },
+  { city: 'Xiva', district: 'Içan-Qalʼa', formatted: 'Xiva, Içan-Qalʼa' },
+  { city: 'Xiva', district: 'Dişan-Qalʼa', formatted: 'Xiva, Dişan-Qalʼa' },
 ]
 
 export function getDistrictsByCity(city: string): SearchableLocation[] {
@@ -36,10 +36,10 @@ export function getDistrictsByCity(city: string): SearchableLocation[] {
  * Cleanly formats city and district, completely stripping raw IP leakage or static dots.
  */
 export function formatCleanCityDistrict(rawLoc?: string | null): string {
-  if (!rawLoc || typeof rawLoc !== 'string') return 'Toshkent, Mirobod tumani'
+  if (!rawLoc || typeof rawLoc !== 'string') return 'Toşkent, Mirobod tumani'
   const trimmed = rawLoc.trim()
   if (/^\d{1,3}\.\d{1,3}\.\d{1,3}/.test(trimmed) || /^\.+$/.test(trimmed) || trimmed === '...' || trimmed === '') {
-    return 'Toshkent, Mirobod tumani'
+    return 'Toşkent, Mirobod tumani'
   }
   return trimmed
 }
@@ -77,18 +77,18 @@ export function saveUserLocation(location: string): void {
 function resolveCoordsToRefinedDistrict(lat: number, lon: number): string {
   // Approximate Tashkent quadrant mapping
   if (lat > 41.33) {
-    return 'Toshkent, Yunusobod tumani'
+    return 'Toşkent, Yunusobod tumani'
   } else if (lat < 41.28) {
     if (lon < 69.22) {
-      return 'Toshkent, Chilonzor tumani'
+      return 'Toşkent, Çilonzor tumani'
     }
-    return 'Toshkent, Mirobod tumani'
+    return 'Toşkent, Mirobod tumani'
   } else if (lon > 69.30) {
-    return 'Toshkent, Mirzo Ulug‘bek tumani'
+    return 'Toşkent, Mirzo Uluğbek tumani'
   } else if (lon < 69.24) {
-    return 'Toshkent, Shayxontohur tumani'
+    return 'Toşkent, Şayxontohur tumani'
   }
-  return 'Toshkent, Yakkasaroy tumani'
+  return 'Toşkent, Yakkasaroy tumani'
 }
 
 /**
@@ -96,7 +96,7 @@ function resolveCoordsToRefinedDistrict(lat: number, lon: number): string {
  */
 export async function detectGPSLocation(): Promise<string> {
   return new Promise((resolve) => {
-    const fallbackLocation = 'Toshkent, Mirobod tumani'
+    const fallbackLocation = 'Toşkent, Mirobod tumani'
 
     const tg = window.Telegram?.WebApp
     if (tg?.LocationManager?.getLocation) {

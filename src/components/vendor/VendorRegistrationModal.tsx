@@ -60,8 +60,8 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
     },
     {
       value: 'individual_entrepreneur',
-      label: currentLocale === 'ru' ? 'ИП / Самозанятый' : 'YTT / Oʻzini oʻzi band qilgan',
-      desc: currentLocale === 'ru' ? 'Индивидуальный предприниматель или самозанятый гражданин' : 'Rasmiy soliq toʻlovçi yoki roʻyxatdan oʻtgan tadbirkor',
+      label: currentLocale === 'ru' ? 'ИП / Самозанятый' : 'YTT / Özini özi band qilgan',
+      desc: currentLocale === 'ru' ? 'Индивидуальный предприниматель или самозанятый гражданин' : 'Rasmiy soliq tölovçi yoki röyxatdan ötgan tadbirkor',
     },
     {
       value: 'home_artisan',
@@ -121,12 +121,12 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             </div>
             <div>
               <h3 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
-                {displayApp ? 'Doʻkon arizasi holati' : 'Ustaxona / Doʻkon ochish'}
+                {displayApp ? 'Dökon arizasi holati' : 'Ustaxona / Dökon oçiş'}
               </h3>
               <p className="text-[11px] text-[#7A6B63]">
                 {displayApp
-                  ? 'Administrator tekshiruvi jarayoni'
-                  : 'Mahalliy hunarmandlar bozorida oʻz vitrinangizni yarating'}
+                  ? 'Administrator tekşiruvi jarayoni'
+                  : 'Mahalliy hunarmandlar bozorida öz vitrinangizni yarating'}
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                 <div className="p-3 rounded-[16px] bg-[#FAF0DC] border border-[#E5A118]/40 flex items-start gap-2.5">
                   <Clock className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
                   <p className="text-[11px] text-[#2D231E] leading-relaxed">
-                    Arizangiz 24 soat ichida administratorlar tomonidan ko‘rib chiqiladi. Tasdiqlangach, do‘koningiz va mahsulotlaringiz bozorda e’lon qilinadi!
+                    Arizangiz 24 soat içida administratorlar tomonidan körib çiqiladi. Tasdiqlangaç, dökoningiz va mahsulotlaringiz bozorda eʼlon qilinadi!
                   </p>
                 </div>
               )}
@@ -219,7 +219,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                 <div className="p-3 rounded-[16px] bg-[#E8F5E9] border border-[#2E7D32]/40 flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#2E7D32] shrink-0 mt-0.5" />
                   <p className="text-[11px] text-[#1B5E20] leading-relaxed font-medium">
-                    Tabriklaymiz! Do‘koningiz muvaffaqiyatli tasdiqlandi. Endi mahsulotlaringiz barcha xaridorlarga ko‘rinadi.
+                    Tabriklaymiz! Dökoningiz muvaffaqiyatli tasdiqlandi. Endi mahsulotlaringiz barça xaridorlarga körinadi.
                   </p>
                 </div>
               )}
@@ -236,7 +236,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             <div className="p-3 rounded-[18px] bg-[#FAF0DC] border border-[#E5A118]/30 flex items-start gap-2.5">
               <Sparkles className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
               <p className="text-[11px] text-[#2D231E] leading-relaxed font-medium">
-                Locally bozorida har bir usta va sotuvchi ma’muriyat tomonidan tekshirilib tasdiqlanadi. Bu xaridorlar ishonchini 100% kafolatlaydi.
+                Locally bozorida har bir usta va sotuvçi maʼmuriyat tomonidan tekşirilib tasdiqlanadi. Bu xaridorlar işonçini 100% kafolatlaydi.
               </p>
             </div>
 
@@ -244,14 +244,14 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             <div>
               <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1">
                 <Store className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span>Doʻkon yoki ustaxona nomi *</span>
+                <span>Dökon yoki ustaxona nomi *</span>
               </label>
               <input
                 type="text"
                 required
                 value={shopName}
                 onChange={(e) => setShopName(e.target.value)}
-                placeholder="Masalan: Buxoro Shirinliklar Uyi"
+                placeholder="Masalan: Buxoro Şirinliklar Uyi"
                 className="w-full min-h-[44px] px-3.5 py-2.5 rounded-[16px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-semibold text-[#2D231E] placeholder:text-[#7A6B63] focus:outline-none focus:border-[#C85A32]"
               />
             </div>
@@ -260,7 +260,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             <div>
               <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1.5">
                 <Tag className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span>Asosiy yoʻnalish (Toifa) *</span>
+                <span>Asosiy yönaliş (Toifa) *</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {categories.map((c) => (
@@ -332,7 +332,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               <div>
                 <label className="text-[10px] font-bold text-[#2D231E] flex items-center gap-1 mb-1">
                   <User className="w-3 h-3 text-[#C85A32]" />
-                  <span>Ism sharifingiz *</span>
+                  <span>Ism şarifingiz *</span>
                 </label>
                 <input
                   type="text"
@@ -383,7 +383,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               size="lg"
               fullWidth
             >
-              Arizani yuborish
+              Arizani yuboriş
             </Button>
           </form>
         )}

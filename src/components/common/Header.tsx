@@ -63,7 +63,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'Locally бозорига хуш келибсиз!'
           : currentLocale === 'en'
           ? 'Welcome to Locally!'
-          : "Locally bozoriga xush kelibsiz!",
+          : "Locally bozoriga xuş kelibsiz!",
       message:
         currentLocale === 'ru'
           ? 'Свежая домашняя выпечка и ремесленные изделия с быстрой доставкой.'
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'Янги уй пишириқлари ва қўл меҳнати буюмлари тезкор етказиб бериш билан.'
           : currentLocale === 'en'
           ? 'Small-batch artisan delicacies and handcrafted treasures.'
-          : "Yangi uy pishiriqlari va qo'l mehnati buyumlari tezkor yetkazib berish bilan.",
+          : "Yangi uy pişiriqlari va qöl mehnati buyumlari tezkor yetkazib beriş bilan.",
       time: '10:00',
       unread: true,
       icon: 'sparkles',
@@ -85,7 +85,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'Биринчи буюртмага чегирма'
           : currentLocale === 'en'
           ? 'First Order Bonus'
-          : "Birinchi buyurtmaga chegirma",
+          : "Birinçi buyurtmaga çegirma",
       message:
         currentLocale === 'ru'
           ? 'Бесплатная доставка курьером при заказе от 100 000 сум.'
@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? '100 000 сўмдан юқори буюртмаларда курьер хизмати бепул.'
           : currentLocale === 'en'
           ? 'Enjoy complimentary delivery on orders over 100,000 UZS.'
-          : "100 000 so'mdan yuqori buyurtmalarda kuryer xizmati bepul.",
+          : "100 000 sömdan yuqori buyurtmalarda kuryer xizmati bepul.",
       time: '09:15',
       unread: true,
       icon: 'tag',
@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'Усталар билан тўғридан-тўғри алоқа'
           : currentLocale === 'en'
           ? 'Direct Artisan Support'
-          : "Ustalar bilan to'g'ridan-to'g'ri aloqa",
+          : "Ustalar bilan töğridan-töğri aloqa",
       message:
         currentLocale === 'ru'
           ? 'Каждый заказ готовится индивидуально под вас.'
@@ -115,7 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
           ? 'Ҳар бир таом ва буюм сиз учун алоҳида тайёрланади.'
           : currentLocale === 'en'
           ? 'Every item is hand-prepared with care upon ordering.'
-          : "Har bir taom va buyum siz uchun alohida tayyorlanadi.",
+          : "Har bir taom va buyum siz uçun alohida tayyorlanadi.",
       time: '18:40',
       unread: false,
       icon: 'bag',

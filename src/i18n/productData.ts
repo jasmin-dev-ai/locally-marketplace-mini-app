@@ -13,12 +13,12 @@ export interface LocalizedProductFields {
 export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProductFields>> = {
   'prod-1': {
     'uz-Latn': {
-      title: 'Zarrin tandir somsa (Mol goʻşti & Koʻkatlar)',
-      description: 'Anʼanaviy loy tandir devorida pişirilgan qarsildoq qatlama somsa. Şirali maydalangan mol goʻşti, şirin piyoz, zira va yangi tuyilgan qora murç bilan toʻldirilgan.',
+      title: 'Zarrin tandir somsa (Mol göşti & Kökatlar)',
+      description: 'Anʼanaviy loy tandir devorida pişirilgan qarsildoq qatlama somsa. Şirali maydalangan mol göşti, şirin piyoz, zira va yangi tuyilgan qora murç bilan töldirilgan.',
       unit: 'porsiya (2 dona)',
       prepTime: 'Har kuni 10:00 va 16:00 da yangi uziladi',
       badge: 'Xit savdo',
-      ingredients: ['Sarxil mol goʻşti', 'Qatlama xamir', 'Şirin piyoz', 'Togʻ zirasi', 'Kunjut'],
+      ingredients: ['Sarxil mol göşti', 'Qatlama xamir', 'Şirin piyoz', 'Toğ zirasi', 'Kunjut'],
     },
     'uz-Cyrl': {
       title: 'Заррин тандир сомса (Мол гўшти & Кўкатлар)',
@@ -48,11 +48,11 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   'prod-2': {
     'uz-Latn': {
       title: 'Mayin asal torti (Anʼanaviy Medovik)',
-      description: 'Sakkiz qavatli yupqa karamellangan togʻ asali korjlari, smetana va mayin qaymoqli krem bilan tun boʻyi şimdirilgan. Ogʻizda eriydi.',
-      unit: 'boʻlak (320g)',
+      description: 'Sakkiz qavatli yupqa karamellangan toğ asali korjlari, smetana va mayin qaymoqli krem bilan tun böyi şimdirilgan. Oğizda eriydi.',
+      unit: 'bölak (320g)',
       prepTime: '1 soat oldin buyurtma',
       badge: 'Yangi pişgan',
-      ingredients: ['Zomin togʻ asali', 'Oliy navli un', 'Tabiiy smetana', 'Madagaskar vanili'],
+      ingredients: ['Zomin toğ asali', 'Oliy navli un', 'Tabiiy smetana', 'Madagaskar vanili'],
     },
     'uz-Cyrl': {
       title: 'Майин асал торти (Анъанавий Медовик)',
@@ -81,11 +81,11 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   },
   'prod-3': {
     'uz-Latn': {
-      title: 'Adras Ikat dasturxoni (Qoʻlda toʻqilgan)',
-      description: 'Margʻilon toʻquvçilik ustaxonalarida anor poʻsti va yongʻoq qobigʻi tabiiy boʻyoqlari bilan boʻyalgan, 100% qoʻl mehnati şoyi va paxta adrasi.',
+      title: 'Adras Ikat dasturxoni (Qölda töqilgan)',
+      description: 'Marğilon töquvçilik ustaxonalarida anor pösti va yonğoq qobiği tabiiy böyoqlari bilan böyalgan, 100% qöl mehnati şoyi va paxta adrasi.',
       unit: 'dona (160 x 45 sm)',
       prepTime: 'Yetkazib berişga tayyor',
-      badge: 'Qoʻl mehnati',
+      badge: 'Qöl mehnati',
     },
     'uz-Cyrl': {
       title: 'Адрас Икат дастурхони (Қўлда тўқилган)',
@@ -116,7 +116,7 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
       unit: '1 dona (450g)',
       prepTime: 'Har 2 soatda issiq non uziladi',
       badge: 'Issiq non',
-      ingredients: ['Tegirmon bugʻdoy uni', 'Suv', 'Tabiiy xamirturuş', 'Dengiz tuzi', 'Sedana'],
+      ingredients: ['Tegirmon buğdoy uni', 'Suv', 'Tabiiy xamirturuş', 'Dengiz tuzi', 'Sedana'],
     },
     'uz-Cyrl': {
       title: 'Иссиқ ачитқисиз нон (Седана ва кунжутли)',
@@ -145,8 +145,8 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   },
   'prod-5': {
     'uz-Latn': {
-      title: 'Çotqol togʻ gul asali (Fargʻona vodiysi)',
-      description: 'Çotqol tizmasining 2400 metr balandligidagi yovvoyi togʻ gullaridan olingan toza xom asal. Pasterizatsiya qilinmagan, gulçangi va propolisi saqlangan.',
+      title: 'Çotqol toğ gul asali (Farğona vodiysi)',
+      description: 'Çotqol tizmasining 2400 metr balandligidagi yovvoyi toğ gullaridan olingan toza xom asal. Pasterizatsiya qilinmagan, gulçangi va propolisi saqlangan.',
       unit: 'banka (500g)',
       prepTime: 'Yetkazib berişga tayyor',
       badge: 'Toza hosil',
@@ -175,8 +175,8 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   },
   'prod-6': {
     'uz-Latn': {
-      title: 'Buxoroça qovoq va qoʻzi goʻştli somsa',
-      description: 'Yupqa qatlama xamir içiga şirin qişki qovoq pyuresi, yumşoq qoʻzi goʻşti boʻlaklari va xuşboʻy kaşniç urugʻlari solingan somsa.',
+      title: 'Buxoroça qovoq va qözi göştli somsa',
+      description: 'Yupqa qatlama xamir içiga şirin qişki qovoq pyuresi, yumşoq qözi göşti bölaklari va xuşböy kaşniç uruğlari solingan somsa.',
       unit: 'porsiya (2 dona)',
       prepTime: '30 daqiqada tayyorlanadi',
       badge: 'Mavsumiy',
@@ -205,8 +205,8 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   },
   'prod-7': {
     'uz-Latn': {
-      title: 'Dudlangan suluguni va togʻ koʻkatli xaçapuri',
-      description: 'Yangi pişirilgan qayiqça xamir, çoʻziluvçan dudlangan suluguni pişlogʻi, qişloq tuxumi sarigʻi va togʻ tarxun moyi bilan.',
+      title: 'Dudlangan suluguni va toğ kökatli xaçapuri',
+      description: 'Yangi pişirilgan qayiqça xamir, çöziluvçan dudlangan suluguni pişloği, qişloq tuxumi sariği va toğ tarxun moyi bilan.',
       unit: '1 dona (400g)',
       prepTime: '25 daqiqada pişiriladi',
       badge: 'Yuqori reyting',
@@ -235,11 +235,11 @@ export const PRODUCT_TRANSLATIONS: Record<string, Record<Locale, LocalizedProduc
   },
   'prod-8': {
     'uz-Latn': {
-      title: 'Yongʻoq daraxtidan çoy patnisi va piyolalar',
-      description: 'Fargʻona yongʻogʻidan oʻyib yasalgan yogʻoç patnis va zangori Rişton kosa-piyolalari toʻplami (4 dona piyola + patnis).',
-      unit: 'toʻplam (5 buyum)',
-      prepTime: 'Bugun joʻnatiladi',
-      badge: 'Yogʻoç oʻymakorlik',
+      title: 'Yonğoq daraxtidan çoy patnisi va piyolalar',
+      description: 'Farğona yonğoğidan öyib yasalgan yoğoç patnis va zangori Rişton kosa-piyolalari töplami (4 dona piyola + patnis).',
+      unit: 'töplam (5 buyum)',
+      prepTime: 'Bugun jönatiladi',
+      badge: 'Yoğoç öymakorlik',
     },
     'uz-Cyrl': {
       title: 'Ёнғоқ дарахтидан чой патниси ва пиёлалар',
@@ -307,7 +307,7 @@ export function localizeCategoryName(categoryId: string, locale: Locale, fallbac
       en: 'Honey & Sweets',
     },
     crafts: {
-      'uz-Latn': 'Qoʻl mehnati',
+      'uz-Latn': 'Qöl mehnati',
       'uz-Cyrl': 'Қўл меҳнати',
       ru: 'Ремесленные изделия',
       en: 'Handmade Crafts',
