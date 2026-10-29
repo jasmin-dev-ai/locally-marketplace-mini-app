@@ -123,24 +123,24 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: '#FAF6F0' }}
+      style={{ backgroundColor: '#FFFDF9' }}
     >
       {/* Header */}
       <div
-        className="sticky top-0 z-10 px-4 pt-4 pb-3 flex items-center gap-3 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#EFE9E1]"
+        className="sticky top-0 z-10 px-4 pt-4 pb-3 flex items-center gap-3 bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#EFE9E1]"
       >
         <button
           onClick={onClose}
-          className="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-90 bg-[#EFE9E1] text-[#3B2219]"
+          className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-all active:scale-90 bg-[#EFE9E1] text-[#2D231E]"
           aria-label={t.common.back}
         >
-          <ArrowLeft className="w-4 h-4 text-[#3B2219]" />
+          <ArrowLeft className="w-4 h-4 text-[#2D231E]" />
         </button>
         <div>
-          <h1 className="text-base font-bold leading-tight text-[#3B2219] font-['Manrope']">
+          <h1 className="text-base font-bold leading-tight text-[#2D231E] font-['Manrope']">
             {t.tracking.pageTitle}
           </h1>
-          <p className="text-xs text-[#8B6E5A]">
+          <p className="text-xs text-[#7A6B63]">
             #{order.orderNumber}
           </p>
         </div>
@@ -208,9 +208,9 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
 
         {/* Status Stepper */}
         <div
-          className="mx-4 mt-4 rounded-2xl p-5 bg-white border border-[#EFE9E1]"
+          className="mx-4 mt-4 rounded-2xl p-5 bg-white border border-[#EFE9E1] shadow-sm"
         >
-          <h2 className="text-sm font-bold mb-5 uppercase tracking-wider text-[#8B6E5A]">
+          <h2 className="text-sm font-bold mb-5 uppercase tracking-wider text-[#7A6B63]">
             {t.tracking.pageTitle}
           </h2>
 
@@ -242,7 +242,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                         backgroundColor: isDone
                           ? '#C85A32'
                           : isActive
-                          ? '#FAF6F0'
+                          ? '#FFFDF9'
                           : '#EFE9E1',
                         border: isActive ? '2.5px solid #C85A32' : 'none',
                         boxShadow: isActive ? '0 0 0 4px rgba(200,90,50,0.15)' : 'none',
@@ -260,12 +260,12 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                   <div className="flex-1 pb-10">
                     <p
                       className="text-sm font-semibold leading-tight transition-all"
-                      style={{ color: isDone || isActive ? '#3B2219' : '#C4B5AC' }}
+                      style={{ color: isDone || isActive ? '#2D231E' : '#C4B5AC' }}
                     >
                       {stepTrans.label}
                       {isActive && (
                         <span
-                          className="ml-2 text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#C85A32] text-white uppercase"
+                          className="ml-2 text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#C85A32] text-white uppercase tracking-wider"
                         >
                           Active
                         </span>
@@ -273,7 +273,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                     </p>
                     <p
                       className="text-xs mt-0.5"
-                      style={{ color: isPending ? '#C4B5AC' : '#8B6E5A' }}
+                      style={{ color: isPending ? '#C4B5AC' : '#7A6B63' }}
                     >
                       {stepTrans.description}
                     </p>
@@ -291,15 +291,15 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
 
         {/* Order Items Summary */}
         <div
-          className="mx-4 mt-4 rounded-2xl overflow-hidden bg-white border border-[#EFE9E1]"
+          className="mx-4 mt-4 rounded-2xl overflow-hidden bg-white border border-[#EFE9E1] shadow-sm"
         >
           <div
             className="px-5 py-3 flex items-center justify-between border-b border-[#EFE9E1]"
           >
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#8B6E5A]">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#7A6B63]">
               {t.cart.financialSummary}
             </h2>
-            <span className="text-xs text-[#8B6E5A]">
+            <span className="text-xs text-[#7A6B63]">
               {order.items.length} {t.common.itemsCount}
             </span>
           </div>
@@ -313,7 +313,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                   className="px-5 py-3 flex items-center gap-3 border-b border-[#EFE9E1]"
                 >
                   <div
-                    className="w-12 h-12 rounded-xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FAF6F0]"
+                    className="w-12 h-12 rounded-xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FFFDF9] border border-[#EFE9E1]"
                   >
                     {product.imageUrl ? (
                       <img
@@ -322,18 +322,18 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <ShoppingBag className="w-5 h-5 text-[#8C746A]" />
+                      <ShoppingBag className="w-5 h-5 text-[#7A6B63]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold truncate text-[#3B2219]">
+                    <p className="text-sm font-semibold truncate text-[#2D231E]">
                       {product.title}
                     </p>
-                    <p className="text-xs text-[#8B6E5A]">
+                    <p className="text-xs text-[#7A6B63]">
                       {product.seller.name} · ×{item.quantity}
                     </p>
                   </div>
-                  <p className="text-sm font-bold shrink-0 text-[#3B2219]">
+                  <p className="text-sm font-bold shrink-0 text-[#2D231E]">
                     {(product.price * item.quantity).toLocaleString()} {t.common.currency}
                   </p>
                 </div>
@@ -342,17 +342,17 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
           </div>
 
           {/* Totals */}
-          <div className="px-5 py-4 bg-[#FAF6F0]">
-            <div className="flex justify-between text-xs mb-1 text-[#8B6E5A]">
+          <div className="px-5 py-4 bg-[#FFFDF9]">
+            <div className="flex justify-between text-xs mb-1 text-[#7A6B63]">
               <span>{t.cart.subtotal}</span>
               <span>{order.subtotal.toLocaleString()} {t.common.currency}</span>
             </div>
-            <div className="flex justify-between text-xs mb-3 text-[#8B6E5A]">
+            <div className="flex justify-between text-xs mb-3 text-[#7A6B63]">
               <span>{t.cart.deliveryFee}</span>
               <span>{order.deliveryFee === 0 ? t.common.free : `${order.deliveryFee.toLocaleString()} ${t.common.currency}`}</span>
             </div>
             <div
-              className="flex justify-between text-sm font-bold pt-2 border-t border-[#EFE9E1] text-[#3B2219]"
+              className="flex justify-between text-sm font-bold pt-2 border-t border-[#EFE9E1] text-[#2D231E]"
             >
               <span>{t.cart.totalToPay}</span>
               <span>{order.totalAmount.toLocaleString()} {t.common.currency}</span>
@@ -362,29 +362,29 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
 
         {/* Delivery Info */}
         <div
-          className="mx-4 mt-4 rounded-2xl p-5 bg-white border border-[#EFE9E1]"
+          className="mx-4 mt-4 rounded-2xl p-5 bg-white border border-[#EFE9E1] shadow-sm"
         >
-          <h2 className="text-sm font-bold mb-3 uppercase tracking-wider text-[#8B6E5A]">
+          <h2 className="text-sm font-bold mb-3 uppercase tracking-wider text-[#7A6B63]">
             {t.cart.deliveryAddress}
           </h2>
           <div className="flex items-start gap-3">
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-[#FAF6F0] text-[#C85A32]"
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-[#FFFDF9] border border-[#EFE9E1] text-[#C85A32]"
             >
               <MapPin className="w-4 h-4 text-[#C85A32]" />
             </div>
             <div>
-              <p className="text-sm font-medium text-[#3B2219]">
+              <p className="text-sm font-medium text-[#2D231E]">
                 {order.deliveryAddress}
               </p>
               {order.deliveryTimeSlot && (
-                <p className="text-xs mt-0.5 text-[#8B6E5A] flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-[#8B6E5A]" />
+                <p className="text-xs mt-0.5 text-[#7A6B63] flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#7A6B63]" />
                   <span>{order.deliveryTimeSlot}</span>
                 </p>
               )}
-              <p className="text-xs mt-0.5 capitalize text-[#8B6E5A] flex items-center gap-1">
-                <CreditCard className="w-3 h-3 text-[#8B6E5A]" />
+              <p className="text-xs mt-0.5 capitalize text-[#7A6B63] flex items-center gap-1">
+                <CreditCard className="w-3 h-3 text-[#7A6B63]" />
                 <span>{order.paymentMethod}</span>
               </p>
             </div>
@@ -395,10 +395,10 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
         <div className="mx-4 mt-4">
           <button
             onClick={onClose}
-            className={`w-full py-4 rounded-2xl font-bold text-sm transition-all active:scale-95 ${
+            className={`w-full min-h-[48px] py-3.5 rounded-2xl font-bold text-sm transition-all duration-150 active:scale-95 ${
               isCompleted
                 ? 'bg-[#C85A32] text-white shadow-md'
-                : 'bg-[#EFE9E1] text-[#3B2219]'
+                : 'bg-[#EFE9E1] text-[#2D231E]'
             }`}
           >
             {isCompleted ? t.common.close : t.tracking.closeTracking}

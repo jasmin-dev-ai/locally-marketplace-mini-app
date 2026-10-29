@@ -78,7 +78,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   })
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] pb-28">
+    <div className="min-h-screen bg-[#FFFDF9] pb-28">
       {/* Safe Area Sticky Header */}
       <Header
         onLocationClick={() => triggerHaptic('light')}
@@ -88,7 +88,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       <main className="px-5 pt-3 space-y-5">
         {/* Clean Modern Headline */}
         <div>
-          <h2 className="text-2xl font-extrabold text-[#3B2219] font-['Manrope'] tracking-tight">
+          <h2 className="text-2xl font-extrabold text-[#2D231E] font-['Manrope'] tracking-tight">
             {t.home.heroHeadline}
           </h2>
         </div>
@@ -102,14 +102,14 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Hero Editorial Card */}
         {!searchQuery && (
-          <section className="relative h-[210px] rounded-[24px] overflow-hidden shadow-[0_10px_28px_rgba(59,34,25,0.08)] bg-[#3B2219]">
+          <section className="relative h-[210px] rounded-[24px] overflow-hidden shadow-sm bg-[#2D231E]">
             <img
               src="https://images.unsplash.com/photo-1790498879720-1faecf186f33?auto=format&fit=crop&w=900&q=85"
               alt="Artisan feast table"
               className="w-full h-full object-cover opacity-85"
             />
             {/* Rich gradient overlay for high contrast text */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#24140E]/90 via-[#24140E]/60 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1C1512]/90 via-[#1C1512]/60 to-transparent pointer-events-none" />
 
             <div className="absolute inset-0 p-5 flex flex-col justify-between text-white z-10">
               <div className="space-y-1.5 max-w-[220px]">
@@ -131,7 +131,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     triggerHaptic('medium')
                     setActiveTab('menu')
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[16px] bg-[#FFFDF9] text-[#933D1C] hover:bg-[#FAF6F0] active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.22)] font-['Manrope'] font-black text-xs cursor-pointer border border-[#FFFDF9]/80"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-[16px] bg-[#FFFDF9] text-[#2D231E] hover:bg-[#FFFDF9] active:scale-95 transition-all shadow-sm font-['Manrope'] font-black text-xs cursor-pointer border border-[#EFE9E1]"
                 >
                   <ShoppingBag className="w-4 h-4 text-[#C85A32] stroke-[2.4]" />
                   <span className="tracking-wide">{t.home.orderNow}</span>
@@ -144,7 +144,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Categories Bar */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#6F574E]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#7A6B63]">
               {t.catalog.allCategories}
             </span>
             {selectedCategory !== 'all' && (
@@ -154,7 +154,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   triggerHaptic('light')
                   setSelectedCategory('all')
                 }}
-                className="text-xs font-bold text-[#C85A32] hover:underline"
+                className="text-xs font-bold text-[#C85A32] hover:underline min-h-[44px] flex items-center"
               >
                 {t.home.resetFilters}
               </button>
@@ -171,7 +171,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {!searchQuery && selectedCategory === 'all' && (
           <section className="space-y-2.5">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
+              <h3 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
                 {t.home.featuredArtisans}
               </h3>
               <button
@@ -180,7 +180,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   triggerHaptic('light')
                   setActiveTab('menu')
                 }}
-                className="text-xs font-bold text-[#C85A32] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#C85A32] hover:underline flex items-center gap-1 min-h-[44px]"
               >
                 <span>{t.home.viewAll}</span>
                 <ArrowRight className="w-3 h-3" />
@@ -201,10 +201,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                     triggerHaptic('light')
                     setSearchQuery(artisan.name.split(' ')[0])
                   }}
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] min-w-[108px] text-center shadow-xs cursor-pointer active:scale-95 transition-transform"
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] min-w-[108px] text-center shadow-xs cursor-pointer active:scale-95 transition-transform"
                 >
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-full bg-[#3B2219] text-[#FFFDF9] flex items-center justify-center font-extrabold text-sm font-['Manrope'] shadow-xs border-2 border-[#FAF6F0]">
+                    <div className="w-12 h-12 rounded-full bg-[#2D231E] text-[#FFFDF9] flex items-center justify-center font-extrabold text-sm font-['Manrope'] shadow-xs border-2 border-[#FFFDF9]">
                       {artisan.initials}
                     </div>
                     {artisan.verified && (
@@ -213,10 +213,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] font-bold text-[#3B2219] truncate max-w-[90px] leading-tight">
+                  <span className="text-[11px] font-bold text-[#2D231E] truncate max-w-[90px] leading-tight">
                     {artisan.name}
                   </span>
-                  <div className="flex items-center gap-0.5 text-[9px] font-bold text-[#6F574E]">
+                  <div className="flex items-center gap-0.5 text-[9px] font-bold text-[#7A6B63]">
                     <Star className="w-2.5 h-2.5 fill-[#E5A118] text-[#E5A118]" />
                     <span>{artisan.rating}</span>
                   </div>
@@ -229,23 +229,23 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Curated Product Grid */}
         <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <h3 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {searchQuery ? `"${searchQuery}"` : t.home.popularPicks}
             </h3>
-            <span className="text-xs font-semibold text-[#6F574E]">
+            <span className="text-xs font-semibold text-[#7A6B63]">
               {filteredProducts.length} {t.common.itemsCount}
             </span>
           </div>
 
           {filteredProducts.length === 0 ? (
-            <div className="py-12 text-center rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5]">
-              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#6F574E] flex items-center justify-center mx-auto mb-2">
+            <div className="py-12 text-center rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1]">
+              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#7A6B63] flex items-center justify-center mx-auto mb-2">
                 <Search className="w-5 h-5" />
               </div>
-              <h4 className="text-sm font-bold text-[#3B2219]">
+              <h4 className="text-sm font-bold text-[#2D231E]">
                 {t.home.noProductsFound}
               </h4>
-              <p className="text-xs text-[#6F574E] mt-1 max-w-[200px] mx-auto">
+              <p className="text-xs text-[#7A6B63] mt-1 max-w-[200px] mx-auto">
                 {t.home.searchPlaceholder}
               </p>
               <button
@@ -255,7 +255,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   setSearchQuery('')
                   setSelectedCategory('all')
                 }}
-                className="mt-4 px-4 py-2 rounded-[12px] bg-[#EFE9E1] text-[#3B2219] text-xs font-bold hover:bg-[#E6DED5]"
+                className="mt-4 px-4 py-2.5 min-h-[44px] rounded-[14px] bg-[#EFE9E1] text-[#2D231E] text-xs font-bold hover:bg-[#E2D8CD] active:scale-95 transition-all"
               >
                 {t.home.resetFilters}
               </button>
@@ -283,7 +283,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               triggerHaptic('medium')
               setIsCartDrawerOpen(true)
             }}
-            className="w-full flex items-center justify-between px-4 py-3 rounded-[20px] bg-[#3B2219] text-white shadow-[0_12px_32px_rgba(59,34,25,0.32)] border border-[#C85A32]/30 active:scale-98 transition-transform"
+            className="w-full min-h-[48px] flex items-center justify-between px-4 py-3 rounded-[20px] bg-[#2D231E] text-white shadow-[0_10px_28px_rgba(45,35,30,0.24)] border border-[#C85A32]/30 active:scale-95 transition-transform"
           >
             <div className="flex items-center gap-3">
               <span className="w-7 h-7 rounded-full bg-[#C85A32] text-white text-xs font-extrabold flex items-center justify-center">

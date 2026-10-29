@@ -35,14 +35,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 px-4 text-center bg-[#FFFDF9] border border-[#E6DED5] rounded-[24px] my-4">
-        <div className="w-14 h-14 rounded-full bg-[#EFE9E1] text-[#6F574E] flex items-center justify-center mb-3">
-          <Search className="w-6 h-6 text-[#6F574E]" />
+      <div className="flex flex-col items-center justify-center py-12 px-4 text-center bg-[#FFFDF9] border border-[#EFE9E1] rounded-[24px] my-4 shadow-sm">
+        <div className="w-14 h-14 rounded-full bg-[#EFE9E1] text-[#7A6B63] flex items-center justify-center mb-3">
+          <Search className="w-6 h-6 text-[#7A6B63]" />
         </div>
-        <h4 className="text-sm font-bold text-[#3B2219] font-['Manrope'] mb-1">
+        <h4 className="text-sm font-bold text-[#2D231E] font-['Manrope'] mb-1">
           No matches found
         </h4>
-        <p className="text-xs text-[#6F574E] max-w-[240px] leading-relaxed">
+        <p className="text-xs text-[#7A6B63] max-w-[240px] leading-relaxed">
           {emptyMessage}
         </p>
       </div>

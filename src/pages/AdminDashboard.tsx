@@ -35,6 +35,8 @@ import {
   TrendingUp,
   Plus,
   X,
+  MapPin,
+  MessageSquare,
 } from 'lucide-react'
 
 interface AdminDashboardProps {
@@ -189,14 +191,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         )
       case 'cancelled':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#9B887F] border border-[#E6DED5]">
-            <XCircle className="w-3 h-3 text-[#9B887F]" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#7A6B63] border border-[#EFE9E1]">
+            <XCircle className="w-3 h-3 text-[#7A6B63]" />
             <span>{t.admin.orderStatuses.cancelled}</span>
           </span>
         )
       default:
         return (
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#EFE9E1] text-[#6F574E]">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#EFE9E1] text-[#7A6B63]">
             {s}
           </span>
         )
@@ -224,8 +226,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         )
       case 'rejected':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#9B887F] border border-[#E6DED5]">
-            <XCircle className="w-3 h-3 text-[#9B887F]" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#7A6B63] border border-[#EFE9E1]">
+            <XCircle className="w-3 h-3 text-[#7A6B63]" />
             <span>{t.admin.applicationStatuses.rejected}</span>
           </span>
         )
@@ -237,34 +239,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   // ───────────────────────────────────────────────────────────────────────────
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-[#FAF6F0] flex flex-col justify-between p-6">
+      <div className="min-h-screen bg-[#FFFDF9] flex flex-col justify-between p-6">
         <div className="pt-12 text-center space-y-4">
           <div className="w-20 h-20 mx-auto rounded-3xl bg-[#C85A32]/10 border-2 border-[#C85A32]/30 flex items-center justify-center text-4xl shadow-sm">
             <ShieldCheck className="w-10 h-10 text-[#C85A32]" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-2xl font-black text-[#3B2219] font-['Manrope']">
+            <h1 className="text-2xl font-black text-[#2D231E] font-['Manrope']">
               {t.admin.accessDeniedTitle}
             </h1>
-            <p className="text-xs text-[#6F574E] max-w-xs mx-auto leading-relaxed">
+            <p className="text-xs text-[#7A6B63] max-w-xs mx-auto leading-relaxed">
               {t.admin.accessDeniedDesc}
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#E6DED5] text-left text-xs space-y-2 max-w-sm mx-auto shadow-xs">
-            <div className="flex items-center justify-between text-[#6F574E]">
+          <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#EFE9E1] text-left text-xs space-y-2 max-w-sm mx-auto shadow-sm">
+            <div className="flex items-center justify-between text-[#7A6B63]">
               <span>{t.admin.security.telegramUser}:</span>
-              <span className="font-bold text-[#3B2219]">
+              <span className="font-bold text-[#2D231E]">
                 {tgUser?.username ? `@${tgUser.username}` : (tgUser?.first_name || 'Anonymous')}
               </span>
             </div>
-            <div className="flex items-center justify-between text-[#6F574E]">
+            <div className="flex items-center justify-between text-[#7A6B63]">
               <span>{t.admin.security.telegramId}:</span>
-              <span className="font-mono font-bold text-[#3B2219]">
+              <span className="font-mono font-bold text-[#2D231E]">
                 {tgUser?.id || t.admin.security.browserPreview}
               </span>
             </div>
-            <div className="pt-2 border-t border-[#EFE9E1] text-[11px] text-[#9B887F] flex items-center gap-1.5">
+            <div className="pt-2 border-t border-[#EFE9E1] text-[11px] text-[#7A6B63] flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
               <span>{t.admin.security.whitelistNotice}</span>
             </div>
@@ -280,7 +282,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
           <button
             type="button"
             onClick={handleDevOverrideToggle}
-            className="w-full py-2.5 text-center text-[11px] font-bold text-[#9B887F] hover:text-[#C85A32] transition-colors"
+            className="w-full min-h-[44px] py-2.5 text-center text-[11px] font-bold text-[#7A6B63] hover:text-[#C85A32] transition-colors active:scale-95"
           >
             {t.admin.security.developerMode}: {devOverride ? t.admin.security.devOverrideActive : t.admin.security.toggleDevMode}
           </button>
@@ -304,30 +306,30 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   })
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] text-[#3B2219] pb-24 animate-in fade-in duration-200">
+    <div className="min-h-screen bg-[#FFFDF9] text-[#2D231E] pb-24 animate-in fade-in duration-200">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-4 left-4 right-4 z-50 p-3 rounded-2xl bg-[#3B2219] text-[#FFFDF9] text-xs font-bold text-center shadow-lg border border-[#C85A32]/40 animate-in slide-in-from-top-2">
+        <div className="fixed top-4 left-4 right-4 z-50 p-3 rounded-2xl bg-[#2D231E] text-[#FFFDF9] text-xs font-bold text-center shadow-lg border border-[#C85A32]/40 animate-in slide-in-from-top-2">
           {toastMessage}
         </div>
       )}
 
       {/* Admin Top Header */}
-      <header className="sticky top-0 z-30 bg-[#FAF6F0]/95 backdrop-blur-md px-5 py-4 border-b border-[#E6DED5] flex items-center justify-between">
+      <header className="sticky top-0 z-30 bg-[#FFFDF9]/95 backdrop-blur-md px-5 py-4 border-b border-[#EFE9E1] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-[#C85A32] text-white flex items-center justify-center text-lg font-bold shadow-xs">
             <ShieldCheck className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base font-extrabold font-['Manrope'] leading-tight">
+              <h1 className="text-base font-extrabold font-['Manrope'] leading-tight text-[#2D231E]">
                 {t.admin.panelTitle}
               </h1>
               <Badge variant="accent" size="sm">
                 Admin
               </Badge>
             </div>
-            <p className="text-[11px] font-medium text-[#6F574E]">
+            <p className="text-[11px] font-medium text-[#7A6B63]">
               {tgUser?.username ? `@${tgUser.username}` : (tgUser?.first_name || 'Admin')} · {t.admin.security.authorizedAs}
             </p>
           </div>
@@ -339,7 +341,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             haptic.selection()
             onClose()
           }}
-          className="w-9 h-9 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] flex items-center justify-center transition-colors"
+          className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#EFE9E1] hover:bg-[#EFE9E1] text-[#2D231E] flex items-center justify-center transition-all active:scale-95"
           aria-label={t.common.close}
         >
           <X className="w-4 h-4" />
@@ -350,18 +352,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
       <main className="px-5 pt-4 space-y-4">
         {/* Analytics Highlights Row */}
         <div className="grid grid-cols-2 gap-2.5">
-          <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs">
-            <span className="text-[10px] font-bold uppercase text-[#6F574E] flex items-center gap-1.5">
+          <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-[#7A6B63] flex items-center gap-1.5">
               <TrendingUp className="w-3.5 h-3.5 text-[#C85A32]" />
               <span>{t.admin.metrics.totalRevenue}</span>
             </span>
-            <span className="text-base font-black text-[#3B2219] font-['Manrope'] mt-1 block">
+            <span className="text-base font-black text-[#2D231E] font-['Manrope'] mt-1 block">
               {metrics.totalRevenue.toLocaleString()} {t.common.currency}
             </span>
           </div>
 
-          <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs">
-            <span className="text-[10px] font-bold uppercase text-[#6F574E] flex items-center gap-1.5">
+          <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm">
+            <span className="text-[10px] font-bold uppercase text-[#7A6B63] flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-[#C85A32]" />
               <span>{t.admin.metrics.activeOrders}</span>
             </span>
@@ -369,7 +371,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <span className="text-base font-black text-[#C85A32] font-['Manrope']">
                 {metrics.activeOrdersCount}
               </span>
-              <span className="text-[11px] text-[#6F574E]">
+              <span className="text-[11px] text-[#7A6B63]">
                 / {metrics.completedOrdersCount} {t.admin.metrics.completedCountSuffix}
               </span>
             </div>
@@ -384,10 +386,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('orders')
             }}
-            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all active:scale-95 ${
               activeTab === 'orders'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
             <Package className="w-3.5 h-3.5" />
@@ -399,10 +401,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('products')
             }}
-            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all active:scale-95 ${
               activeTab === 'products'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
             <Tag className="w-3.5 h-3.5" />
@@ -414,10 +416,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('applications')
             }}
-            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all active:scale-95 ${
               activeTab === 'applications'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
             <Store className="w-3.5 h-3.5" />
@@ -434,10 +436,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('analytics')
             }}
-            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all active:scale-95 ${
               activeTab === 'analytics'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
@@ -455,10 +457,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setOrderFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   orderFilter === 'all'
-                    ? 'bg-[#3B2219] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#2D231E] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.orders.filterAll} ({orders.length})
@@ -466,10 +468,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setOrderFilter('active')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   orderFilter === 'active'
-                    ? 'bg-[#C85A32] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#C85A32] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.orders.filterActive} ({metrics.activeOrdersCount})
@@ -477,10 +479,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setOrderFilter('completed')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   orderFilter === 'completed'
-                    ? 'bg-[#2E7D32] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#2E7D32] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.orders.filterCompleted} ({metrics.completedOrdersCount})
@@ -493,14 +495,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 return (
                   <div
                     key={order.id}
-                    className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3"
+                    className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm space-y-3"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                        <span className="text-xs font-black text-[#2D231E] font-['Manrope']">
                           #{order.orderNumber || order.id}
                         </span>
-                        <span className="text-[10px] text-[#9B887F] block">
+                        <span className="text-[10px] text-[#7A6B63] block">
                           {order.deliveryTimeSlot || t.admin.orders.standardDelivery}
                         </span>
                       </div>
@@ -508,15 +510,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     </div>
 
                     {/* Order Items */}
-                    <div className="bg-[#FAF6F0] p-2.5 rounded-[14px] text-xs space-y-1">
+                    <div className="bg-[#FFFDF9] border border-[#EFE9E1] p-2.5 rounded-[14px] text-xs space-y-1">
                       {order.items.map((it, idx) => {
                         const loc = getLocalizedProduct(it.product)
                         return (
-                          <div key={idx} className="flex justify-between text-[#6F574E]">
+                          <div key={idx} className="flex justify-between text-[#7A6B63]">
                             <span className="font-semibold truncate max-w-[200px]">
                               {it.quantity}× {loc.name}
                             </span>
-                            <span className="font-mono text-[#3B2219]">
+                            <span className="font-mono text-[#2D231E]">
                               {(it.product.price * it.quantity).toLocaleString()} {t.common.currency}
                             </span>
                           </div>
@@ -525,13 +527,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     </div>
 
                     {/* Order Details & Address */}
-                    <div className="text-[11px] text-[#6F574E] space-y-0.5">
-                      <p>
-                        📍 <span className="font-medium">{order.deliveryAddress}</span>
+                    <div className="text-[11px] text-[#7A6B63] space-y-1">
+                      <p className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
+                        <span className="font-medium text-[#2D231E]">{order.deliveryAddress}</span>
                       </p>
                       {order.customerNotes && (
-                        <p className="text-[#C85A32]">
-                          💬 <i>"{order.customerNotes}"</i>
+                        <p className="text-[#C85A32] flex items-center gap-1.5">
+                          <MessageSquare className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
+                          <i>"{order.customerNotes}"</i>
                         </p>
                       )}
                     </div>
@@ -539,10 +543,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     {/* Total & Action Bar */}
                     <div className="pt-2 border-t border-[#EFE9E1] flex items-center justify-between">
                       <div>
-                        <span className="text-[10px] text-[#9B887F] block">
+                        <span className="text-[10px] text-[#7A6B63] block">
                           {t.admin.orders.total}
                         </span>
-                        <span className="text-sm font-black text-[#3B2219] font-['Manrope']">
+                        <span className="text-sm font-black text-[#2D231E] font-['Manrope']">
                           {order.totalAmount.toLocaleString()} {t.common.currency}
                         </span>
                       </div>
@@ -553,7 +557,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'preparing')}
-                            className="px-3 py-1.5 rounded-full bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+                            className="min-h-[40px] px-3.5 py-2 rounded-full bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 active:scale-95"
                           >
                             <Clock className="w-3.5 h-3.5" />
                             <span>{t.admin.orders.markPreparing}</span>
@@ -563,7 +567,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'delivering')}
-                            className="px-3 py-1.5 rounded-full bg-[#8C4A28] hover:bg-[#723B1E] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+                            className="min-h-[40px] px-3.5 py-2 rounded-full bg-[#8C4A28] hover:bg-[#723B1E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 active:scale-95"
                           >
                             <Truck className="w-3.5 h-3.5" />
                             <span>{t.admin.orders.markDelivering}</span>
@@ -573,7 +577,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'completed')}
-                            className="px-3.5 py-1.5 rounded-full bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
+                            className="min-h-[40px] px-3.5 py-2 rounded-full bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 active:scale-95"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>{t.admin.orders.markDelivered}</span>
@@ -583,10 +587,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'cancelled')}
-                            className="w-7 h-7 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#9B887F] hover:text-[#C85A32] flex items-center justify-center transition-colors"
+                            className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-[#EFE9E1] hover:bg-[#EFE9E1] text-[#7A6B63] hover:text-[#C85A32] flex items-center justify-center transition-all active:scale-95"
                             title={t.admin.orders.cancelOrder}
                           >
-                            <X className="w-3.5 h-3.5" />
+                            <X className="w-4 h-4" />
                           </button>
                         )}
                       </div>
@@ -605,7 +609,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
           <section className="space-y-3 animate-in fade-in duration-200">
             {/* Top Action */}
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#6F574E]">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#7A6B63]">
                 {t.admin.products.title} ({products.length})
               </h3>
               <button
@@ -614,7 +618,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   haptic.selection()
                   setIsAddProductOpen(!isAddProductOpen)
                 }}
-                className="px-3 py-1.5 rounded-full bg-[#C85A32] text-white text-xs font-bold hover:bg-[#B34E29] transition-colors flex items-center gap-1 shadow-xs"
+                className="min-h-[40px] px-3.5 py-2 rounded-full bg-[#C85A32] text-white text-xs font-bold hover:bg-[#B34E29] transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
               >
                 <span>{isAddProductOpen ? '✕' : '+'}</span>
                 <span>{t.admin.products.addNew}</span>
@@ -627,13 +631,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 onSubmit={handleAddProductSubmit}
                 className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#C85A32]/40 shadow-sm space-y-3 animate-in fade-in"
               >
-                <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+                <h4 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] flex items-center gap-1.5">
                   <Plus className="w-3.5 h-3.5 text-[#C85A32]" />
                   <span>{t.admin.products.addNew}</span>
                 </h4>
 
                 <div>
-                  <label className="text-[10px] font-bold text-[#6F574E] block mb-1">
+                  <label className="text-[10px] font-bold text-[#7A6B63] block mb-1">
                     {t.admin.products.formTitle}
                   </label>
                   <input
@@ -642,13 +646,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder={t.admin.products.formTitlePlaceholder}
-                    className="w-full px-3 py-2 rounded-[12px] bg-[#FAF6F0] border border-[#E6DED5] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
+                    className="w-full min-h-[44px] px-3.5 py-2.5 rounded-[12px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="text-[10px] font-bold text-[#6F574E] block mb-1">
+                    <label className="text-[10px] font-bold text-[#7A6B63] block mb-1">
                       {t.admin.products.formPrice}
                     </label>
                     <input
@@ -657,17 +661,17 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                       value={newPrice}
                       onChange={(e) => setNewPrice(e.target.value)}
                       placeholder="45000"
-                      className="w-full px-3 py-2 rounded-[12px] bg-[#FAF6F0] border border-[#E6DED5] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
+                      className="w-full min-h-[44px] px-3.5 py-2.5 rounded-[12px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-[#6F574E] block mb-1">
+                    <label className="text-[10px] font-bold text-[#7A6B63] block mb-1">
                       {t.admin.products.formCategory}
                     </label>
                     <select
                       value={newCategory}
                       onChange={(e) => setNewCategory(e.target.value as any)}
-                      className="w-full px-2 py-2 rounded-[12px] bg-[#FAF6F0] border border-[#E6DED5] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
+                      className="w-full min-h-[44px] px-2.5 py-2.5 rounded-[12px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
                     >
                       <option value="bakery">{t.admin.categories.bakery}</option>
                       <option value="national">{t.admin.categories.national}</option>
@@ -678,7 +682,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   </div>
                 </div>
 
-                <Button type="submit" variant="accent" size="sm" fullWidth>
+                <Button type="submit" variant="accent" size="md" fullWidth>
                   {t.common.save}
                 </Button>
               </form>
@@ -692,23 +696,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 return (
                   <div
                     key={p.id}
-                    className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs flex items-center justify-between gap-3"
+                    className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm flex items-center justify-between gap-3"
                   >
                     <img
                       src={p.imageUrl}
                       alt={loc.title}
-                      className="w-12 h-12 rounded-[14px] object-cover border border-[#E6DED5]"
+                      className="w-12 h-12 rounded-[14px] object-cover border border-[#EFE9E1]"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
-                        <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] truncate">
+                        <h4 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] truncate">
                           {loc.title}
                         </h4>
                       </div>
-                      <p className="text-[10px] text-[#6F574E] truncate">
+                      <p className="text-[10px] text-[#7A6B63] truncate">
                         {p.seller.name} · {categoryLabel}
                       </p>
-                      <span className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
+                      <span className="text-xs font-extrabold text-[#2D231E] font-['Manrope']">
                         {p.price.toLocaleString()} {t.common.currency}
                       </span>
                     </div>
@@ -717,10 +721,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     <button
                       type="button"
                       onClick={() => handleToggleStock(p.id)}
-                      className={`px-3 py-1.5 rounded-full text-[11px] font-extrabold transition-all ${
+                      className={`min-h-[40px] px-3.5 py-2 rounded-full text-[11px] font-extrabold transition-all active:scale-95 ${
                         p.inStock
                           ? 'bg-[#2E7D32]/10 text-[#2E7D32] border border-[#2E7D32]/30'
-                          : 'bg-[#9B887F]/10 text-[#9B887F] border border-[#9B887F]/30'
+                          : 'bg-[#7A6B63]/10 text-[#7A6B63] border border-[#7A6B63]/30'
                       }`}
                     >
                       {p.inStock ? `● ${t.admin.products.inStock}` : `○ ${t.admin.products.outOfStock}`}
@@ -742,10 +746,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setAppFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   appFilter === 'all'
-                    ? 'bg-[#3B2219] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#2D231E] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.applications.filterAll} ({applications.length})
@@ -753,10 +757,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setAppFilter('pending')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   appFilter === 'pending'
-                    ? 'bg-[#C85A32] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#C85A32] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.applications.filterPending} ({metrics.pendingApplicationsCount})
@@ -764,10 +768,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={() => setAppFilter('approved')}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                className={`min-h-[40px] px-3.5 py-2 rounded-full text-xs font-bold transition-all active:scale-95 ${
                   appFilter === 'approved'
-                    ? 'bg-[#2E7D32] text-white shadow-xs'
-                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                    ? 'bg-[#2E7D32] text-white shadow-sm'
+                    : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1]'
                 }`}
               >
                 {t.admin.applications.filterApproved}
@@ -781,58 +785,58 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 .map((app) => (
                   <div
                     key={app.id}
-                    className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3"
+                    className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm space-y-3"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                        <span className="text-xs font-black text-[#2D231E] font-['Manrope']">
                           #{app.id}
                         </span>
-                        <h4 className="text-sm font-extrabold text-[#3B2219]">
+                        <h4 className="text-sm font-extrabold text-[#2D231E]">
                           {app.shopName}
                         </h4>
                       </div>
                       {getAppStatusBadge(app.status)}
                     </div>
 
-                    <div className="bg-[#FAF6F0] p-2.5 rounded-[14px] text-xs space-y-1.5">
-                      <div className="flex items-center justify-between text-[#6F574E]">
+                    <div className="bg-[#FFFDF9] border border-[#EFE9E1] p-2.5 rounded-[14px] text-xs space-y-1.5">
+                      <div className="flex items-center justify-between text-[#7A6B63]">
                         <span className="flex items-center gap-1">
                           <User className="w-3 h-3 text-[#C85A32]" />
                           <span>{t.admin.applications.artisan}:</span>
                         </span>
-                        <span className="font-bold text-[#3B2219]">
+                        <span className="font-bold text-[#2D231E]">
                           {app.ownerName} {app.telegramUsername ? `(@${app.telegramUsername})` : ''}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between text-[#6F574E]">
+                      <div className="flex items-center justify-between text-[#7A6B63]">
                         <span className="flex items-center gap-1">
                           <Phone className="w-3 h-3 text-[#C85A32]" />
                           <span>{t.admin.applications.contact}:</span>
                         </span>
-                        <span className="font-mono font-bold text-[#3B2219]">{app.phone}</span>
+                        <span className="font-mono font-bold text-[#2D231E]">{app.phone}</span>
                       </div>
-                      <div className="flex items-center justify-between text-[#6F574E]">
+                      <div className="flex items-center justify-between text-[#7A6B63]">
                         <span className="flex items-center gap-1">
                           <ShieldCheck className="w-3 h-3 text-[#C85A32]" />
                           <span>{t.admin.applications.status}:</span>
                         </span>
-                        <span className="font-bold text-[#3B2219]">{app.legalStatusLabel}</span>
+                        <span className="font-bold text-[#2D231E]">{app.legalStatusLabel}</span>
                       </div>
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-bold uppercase text-[#9B887F] block mb-0.5">
+                      <span className="text-[10px] font-bold uppercase text-[#7A6B63] block mb-0.5">
                         {t.admin.applications.description}
                       </span>
-                      <p className="text-xs text-[#3B2219] leading-relaxed italic">
+                      <p className="text-xs text-[#2D231E] leading-relaxed italic">
                         "{app.description}"
                       </p>
                     </div>
 
                     {/* Action Bar */}
                     <div className="pt-2 border-t border-[#EFE9E1] flex items-center justify-between">
-                      <span className="text-[10px] text-[#9B887F]">
+                      <span className="text-[10px] text-[#7A6B63]">
                         {new Date(app.createdAt).toLocaleDateString()}
                       </span>
 
@@ -842,14 +846,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                             <button
                               type="button"
                               onClick={() => handleRejectApplication(app.id)}
-                              className="px-3 py-1.5 rounded-[12px] bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#6F574E] text-xs font-bold transition-colors"
+                              className="min-h-[40px] px-3.5 py-2 rounded-[12px] bg-[#EFE9E1] hover:bg-[#EFE9E1] text-[#7A6B63] text-xs font-bold transition-all active:scale-95"
                             >
                               {t.admin.applications.reject}
                             </button>
                             <button
                               type="button"
                               onClick={() => handleApproveApplication(app.id)}
-                              className="px-3.5 py-1.5 rounded-[12px] bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-colors shadow-xs"
+                              className="min-h-[40px] px-4 py-2 rounded-[12px] bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-all shadow-sm active:scale-95"
                             >
                               {t.admin.applications.approve}
                             </button>
@@ -862,8 +866,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           </span>
                         )}
                         {app.status === 'rejected' && (
-                          <span className="text-xs font-bold text-[#9B887F] flex items-center gap-1">
-                            <XCircle className="w-4 h-4 text-[#9B887F]" />
+                          <span className="text-xs font-bold text-[#7A6B63] flex items-center gap-1">
+                            <XCircle className="w-4 h-4 text-[#7A6B63]" />
                             <span>{t.admin.applications.rejectedStatus}</span>
                           </span>
                         )}
@@ -881,32 +885,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         {activeTab === 'analytics' && (
           <section className="space-y-4 animate-in fade-in duration-200">
             {/* Extended Analytics Cards */}
-            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
-              <h3 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-2">
+            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm space-y-3">
+              <h3 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-[#C85A32]" />
                 <span>{t.admin.metrics.overviewTitle}</span>
               </h3>
 
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">{t.admin.metrics.grossMerchandiseValue}:</span>
-                  <span className="font-extrabold text-[#3B2219]">
+                  <span className="text-[#7A6B63]">{t.admin.metrics.grossMerchandiseValue}:</span>
+                  <span className="font-extrabold text-[#2D231E]">
                     {metrics.totalRevenue.toLocaleString()} {t.common.currency}
                   </span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">{t.admin.metrics.totalProcessedOrders}:</span>
-                  <span className="font-extrabold text-[#3B2219]">{orders.length} ta</span>
+                  <span className="text-[#7A6B63]">{t.admin.metrics.totalProcessedOrders}:</span>
+                  <span className="font-extrabold text-[#2D231E]">{orders.length} ta</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">{t.admin.metrics.activeDeliveryQueue}:</span>
+                  <span className="text-[#7A6B63]">{t.admin.metrics.activeDeliveryQueue}:</span>
                   <span className="font-extrabold text-[#C85A32]">
                     {metrics.activeOrdersCount} ta
                   </span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">{t.admin.metrics.verifiedLocalArtisans}:</span>
-                  <span className="font-extrabold text-[#3B2219]">
+                  <span className="text-[#7A6B63]">{t.admin.metrics.verifiedLocalArtisans}:</span>
+                  <span className="font-extrabold text-[#2D231E]">
                     {metrics.registeredMakersCount} ta
                   </span>
                 </div>
@@ -914,25 +918,25 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             </div>
 
             {/* Access & Security Whitelist Box */}
-            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
-              <h3 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm space-y-3">
+              <h3 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-[#2E7D32]" />
                 <span>{t.admin.security.accessControlTitle}</span>
               </h3>
-              <p className="text-[11px] text-[#6F574E] leading-relaxed">
+              <p className="text-[11px] text-[#7A6B63] leading-relaxed">
                 {t.admin.security.whitelistNotice}
               </p>
 
-              <div className="p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#E6DED5] text-xs space-y-2 text-[#6F574E]">
+              <div className="p-3.5 rounded-2xl bg-[#FFFDF9] border border-[#EFE9E1] text-xs space-y-2 text-[#7A6B63]">
                 <div className="flex items-center justify-between">
                   <span>{t.admin.security.currentAdmin}:</span>
-                  <span className="font-bold text-[#3B2219]">
+                  <span className="font-bold text-[#2D231E]">
                     @{tgUser?.username || 'admin'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>{t.admin.security.telegramId}:</span>
-                  <span className="font-mono font-bold text-[#3B2219]">
+                  <span className="font-mono font-bold text-[#2D231E]">
                     {tgUser?.id || '8850768299'}
                   </span>
                 </div>
@@ -947,7 +951,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               <button
                 type="button"
                 onClick={handleDevOverrideToggle}
-                className="w-full mt-2 py-2.5 rounded-xl bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] text-xs font-bold transition-colors"
+                className="w-full min-h-[44px] mt-2 py-2.5 rounded-xl bg-[#EFE9E1] hover:bg-[#EFE9E1] text-[#2D231E] text-xs font-bold transition-all active:scale-95"
               >
                 {t.admin.security.toggleDevMode} ({devOverride ? t.admin.security.devOverrideActive : t.admin.security.devOverrideOff})
               </button>

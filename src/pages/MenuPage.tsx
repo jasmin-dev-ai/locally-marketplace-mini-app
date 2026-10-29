@@ -96,7 +96,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
   })
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] pb-28">
+    <div className="min-h-screen bg-[#FFFDF9] pb-28">
       <Header
         title={t.header.artisanCatalog}
         subtitle={t.header.catalogSubtitle}
@@ -131,10 +131,10 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
                     triggerHaptic('light')
                     setActiveTag(tag.key)
                   }}
-                  className={`text-[11px] font-bold px-2.5 py-1 rounded-[10px] capitalize transition-colors ${
+                  className={`min-h-[40px] px-3.5 py-2 text-xs font-bold rounded-[12px] capitalize transition-all active:scale-95 ${
                     isSelected
-                      ? 'bg-[#3B2219] text-white'
-                      : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                      ? 'bg-[#2D231E] text-white shadow-xs'
+                      : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1] hover:bg-[#EFE9E1]/50'
                   }`}
                 >
                   {tag.label}
@@ -151,13 +151,13 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
                 triggerHaptic('light')
                 setIsSortOpen((prev) => !prev)
               }}
-              className="flex items-center gap-1.5 text-[11px] font-bold bg-[#FFFDF9] border border-[#E6DED5] rounded-[10px] px-2.5 py-1 text-[#3B2219] shadow-2xs hover:border-[#C85A32]/40 transition-colors"
+              className="flex items-center gap-1.5 min-h-[40px] px-3 py-2 text-xs font-bold bg-[#FFFDF9] border border-[#EFE9E1] rounded-[12px] text-[#2D231E] shadow-xs hover:border-[#C85A32]/40 active:scale-95 transition-all"
             >
-              <ArrowUpDown className="w-3 h-3 text-[#C85A32]" />
+              <ArrowUpDown className="w-3.5 h-3.5 text-[#C85A32]" />
               <span className="truncate max-w-[100px]">
                 {sortOptions.find((o) => o.value === sortBy)?.label}
               </span>
-              <ChevronDown className="w-3 h-3 text-[#8C746A]" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#7A6B63]" />
             </button>
 
             {isSortOpen && (
@@ -166,7 +166,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
                   className="fixed inset-0 z-30"
                   onClick={() => setIsSortOpen(false)}
                 />
-                <div className="absolute right-0 top-8 z-40 w-44 rounded-[16px] bg-[#FFFDF9]/95 backdrop-blur-md border border-[#E6DED5] shadow-[0_8px_24px_rgba(59,34,25,0.12)] p-1 space-y-0.5 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute right-0 top-11 z-40 w-48 rounded-[18px] bg-[#FFFDF9]/95 backdrop-blur-md border border-[#EFE9E1] shadow-[0_8px_24px_rgba(45,35,30,0.12)] p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-100">
                   {sortOptions.map((opt) => {
                     const isSelected = opt.value === sortBy
                     return (
@@ -178,14 +178,14 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
                           setSortBy(opt.value)
                           setIsSortOpen(false)
                         }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[10px] text-[11px] font-bold transition-colors ${
+                        className={`w-full min-h-[44px] flex items-center justify-between px-3 py-2 rounded-[12px] text-xs font-bold transition-all active:scale-95 ${
                           isSelected
-                            ? 'bg-[#EFE9E1] text-[#3B2219]'
-                            : 'text-[#6F574E] hover:bg-[#FAF6F0] hover:text-[#3B2219]'
+                            ? 'bg-[#EFE9E1] text-[#2D231E]'
+                            : 'text-[#7A6B63] hover:bg-[#EFE9E1]/50 hover:text-[#2D231E]'
                         }`}
                       >
                         <span>{opt.label}</span>
-                        {isSelected && <Check className="w-3 h-3 text-[#C85A32]" />}
+                        {isSelected && <Check className="w-3.5 h-3.5 text-[#C85A32]" />}
                       </button>
                     )
                   })}
@@ -198,14 +198,14 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
         {/* Product Grid */}
         <div className="pt-2">
           {filteredProducts.length === 0 ? (
-            <div className="py-14 text-center rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5]">
-              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#8C746A] flex items-center justify-center mx-auto mb-2">
+            <div className="py-14 text-center rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1]">
+              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#7A6B63] flex items-center justify-center mx-auto mb-2">
                 <PackageSearch className="w-5 h-5" />
               </div>
-              <h4 className="text-sm font-bold text-[#3B2219]">
+              <h4 className="text-sm font-bold text-[#2D231E]">
                 {t.home.noProductsFound}
               </h4>
-              <p className="text-xs text-[#6F574E] mt-1 max-w-[200px] mx-auto">
+              <p className="text-xs text-[#7A6B63] mt-1 max-w-[200px] mx-auto">
                 {t.catalog.filterCatalog}
               </p>
               <button
@@ -216,7 +216,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
                   setActiveTag('all')
                   setSelectedCategory('all')
                 }}
-                className="mt-4 px-4 py-2 rounded-[12px] bg-[#EFE9E1] text-[#3B2219] text-xs font-bold hover:bg-[#E6DED5]"
+                className="mt-4 px-4 py-2.5 min-h-[44px] rounded-[14px] bg-[#EFE9E1] text-[#2D231E] text-xs font-bold hover:bg-[#E2D8CD] active:scale-95 transition-all"
               >
                 {t.home.resetFilters}
               </button>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Sparkles, ArrowRight } from 'lucide-react'
 import { Button } from '../common/Button'
 import { triggerHaptic } from '../../utils/telegram'
 import { useLanguage } from '../../context/LanguageContext'
@@ -29,27 +30,27 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
 
   return (
     <div
-      className={`bg-[#FFFDF9] border border-[#E6DED5] rounded-[22px] p-4 shadow-[0_6px_20px_rgba(59,34,25,0.05)] ${className}`}
+      className={`bg-[#FFFDF9] border border-[#EFE9E1] rounded-[22px] p-4 shadow-[0_4px_16px_rgba(45,35,30,0.04)] ${className}`}
     >
       {isFreeDelivery && (
         <div className="mb-4 flex items-center gap-2 p-2.5 rounded-[14px] bg-[#DCE8D5] text-[#2D4E37] text-xs font-bold border border-[#C7DAC0]">
-          <span>🎉</span>
+          <Sparkles className="w-4 h-4 text-[#2D4E37] shrink-0" />
           <span>{t.cart.freeCourier}</span>
         </div>
       )}
 
       {/* Breakdown */}
       <div className="space-y-2 text-xs">
-        <div className="flex items-center justify-between text-[#6F574E]">
+        <div className="flex items-center justify-between text-[#7A6B63]">
           <span>{t.cart.subtotal} ({itemCount})</span>
-          <span className="font-bold text-[#3B2219]">
+          <span className="font-bold text-[#2D231E]">
             {subtotal.toLocaleString()} {t.common.currency}
           </span>
         </div>
 
-        <div className="flex items-center justify-between text-[#6F574E]">
+        <div className="flex items-center justify-between text-[#7A6B63]">
           <span>{t.cart.deliveryFee}</span>
-          <span className="font-bold text-[#3B2219]">
+          <span className="font-bold text-[#2D231E]">
             {deliveryFee === 0 ? (
               <span className="text-[#2D4E37] font-extrabold uppercase text-[10px]">
                 {t.common.free}
@@ -68,14 +69,14 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
         )}
 
         <div className="pt-2.5 mt-2.5 border-t border-[#EFE9E1] flex items-baseline justify-between">
-          <span className="font-bold text-sm text-[#3B2219] font-['Manrope']">
+          <span className="font-bold text-sm text-[#2D231E] font-['Manrope']">
             {t.cart.totalToPay}
           </span>
           <div className="text-right">
-            <span className="text-lg font-extrabold text-[#3B2219] font-['Manrope']">
+            <span className="text-lg font-extrabold text-[#2D231E] font-['Manrope']">
               {total.toLocaleString()}
             </span>
-            <span className="text-xs font-bold text-[#6F574E] ml-1">{t.common.currency}</span>
+            <span className="text-xs font-bold text-[#7A6B63] ml-1">{t.common.currency}</span>
           </div>
         </div>
       </div>

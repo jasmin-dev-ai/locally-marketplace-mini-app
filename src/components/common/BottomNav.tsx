@@ -79,7 +79,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF9]/95 backdrop-blur-lg border-t border-[#E6DED5] shadow-[0_-4px_20px_rgba(59,34,25,0.04)] ${className}`}
+      className={`fixed bottom-0 left-0 right-0 z-40 bg-[#FFFDF9]/95 backdrop-blur-md border-t border-[#EFE9E1] shadow-[0_-4px_24px_rgba(45,35,30,0.04)] ${className}`}
       style={{
         paddingBottom: 'max(10px, env(safe-area-inset-bottom, 10px))',
       }}
@@ -92,10 +92,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               key={item.id}
               type="button"
               onClick={() => handleTabClick(item.id)}
-              className={`relative flex flex-col items-center justify-center gap-1 select-none transition-colors duration-150 active:scale-95 ${
+              className={`relative min-h-[48px] flex flex-col items-center justify-center gap-1 select-none transition-all duration-150 active:scale-95 ${
                 isActive
                   ? 'text-[#C85A32]'
-                  : 'text-[#8E7C74] hover:text-[#3B2219]'
+                  : 'text-[#7A6B63] hover:text-[#2D231E]'
               }`}
             >
               <div className="relative">
@@ -114,7 +114,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
                 {item.label}
               </span>
               {isActive && (
-                <span className="absolute bottom-1 w-4 h-0.5 bg-[#C85A32] rounded-full" />
+                <span className="absolute bottom-1 w-5 h-1 bg-[#C85A32] rounded-full transition-all duration-200" />
               )}
             </button>
           )

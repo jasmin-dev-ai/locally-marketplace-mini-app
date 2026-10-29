@@ -35,36 +35,36 @@ export const Button: React.FC<ButtonProps> = ({
 
   // Base styles: soft tactile container, smooth transition, active micro-press
   const baseStyles =
-    'relative inline-flex items-center justify-center font-bold tracking-tight select-none transition-all duration-200 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none rounded-[16px] outline-none focus-visible:ring-2 focus-visible:ring-[#C85A32]/40'
+    'relative inline-flex items-center justify-center font-bold tracking-tight select-none transition-all duration-150 active:scale-95 disabled:opacity-50 disabled:pointer-events-none rounded-[16px] outline-none focus-visible:ring-2 focus-visible:ring-[#C85A32]/40'
 
   // Variant mappings using the design tokens
   const variantStyles = {
-    // Rich Espresso Brown (#3B2219)
+    // Deep Terracotta Primary (#C85A32)
     primary:
-      'bg-[#3B2219] text-[#FFFDF9] shadow-[0_6px_18px_rgba(59,34,25,0.18)] hover:bg-[#2A1811] active:bg-[#1E100B]',
-    // Warm Terracotta / Burnt Orange (#C85A32)
+      'bg-[#C85A32] text-white shadow-[0_4px_16px_rgba(200,90,50,0.22)] hover:bg-[#B64F2A] active:bg-[#933D1C]',
+    // Warm Terracotta Accent (#C85A32)
     accent:
-      'bg-[#C85A32] text-white shadow-[0_6px_18px_rgba(200,90,50,0.25)] hover:bg-[#B64F2A] active:bg-[#933D1C]',
-    // Warm Taupe / Light Beige (#EFE9E1)
+      'bg-[#C85A32] text-white shadow-[0_4px_16px_rgba(200,90,50,0.22)] hover:bg-[#B64F2A] active:bg-[#933D1C]',
+    // Warm Taupe / Soft Cream Secondary (#FFFDF9)
     secondary:
-      'bg-[#EFE9E1] text-[#3B2219] border border-[#E6DED5] hover:bg-[#E6DED5] active:bg-[#DFD6CB]',
+      'bg-[#FFFDF9] text-[#2D231E] border border-[#EFE9E1] hover:bg-[#FAF6F0] active:bg-[#EFE9E1] shadow-xs',
     // Soft Peach / Terracotta tint
     soft:
-      'bg-[#F5D6C9] text-[#C85A32] hover:bg-[#ECC8B8] active:bg-[#E2B9A6]',
+      'bg-[#FBF4EE] text-[#C85A32] border border-[#F5D6C9] hover:bg-[#F5D6C9] active:bg-[#ECC8B8]',
     // Transparent / Ghost
     ghost:
-      'bg-transparent text-[#3B2219] hover:bg-[#EFE9E1] active:bg-[#E6DED5]',
-    // Subtle Outline
+      'bg-transparent text-[#2D231E] hover:bg-[#EFE9E1]/60 active:bg-[#EFE9E1]',
+    // Subtle Warm Outline
     outline:
-      'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5] hover:border-[#3B2219]/30 shadow-xs',
+      'bg-transparent text-[#2D231E] border border-[#EFE9E1] hover:border-[#C85A32]/40 hover:bg-[#FFFDF9] shadow-xs',
   }
 
-  // Sizing tokens
+  // Sizing tokens (Minimum 44px touch target height for mobile ergonomics)
   const sizeStyles = {
-    sm: 'h-9 px-3.5 text-xs gap-1.5 rounded-[12px]',
-    md: 'h-12 px-5 text-sm gap-2 rounded-[16px]',
-    lg: 'h-14 px-6 text-base gap-2.5 rounded-[18px]',
-    icon: 'h-10 w-10 p-0 rounded-[14px]',
+    sm: 'min-h-[44px] h-11 px-4 text-xs font-semibold gap-1.5 rounded-[14px]',
+    md: 'min-h-[48px] h-12 px-5 text-sm font-semibold gap-2 rounded-[16px]',
+    lg: 'min-h-[54px] h-14 px-6 text-base font-bold gap-2.5 rounded-[18px]',
+    icon: 'min-h-[44px] min-w-[44px] h-11 w-11 p-0 rounded-[14px]',
   }
 
   const widthStyle = fullWidth ? 'w-full' : ''

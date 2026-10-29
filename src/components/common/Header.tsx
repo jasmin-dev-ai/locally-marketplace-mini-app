@@ -165,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <>
       <header
-        className={`sticky top-0 z-30 flex items-center justify-between px-5 py-3.5 bg-[#FAF6F0]/95 backdrop-blur-md border-b border-[#E6DED5]/50 transition-colors ${className}`}
+        className={`sticky top-0 z-30 flex items-center justify-between px-5 py-3.5 bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#EFE9E1] transition-colors ${className}`}
         style={{
           paddingTop: 'max(14px, env(safe-area-inset-top, 14px))',
         }}
@@ -178,18 +178,18 @@ export const Header: React.FC<HeaderProps> = ({
                 triggerHaptic('light')
                 onBackClick?.()
               }}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-transform"
+              className="flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-[#FFFDF9] border border-[#EFE9E1] text-[#2D231E] shadow-xs active:scale-95 transition-transform"
               aria-label={t.common.back}
             >
-              <ArrowLeft className="w-5 h-5 text-[#3B2219]" />
+              <ArrowLeft className="w-5 h-5 text-[#2D231E]" />
             </button>
             {title && (
               <div>
-                <h1 className="text-base font-bold text-[#3B2219] font-['Manrope'] leading-tight">
+                <h1 className="text-base font-bold text-[#2D231E] font-['Manrope'] leading-tight">
                   {title}
                 </h1>
                 {subtitle && (
-                  <p className="text-xs text-[#6F574E]">{subtitle}</p>
+                  <p className="text-xs text-[#7A6B63]">{subtitle}</p>
                 )}
               </div>
             )}
@@ -197,29 +197,29 @@ export const Header: React.FC<HeaderProps> = ({
         ) : title ? (
           <div>
             {resolvedEyebrow && (
-              <span className="block text-[10px] uppercase font-bold tracking-widest text-[#6F574E] mb-0.5">
+              <span className="block text-[10px] uppercase font-bold tracking-widest text-[#7A6B63] mb-0.5">
                 {resolvedEyebrow}
               </span>
             )}
-            <h1 className="text-lg font-extrabold text-[#3B2219] font-['Manrope'] tracking-tight">
+            <h1 className="text-lg font-extrabold text-[#2D231E] font-['Manrope'] tracking-tight">
               {title}
             </h1>
           </div>
         ) : (
           <div>
-            <span className="block text-[10px] uppercase font-bold tracking-wider text-[#6F574E]">
+            <span className="block text-[10px] uppercase font-bold tracking-wider text-[#7A6B63]">
               {resolvedEyebrow}
             </span>
             <button
               type="button"
               onClick={handleLocationPress}
-              className="flex items-center gap-1.5 font-bold text-sm text-[#3B2219] mt-0.5 hover:text-[#C85A32] transition-colors"
+              className="flex items-center gap-1.5 min-h-[44px] py-1 font-bold text-sm text-[#2D231E] mt-0.5 hover:text-[#C85A32] active:scale-95 transition-all"
             >
               <MapPin className="w-4 h-4 text-[#C85A32] shrink-0" />
               <span className={`truncate max-w-[170px] ${!currentLocation ? 'text-[#C85A32] font-semibold' : ''}`}>
                 {displayLocation}
               </span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#6F574E] shrink-0" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#7A6B63] shrink-0" />
             </button>
           </div>
         )}
@@ -234,12 +234,12 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={handleNotificationPress}
-                className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-transform"
+                className="relative flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-[#FFFDF9] border border-[#EFE9E1] text-[#2D231E] shadow-xs active:scale-95 transition-transform"
                 aria-label={t.header.notifications}
               >
-                <Bell className="w-5 h-5 text-[#3B2219]" />
+                <Bell className="w-5 h-5 text-[#2D231E]" />
                 {hasUnread && (
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-[#C85A32] rounded-full ring-2 ring-[#FFFDF9]" />
+                  <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-[#C85A32] rounded-full ring-2 ring-[#FFFDF9]" />
                 )}
               </button>
 
@@ -248,15 +248,15 @@ export const Header: React.FC<HeaderProps> = ({
                 <>
                   {/* Backdrop overlay */}
                   <div
-                    className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px]"
+                    className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
                     onClick={() => setIsNotificationOpen(false)}
                   />
 
                   {/* Popover Card */}
-                  <div className="absolute right-0 top-12 z-50 w-[300px] sm:w-[320px] rounded-[24px] bg-[#FFFDF9]/95 backdrop-blur-xl border border-[#E6DED5] shadow-[0_16px_40px_rgba(59,34,25,0.18)] p-4 space-y-3 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="absolute right-0 top-13 z-50 w-[300px] sm:w-[320px] rounded-[24px] bg-[#FFFDF9]/98 backdrop-blur-xl border border-[#EFE9E1] shadow-[0_12px_36px_rgba(45,35,30,0.12)] p-4 space-y-3 animate-in fade-in zoom-in-95 duration-150">
                     <div className="flex items-center justify-between pb-2 border-b border-[#EFE9E1]">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
+                        <span className="text-xs font-extrabold text-[#2D231E] font-['Manrope']">
                           {t.header.notifications}
                         </span>
                         {hasUnread && (
@@ -271,7 +271,7 @@ export const Header: React.FC<HeaderProps> = ({
                           <button
                             type="button"
                             onClick={handleMarkAllRead}
-                            className="text-[10px] font-bold text-[#C85A32] hover:underline flex items-center gap-1"
+                            className="text-[10px] font-bold text-[#C85A32] hover:underline flex items-center gap-1 active:scale-95"
                             title="Mark all as read"
                           >
                             <CheckCheck className="w-3.5 h-3.5" />
@@ -280,9 +280,9 @@ export const Header: React.FC<HeaderProps> = ({
                         <button
                           type="button"
                           onClick={() => setIsNotificationOpen(false)}
-                          className="w-5 h-5 rounded-full flex items-center justify-center text-[#8C746A] hover:text-[#3B2219]"
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-[#7A6B63] hover:text-[#2D231E] active:scale-95 transition-transform"
                         >
-                          <X className="w-3.5 h-3.5" />
+                          <X className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
@@ -294,7 +294,7 @@ export const Header: React.FC<HeaderProps> = ({
                           key={item.id}
                           className={`p-2.5 rounded-[16px] border transition-colors flex items-start gap-2.5 ${
                             item.unread
-                              ? 'bg-[#FAF6F0] border-[#E6DED5]'
+                              ? 'bg-[#FFFDF9] border-[#EFE9E1]'
                               : 'bg-transparent border-transparent'
                           }`}
                         >
@@ -309,14 +309,14 @@ export const Header: React.FC<HeaderProps> = ({
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between">
-                              <h4 className="text-xs font-bold text-[#3B2219] truncate font-['Manrope']">
+                              <h4 className="text-xs font-bold text-[#2D231E] truncate font-['Manrope']">
                                 {item.title}
                               </h4>
-                              <span className="text-[9px] text-[#8C746A] shrink-0 ml-1">
+                              <span className="text-[9px] text-[#7A6B63] shrink-0 ml-1">
                                 {item.time}
                               </span>
                             </div>
-                            <p className="text-[10px] text-[#6F574E] mt-0.5 leading-snug line-clamp-2">
+                            <p className="text-[10px] text-[#7A6B63] mt-0.5 leading-snug line-clamp-2">
                               {item.message}
                             </p>
                           </div>

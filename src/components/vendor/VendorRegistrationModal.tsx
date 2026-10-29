@@ -105,13 +105,13 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
   const displayApp = submittedApp || existingApplication
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#3B2219]/60 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-[#2D231E]/50 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="w-full max-w-lg bg-[#FAF6F0] rounded-t-[32px] sm:rounded-[32px] border border-[#E6DED5] p-5 sm:p-6 shadow-[0_-12px_44px_rgba(59,34,25,0.22)] space-y-4 animate-in slide-in-from-bottom duration-250 max-h-[92vh] overflow-y-auto"
+        className="w-full max-w-lg bg-[#FFFDF9] rounded-t-[32px] sm:rounded-[32px] border border-[#EFE9E1] p-5 sm:p-6 shadow-[0_-12px_44px_rgba(45,35,30,0.18)] space-y-4 animate-in slide-in-from-bottom duration-250 max-h-[92vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Mobile grab handle */}
-        <div className="w-10 h-1.5 rounded-full bg-[#E6DED5] mx-auto -mt-1 mb-1 sm:hidden" />
+        <div className="w-10 h-1.5 rounded-full bg-[#EFE9E1] mx-auto -mt-1 mb-1 sm:hidden" />
 
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-[#EFE9E1]">
@@ -120,12 +120,12 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               <Store className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
-                {displayApp ? 'Doʻkon arizasi holati' : 'Ustaxona / Doʻkon oçiş'}
+              <h3 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
+                {displayApp ? 'Doʻkon arizasi holati' : 'Ustaxona / Doʻkon ochish'}
               </h3>
-              <p className="text-[11px] text-[#6F574E]">
+              <p className="text-[11px] text-[#7A6B63]">
                 {displayApp
-                  ? 'Administrator tekşiruvi jarayoni'
+                  ? 'Administrator tekshiruvi jarayoni'
                   : 'Mahalliy hunarmandlar bozorida oʻz vitrinangizni yarating'}
               </p>
             </div>
@@ -136,7 +136,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               triggerHaptic('light')
               onClose()
             }}
-            className="w-8 h-8 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] flex items-center justify-center transition-colors"
+            className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#EFE9E1] hover:bg-[#FAF6F0] text-[#2D231E] flex items-center justify-center transition-all active:scale-95"
             aria-label={t.common.close}
           >
             <X className="w-4 h-4" />
@@ -146,13 +146,13 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
         {/* Existing Application / Submission Success Screen */}
         {displayApp ? (
           <div className="space-y-4 py-2 animate-in fade-in duration-200">
-            <div className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
+            <div className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                  <span className="text-xs font-black text-[#2D231E] font-['Manrope']">
                     #{displayApp.id}
                   </span>
-                  <span className="text-sm font-extrabold text-[#3B2219]">
+                  <span className="text-sm font-extrabold text-[#2D231E]">
                     {displayApp.shopName}
                   </span>
                 </div>
@@ -174,34 +174,34 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                 </Badge>
               </div>
 
-              <div className="p-3 rounded-[16px] bg-[#FAF6F0] border border-[#E6DED5] text-xs space-y-1.5">
-                <div className="flex justify-between text-[#6F574E]">
+              <div className="p-3 rounded-[16px] bg-[#FAF6F0] border border-[#EFE9E1] text-xs space-y-1.5">
+                <div className="flex justify-between text-[#7A6B63]">
                   <span>Egasi:</span>
-                  <span className="font-bold text-[#3B2219]">{displayApp.ownerName}</span>
+                  <span className="font-bold text-[#2D231E]">{displayApp.ownerName}</span>
                 </div>
-                <div className="flex justify-between text-[#6F574E]">
+                <div className="flex justify-between text-[#7A6B63]">
                   <span>Toifasi:</span>
-                  <span className="font-bold text-[#3B2219] capitalize">
+                  <span className="font-bold text-[#2D231E] capitalize">
                     {displayApp.category}
                   </span>
                 </div>
-                <div className="flex justify-between text-[#6F574E]">
+                <div className="flex justify-between text-[#7A6B63]">
                   <span>Huquqiy maqomi:</span>
-                  <span className="font-bold text-[#3B2219] text-right truncate max-w-[200px]">
+                  <span className="font-bold text-[#2D231E] text-right truncate max-w-[200px]">
                     {displayApp.legalStatusLabel}
                   </span>
                 </div>
-                <div className="flex justify-between text-[#6F574E]">
+                <div className="flex justify-between text-[#7A6B63]">
                   <span>Telefon:</span>
-                  <span className="font-mono font-bold text-[#3B2219]">{displayApp.phone}</span>
+                  <span className="font-mono font-bold text-[#2D231E]">{displayApp.phone}</span>
                 </div>
               </div>
 
               <div>
-                <span className="text-[10px] font-bold uppercase text-[#9B887F] block mb-1">
+                <span className="text-[10px] font-bold uppercase text-[#7A6B63] block mb-1">
                   Ustaxona ta’rifi
                 </span>
-                <p className="text-xs text-[#3B2219] leading-relaxed italic bg-[#FAF6F0] p-2.5 rounded-[12px]">
+                <p className="text-xs text-[#2D231E] leading-relaxed italic bg-[#FAF6F0] p-2.5 rounded-[12px]">
                   "{displayApp.description}"
                 </p>
               </div>
@@ -209,7 +209,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               {displayApp.status === 'pending' && (
                 <div className="p-3 rounded-[16px] bg-[#FAF0DC] border border-[#E5A118]/40 flex items-start gap-2.5">
                   <Clock className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-[#3B2219] leading-relaxed">
+                  <p className="text-[11px] text-[#2D231E] leading-relaxed">
                     Arizangiz 24 soat ichida administratorlar tomonidan ko‘rib chiqiladi. Tasdiqlangach, do‘koningiz va mahsulotlaringiz bozorda e’lon qilinadi!
                   </p>
                 </div>
@@ -235,14 +235,14 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             {/* Informational Header Notice */}
             <div className="p-3 rounded-[18px] bg-[#FAF0DC] border border-[#E5A118]/30 flex items-start gap-2.5">
               <Sparkles className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
-              <p className="text-[11px] text-[#3B2219] leading-relaxed font-medium">
+              <p className="text-[11px] text-[#2D231E] leading-relaxed font-medium">
                 Locally bozorida har bir usta va sotuvchi ma’muriyat tomonidan tekshirilib tasdiqlanadi. Bu xaridorlar ishonchini 100% kafolatlaydi.
               </p>
             </div>
 
             {/* Shop Name */}
             <div>
-              <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1">
+              <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1">
                 <Store className="w-3.5 h-3.5 text-[#C85A32]" />
                 <span>Doʻkon yoki ustaxona nomi *</span>
               </label>
@@ -252,15 +252,15 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                 value={shopName}
                 onChange={(e) => setShopName(e.target.value)}
                 placeholder="Masalan: Buxoro Shirinliklar Uyi"
-                className="w-full px-3.5 py-2.5 rounded-[16px] bg-[#FFFDF9] border border-[#E6DED5] text-xs font-semibold text-[#3B2219] placeholder:text-[#9B887F] focus:outline-none focus:border-[#C85A32]"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-[16px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-semibold text-[#2D231E] placeholder:text-[#7A6B63] focus:outline-none focus:border-[#C85A32]"
               />
             </div>
 
             {/* Category Selection */}
             <div>
-              <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1.5">
+              <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1.5">
                 <Tag className="w-3.5 h-3.5 text-[#C85A32]" />
-                <span>Asosiy yoʻnaliş (Toifa) *</span>
+                <span>Asosiy yoʻnalish (Toifa) *</span>
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {categories.map((c) => (
@@ -271,10 +271,10 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                       triggerHaptic('light')
                       setCategory(c.id)
                     }}
-                    className={`py-2 px-3 rounded-[14px] text-xs font-bold text-left transition-all ${
+                    className={`min-h-[44px] py-2 px-3 rounded-[14px] text-xs font-bold text-left transition-all active:scale-95 ${
                       category === c.id
-                        ? 'bg-[#3B2219] text-white shadow-xs'
-                        : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5] hover:border-[#3B2219]/30'
+                        ? 'bg-[#2D231E] text-white shadow-xs'
+                        : 'bg-[#FFFDF9] text-[#7A6B63] border border-[#EFE9E1] hover:border-[#C85A32]/30'
                     }`}
                   >
                     {c.label}
@@ -285,7 +285,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
 
             {/* Legal Status (YTT / Hunarmand / Uy sharoiti) */}
             <div>
-              <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1.5">
+              <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#C85A32]" />
                 <span>Huquqiy faoliyat maqomi *</span>
               </label>
@@ -297,17 +297,17 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                       triggerHaptic('light')
                       setLegalStatus(opt.value)
                     }}
-                    className={`p-2.5 rounded-[16px] cursor-pointer transition-all border flex items-start gap-2.5 ${
+                    className={`p-3 rounded-[16px] cursor-pointer transition-all border flex items-start gap-2.5 active:scale-[0.98] ${
                       legalStatus === opt.value
                         ? 'bg-[#FFFDF9] border-[#C85A32] shadow-xs ring-1 ring-[#C85A32]'
-                        : 'bg-[#FFFDF9] border-[#E6DED5] hover:bg-[#FAF6F0]'
+                        : 'bg-[#FFFDF9] border border-[#EFE9E1] hover:bg-[#FAF6F0]'
                     }`}
                   >
                     <div
                       className={`w-4 h-4 rounded-full border flex items-center justify-center mt-0.5 shrink-0 ${
                         legalStatus === opt.value
                           ? 'border-[#C85A32] bg-[#C85A32]'
-                          : 'border-[#9B887F]'
+                          : 'border-[#7A6B63]'
                       }`}
                     >
                       {legalStatus === opt.value && (
@@ -315,10 +315,10 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                       )}
                     </div>
                     <div>
-                      <h5 className="text-xs font-extrabold text-[#3B2219]">
+                      <h5 className="text-xs font-extrabold text-[#2D231E]">
                         {opt.label}
                       </h5>
-                      <p className="text-[10px] text-[#6F574E] mt-0.5 leading-snug">
+                      <p className="text-[10px] text-[#7A6B63] mt-0.5 leading-snug">
                         {opt.desc}
                       </p>
                     </div>
@@ -330,9 +330,9 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
             {/* Owner & Phone Row */}
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className="text-[10px] font-bold text-[#3B2219] flex items-center gap-1 mb-1">
+                <label className="text-[10px] font-bold text-[#2D231E] flex items-center gap-1 mb-1">
                   <User className="w-3 h-3 text-[#C85A32]" />
-                  <span>Ism şarifingiz *</span>
+                  <span>Ism sharifingiz *</span>
                 </label>
                 <input
                   type="text"
@@ -340,12 +340,12 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                   value={ownerName}
                   onChange={(e) => setOwnerName(e.target.value)}
                   placeholder="Ismingiz"
-                  className="w-full px-3 py-2 rounded-[14px] bg-[#FFFDF9] border border-[#E6DED5] text-xs font-semibold text-[#3B2219] focus:outline-none focus:border-[#C85A32]"
+                  className="w-full min-h-[44px] px-3 py-2 rounded-[14px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-semibold text-[#2D231E] focus:outline-none focus:border-[#C85A32]"
                 />
               </div>
 
               <div>
-                <label className="text-[10px] font-bold text-[#3B2219] flex items-center gap-1 mb-1">
+                <label className="text-[10px] font-bold text-[#2D231E] flex items-center gap-1 mb-1">
                   <Phone className="w-3 h-3 text-[#C85A32]" />
                   <span>Telefon raqamingiz *</span>
                 </label>
@@ -355,14 +355,14 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+998 90 123 45 67"
-                  className="w-full px-3 py-2 rounded-[14px] bg-[#FFFDF9] border border-[#E6DED5] text-xs font-semibold text-[#3B2219] focus:outline-none focus:border-[#C85A32]"
+                  className="w-full min-h-[44px] px-3 py-2 rounded-[14px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-semibold text-[#2D231E] focus:outline-none focus:border-[#C85A32]"
                 />
               </div>
             </div>
 
             {/* Description */}
             <div>
-              <label className="text-[11px] font-bold text-[#3B2219] flex items-center gap-1.5 mb-1">
+              <label className="text-[11px] font-bold text-[#2D231E] flex items-center gap-1.5 mb-1">
                 <FileText className="w-3.5 h-3.5 text-[#C85A32]" />
                 <span>Mahsulotlaringiz va tajribangiz haqida *</span>
               </label>
@@ -372,7 +372,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Qanday mahsulotlar tayyorlaysiz? Masalan: 5 yildan beri tandirda tabiiy xamirdan issiq non va somsalar yopaman..."
-                className="w-full px-3.5 py-2.5 rounded-[16px] bg-[#FFFDF9] border border-[#E6DED5] text-xs font-medium text-[#3B2219] placeholder:text-[#9B887F] focus:outline-none focus:border-[#C85A32] resize-none"
+                className="w-full px-3.5 py-2.5 rounded-[16px] bg-[#FFFDF9] border border-[#EFE9E1] text-xs font-medium text-[#2D231E] placeholder:text-[#7A6B63] focus:outline-none focus:border-[#C85A32] resize-none"
               />
             </div>
 
@@ -383,7 +383,7 @@ export const VendorRegistrationModal: React.FC<VendorRegistrationModalProps> = (
               size="lg"
               fullWidth
             >
-              Arizani yuboriş
+              Arizani yuborish
             </Button>
           </form>
         )}

@@ -147,7 +147,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] pb-28">
+    <div className="min-h-screen bg-[#FFFDF9] pb-28">
       <Header
         title={t.header.yourCart}
         subtitle={`${totalItems} ${t.common.itemsCount}`}
@@ -159,7 +159,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                 triggerHaptic('light')
                 clearCart()
               }}
-              className="text-xs font-bold text-[#C85A32] hover:underline px-2 py-1"
+              className="text-xs font-bold text-[#C85A32] hover:underline px-2 py-1 min-h-[44px] flex items-center active:scale-95 transition-all"
             >
               {t.cart.clearAll}
             </button>
@@ -169,14 +169,14 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
 
       <main className="px-5 pt-3 space-y-4">
         {items.length === 0 ? (
-          <div className="py-20 text-center rounded-[28px] bg-[#FFFDF9] border border-[#E6DED5] p-6 shadow-xs">
-            <div className="w-20 h-20 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#8C746A] mb-4">
+          <div className="py-20 text-center rounded-[28px] bg-[#FFFDF9] border border-[#EFE9E1] p-6 shadow-xs">
+            <div className="w-20 h-20 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#7A6B63] mb-4">
               <ShoppingBag className="w-10 h-10" />
             </div>
-            <h2 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <h2 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {t.cart.emptyCartTitle}
             </h2>
-            <p className="text-xs text-[#6F574E] mt-1.5 max-w-[240px] mx-auto leading-relaxed">
+            <p className="text-xs text-[#7A6B63] mt-1.5 max-w-[240px] mx-auto leading-relaxed">
               {t.cart.emptyCartDesc}
             </p>
             <div className="mt-5">
@@ -201,7 +201,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                 return (
                   <div
                     key={product.id}
-                    className="flex items-center gap-3 p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs"
+                    className="flex items-center gap-3 p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs"
                   >
                     <img
                       src={product.imageUrl}
@@ -209,24 +209,24 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                       className="w-16 h-16 rounded-[14px] object-cover bg-[#EFE9E1] shrink-0"
                     />
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-xs font-bold text-[#3B2219] truncate font-['Manrope']">
+                      <h4 className="text-xs font-bold text-[#2D231E] truncate font-['Manrope']">
                         {product.title}
                       </h4>
-                      <p className="text-[11px] text-[#6F574E] mt-0.5 truncate">
+                      <p className="text-[11px] text-[#7A6B63] mt-0.5 truncate">
                         {product.seller.name}
                       </p>
                       <div className="flex items-baseline gap-1 mt-1">
                         <span className="text-xs font-extrabold text-[#C85A32] font-['Manrope']">
                           {(product.price * item.quantity).toLocaleString()}
                         </span>
-                        <span className="text-[9px] font-bold text-[#6F574E]">
+                        <span className="text-[9px] font-bold text-[#7A6B63]">
                           {t.common.currency}
                         </span>
                       </div>
                     </div>
 
                     {/* Quantity controls */}
-                    <div className="flex items-center bg-[#EFE9E1] border border-[#E6DED5] rounded-[12px] p-0.5 shrink-0">
+                    <div className="flex items-center bg-[#EFE9E1] border border-[#EFE9E1] rounded-[14px] p-1 shrink-0 gap-1">
                       <button
                         type="button"
                         onClick={() => {
@@ -237,11 +237,11 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                             updateQuantity(product.id, item.quantity - 1)
                           }
                         }}
-                        className="w-7 h-7 rounded-[10px] bg-[#FFFDF9] text-[#3B2219] hover:bg-[#E6DED5] text-xs font-bold flex items-center justify-center active:scale-90"
+                        className="w-8 h-8 rounded-[10px] bg-[#FFFDF9] text-[#2D231E] hover:bg-[#EFE9E1] text-xs font-bold flex items-center justify-center active:scale-90 transition-all shadow-xs"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
-                      <span className="w-6 text-center text-xs font-bold text-[#3B2219]">
+                      <span className="w-6 text-center text-xs font-bold text-[#2D231E]">
                         {item.quantity}
                       </span>
                       <button
@@ -250,7 +250,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                           triggerHaptic('light')
                           updateQuantity(product.id, item.quantity + 1)
                         }}
-                        className="w-7 h-7 rounded-[10px] bg-[#C85A32] text-white hover:bg-[#B64F2A] text-xs font-bold flex items-center justify-center active:scale-90"
+                        className="w-8 h-8 rounded-[10px] bg-[#C85A32] text-white hover:bg-[#B34E29] text-xs font-bold flex items-center justify-center active:scale-90 transition-all shadow-xs"
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
@@ -261,9 +261,9 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
             </section>
 
             {/* Delivery Address & Time Slot Card */}
-            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
+            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold font-['Manrope'] text-[#3B2219] flex items-center gap-1.5">
+                <span className="text-xs font-extrabold font-['Manrope'] text-[#2D231E] flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#C85A32]" />
                   <span>{t.cart.deliveryAddress}</span>
                 </span>
@@ -275,11 +275,11 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                 onChange={(e) => setDeliveryAddress(e.target.value)}
                 placeholder={t.cart.deliveryAddress}
                 aria-label={t.cart.deliveryAddress}
-                className="w-full text-xs font-medium bg-[#EFE9E1]/60 border border-[#E6DED5] rounded-[14px] px-3.5 py-2.5 text-[#3B2219] focus:outline-none focus:ring-1 focus:ring-[#C85A32]"
+                className="w-full text-xs font-medium bg-[#EFE9E1]/50 border border-[#EFE9E1] rounded-[14px] px-3.5 py-3 text-[#2D231E] min-h-[44px] focus:outline-none focus:ring-1 focus:ring-[#C85A32]"
               />
 
               <div className="pt-2 border-t border-[#EFE9E1]">
-                <span className="block text-[11px] font-bold text-[#6F574E] mb-1.5 flex items-center gap-1.5">
+                <span className="block text-[11px] font-bold text-[#7A6B63] mb-1.5 flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-[#C85A32]" />
                   <span>{t.cart.deliverySlot}</span>
                 </span>
@@ -294,10 +294,10 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                           triggerHaptic('selection')
                           setDeliverySlot(slot)
                         }}
-                        className={`px-3 py-2 rounded-[12px] text-xs text-left font-medium transition-all ${
+                        className={`min-h-[44px] px-3.5 py-2.5 rounded-[14px] text-xs text-left font-medium transition-all active:scale-95 ${
                           isSelected
-                            ? 'bg-[#3B2219] text-white font-bold'
-                            : 'bg-[#EFE9E1] text-[#3B2219] hover:bg-[#E6DED5]'
+                            ? 'bg-[#2D231E] text-white font-bold shadow-xs'
+                            : 'bg-[#EFE9E1] text-[#2D231E] hover:bg-[#E2D8CD]'
                         }`}
                       >
                         {slot}
@@ -309,8 +309,8 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
             </section>
 
             {/* Payment Methods */}
-            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-2.5">
-              <span className="block text-xs font-extrabold font-['Manrope'] text-[#3B2219] flex items-center gap-1.5">
+            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs space-y-2.5">
+              <span className="block text-xs font-extrabold font-['Manrope'] text-[#2D231E] flex items-center gap-1.5">
                 <CreditCard className="w-3.5 h-3.5 text-[#C85A32]" />
                 <span>{t.cart.paymentMethod}</span>
               </span>
@@ -325,15 +325,15 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                         triggerHaptic('selection')
                         setPaymentMethod(opt.id)
                       }}
-                      className={`flex items-center gap-2 p-3 rounded-[14px] border text-left transition-all ${
+                      className={`min-h-[48px] flex items-center gap-2 p-3 rounded-[16px] border text-left transition-all active:scale-95 ${
                         isSelected
-                          ? 'border-[#C85A32] bg-[#FAF6F0] ring-1 ring-[#C85A32]'
-                          : 'border-[#E6DED5] bg-[#FFFDF9] hover:bg-[#FAF6F0]'
+                          ? 'border-[#C85A32] bg-[#FFFDF9] ring-1 ring-[#C85A32] shadow-xs'
+                          : 'border-[#EFE9E1] bg-[#FFFDF9] hover:bg-[#EFE9E1]/40'
                       }`}
                     >
                       <div className="shrink-0">{opt.icon}</div>
                       <div className="min-w-0">
-                        <span className="block text-xs font-bold text-[#3B2219] truncate">
+                        <span className="block text-xs font-bold text-[#2D231E] truncate">
                           {opt.label}
                         </span>
                         {opt.badge && (
@@ -349,13 +349,13 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
             </section>
 
             {/* Order Note */}
-            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs">
+            <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs">
               <textarea
                 value={orderNote}
                 onChange={(e) => setOrderNote(e.target.value)}
                 placeholder={t.cart.orderNotePlaceholder}
                 rows={2}
-                className="w-full text-xs font-medium bg-[#EFE9E1]/50 border border-[#E6DED5] rounded-[14px] p-3 text-[#3B2219] focus:outline-none focus:ring-1 focus:ring-[#C85A32]"
+                className="w-full text-xs font-medium bg-[#EFE9E1]/50 border border-[#EFE9E1] rounded-[14px] p-3 text-[#2D231E] focus:outline-none focus:ring-1 focus:ring-[#C85A32]"
               />
             </section>
 

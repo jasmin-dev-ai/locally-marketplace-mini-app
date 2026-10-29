@@ -29,9 +29,9 @@ export const Badge: React.FC<BadgeProps> = ({
     // Artisanal Gold
     gold: 'bg-[#FBF0CE] text-[#7A5C0B] border border-[#F2DF99]',
     // Soft Taupe / Neutral
-    neutral: 'bg-[#EFE9E1] text-[#6F574E] border border-[#E6DED5]',
+    neutral: 'bg-[#EFE9E1] text-[#7A6B63] border border-[#EFE9E1]',
     // Espresso Dark
-    dark: 'bg-[#3B2219] text-[#FFFDF9]',
+    dark: 'bg-[#2D231E] text-[#FFFDF9]',
   }
 
   const sizeStyles = {
@@ -44,8 +44,8 @@ export const Badge: React.FC<BadgeProps> = ({
     default: 'bg-[#C85A32]',
     fresh: 'bg-[#2D4E37]',
     gold: 'bg-[#7A5C0B]',
-    neutral: 'bg-[#6F574E]',
-    dark: 'bg-[#FAF6F0]',
+    neutral: 'bg-[#7A6B63]',
+    dark: 'bg-[#FFFDF9]',
   }
 
   return (

@@ -51,7 +51,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     <div className="fixed inset-0 z-50 flex items-end justify-center">
       {/* Dimmed Backdrop */}
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300 animate-in fade-in"
+        className="fixed inset-0 bg-[#2D231E]/50 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
         onClick={() => {
           triggerHaptic('light')
           onClose()
@@ -60,23 +60,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
       {/* Drawer Container */}
       <div
-        className="relative w-full max-w-lg bg-[#FAF6F0] rounded-t-[28px] border-t border-[#E6DED5] shadow-[0_-12px_40px_rgba(59,34,25,0.18)] flex flex-col max-h-[85vh] z-10 animate-in slide-in-from-bottom duration-300"
+        className="relative w-full max-w-lg bg-[#FFFDF9] rounded-t-[28px] border-t border-[#EFE9E1] shadow-[0_-12px_40px_rgba(45,35,30,0.18)] flex flex-col max-h-[85vh] z-10 animate-in slide-in-from-bottom duration-300"
         style={{
           paddingBottom: 'max(16px, env(safe-area-inset-bottom, 16px))',
         }}
       >
         {/* Drag Pill Handle */}
         <div className="flex justify-center pt-3 pb-1">
-          <div className="w-10 h-1.2 bg-[#D8CEC4] rounded-full" />
+          <div className="w-10 h-1.5 bg-[#EFE9E1] rounded-full" />
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-[#E6DED5]">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[#EFE9E1]">
           <div className="flex items-center gap-2">
-            <h2 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <h2 className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {t.cart.drawerTitle}
             </h2>
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#EFE9E1] text-[#6F574E]">
+            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#EFE9E1] text-[#7A6B63]">
               {totalCount} {t.common.itemsCount}
             </span>
           </div>
@@ -87,10 +87,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               triggerHaptic('light')
               onClose()
             }}
-            className="w-8 h-8 rounded-full bg-[#EFE9E1] text-[#3B2219] flex items-center justify-center hover:bg-[#E6DED5] active:scale-95 transition-transform"
+            className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#EFE9E1] text-[#2D231E] flex items-center justify-center hover:bg-[#E2D8CD] active:scale-95 transition-all"
             aria-label={t.common.close}
           >
-            <X className="w-4 h-4 text-[#3B2219]" />
+            <X className="w-4 h-4 text-[#2D231E]" />
           </button>
         </div>
 
@@ -98,13 +98,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         <div className="flex-1 overflow-y-auto px-5 py-3 space-y-3">
           {items.length === 0 ? (
             <div className="py-12 text-center">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#8C746A] mb-3">
+              <div className="w-16 h-16 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#7A6B63] mb-3">
                 <ShoppingBag className="w-7 h-7" />
               </div>
-              <h3 className="text-sm font-bold text-[#3B2219] font-['Manrope']">
+              <h3 className="text-sm font-bold text-[#2D231E] font-['Manrope']">
                 {t.cart.emptyCartTitle}
               </h3>
-              <p className="text-xs text-[#6F574E] mt-1 max-w-[220px] mx-auto">
+              <p className="text-xs text-[#7A6B63] mt-1 max-w-[220px] mx-auto">
                 {t.cart.emptyCartDesc}
               </p>
               <div className="mt-4">
@@ -126,7 +126,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
               return (
                 <div
                   key={product.id}
-                  className="flex items-center gap-3 p-3 rounded-[18px] bg-[#FFFDF9] border border-[#E6DED5] shadow-2xs"
+                  className="flex items-center gap-3 p-3 rounded-[18px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs"
                 >
                   <img
                     src={product.imageUrl}
@@ -134,17 +134,17 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     className="w-14 h-14 rounded-[12px] object-cover bg-[#EFE9E1] shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-bold text-[#3B2219] truncate font-['Manrope']">
+                    <h4 className="text-xs font-bold text-[#2D231E] truncate font-['Manrope']">
                       {product.title}
                     </h4>
-                    <p className="text-[10px] text-[#6F574E] mt-0.5 truncate">
+                    <p className="text-[10px] text-[#7A6B63] mt-0.5 truncate">
                       {product.seller.name}
                     </p>
                     <div className="flex items-baseline gap-1 mt-1">
                       <span className="text-xs font-extrabold text-[#C85A32] font-['Manrope']">
                         {(product.price * item.quantity).toLocaleString()}
                       </span>
-                      <span className="text-[9px] font-bold text-[#6F574E]">
+                      <span className="text-[9px] font-bold text-[#7A6B63]">
                         {t.common.currency}
                       </span>
                     </div>
@@ -162,11 +162,11 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                           onUpdateQuantity(product.id, item.quantity - 1)
                         }
                       }}
-                      className="w-6 h-6 rounded-[8px] bg-[#FFFDF9] text-[#3B2219] hover:bg-[#E6DED5] text-xs font-bold flex items-center justify-center active:scale-90"
+                      className="w-7 h-7 rounded-[8px] bg-[#FFFDF9] text-[#2D231E] hover:bg-[#EFE9E1] text-xs font-bold flex items-center justify-center active:scale-90 transition-all shadow-xs"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
-                    <span className="w-5 text-center text-xs font-bold text-[#3B2219]">
+                    <span className="w-5 text-center text-xs font-bold text-[#2D231E]">
                       {item.quantity}
                     </span>
                     <button
@@ -175,7 +175,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         triggerHaptic('light')
                         onUpdateQuantity(product.id, item.quantity + 1)
                       }}
-                      className="w-6 h-6 rounded-[8px] bg-[#C85A32] text-white hover:bg-[#B64F2A] text-xs font-bold flex items-center justify-center active:scale-90"
+                      className="w-7 h-7 rounded-[8px] bg-[#C85A32] text-white hover:bg-[#B34E29] text-xs font-bold flex items-center justify-center active:scale-90 transition-all shadow-xs"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
@@ -188,14 +188,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
         {/* Footer Actions */}
         {items.length > 0 && (
-          <div className="p-5 bg-[#FFFDF9] border-t border-[#E6DED5] space-y-3">
+          <div className="p-5 bg-[#FFFDF9] border-t border-[#EFE9E1] space-y-3">
             <div className="flex items-baseline justify-between text-xs">
-              <span className="text-[#6F574E]">{t.cart.totalToPay}</span>
+              <span className="text-[#7A6B63] font-medium">{t.cart.totalToPay}</span>
               <div className="text-right">
-                <span className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
+                <span className="text-base font-extrabold text-[#2D231E] font-['Manrope']">
                   {total.toLocaleString()}
                 </span>
-                <span className="text-xs font-bold text-[#6F574E] ml-1">
+                <span className="text-xs font-bold text-[#7A6B63] ml-1">
                   {t.common.currency}
                 </span>
               </div>

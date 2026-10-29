@@ -83,10 +83,10 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                 key={lang.code}
                 type="button"
                 onClick={() => handleSelect(lang.code)}
-                className={`relative flex items-center gap-2.5 p-3 rounded-[18px] text-left transition-all duration-200 active:scale-[0.98] ${
+                className={`relative min-h-[48px] flex items-center gap-2.5 p-3 rounded-[18px] text-left transition-all duration-150 active:scale-95 ${
                   isActive
-                    ? 'bg-[#3B2219] text-white shadow-md ring-2 ring-[#C85A32]/50'
-                    : 'bg-[#FFFDF9] text-[#3B2219] border border-[#E6DED5] hover:border-[#C85A32]/40 hover:bg-[#FAF6F0]'
+                    ? 'bg-[#2D231E] text-white shadow-sm ring-2 ring-[#C85A32]/40'
+                    : 'bg-[#FFFDF9] text-[#2D231E] border border-[#EFE9E1] hover:border-[#C85A32]/40 hover:bg-[#FAF6F0]'
                 }`}
               >
                 <span className="text-2xl shrink-0 leading-none" role="img" aria-label={lang.label}>
@@ -96,7 +96,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                   <div className="flex items-center justify-between">
                     <span
                       className={`text-xs font-bold font-['Manrope'] truncate ${
-                        isActive ? 'text-white' : 'text-[#3B2219]'
+                        isActive ? 'text-white' : 'text-[#2D231E]'
                       }`}
                     >
                       {lang.nativeName}
@@ -105,7 +105,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                       className={`text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-md shrink-0 ml-1 ${
                         isActive
                           ? 'bg-[#C85A32] text-white'
-                          : 'bg-[#EFE9E1] text-[#6F574E]'
+                          : 'bg-[#EFE9E1] text-[#7A6B63]'
                       }`}
                     >
                       {codeDisplay}
@@ -114,7 +114,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                   {lang.label !== lang.nativeName && (
                     <span
                       className={`block text-[10px] mt-0.5 ${
-                        isActive ? 'text-[#EFE9E1]/80' : 'text-[#8E7C74]'
+                        isActive ? 'text-[#EFE9E1]/80' : 'text-[#7A6B63]'
                       }`}
                     >
                       {lang.label}
@@ -141,18 +141,18 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
           triggerHaptic('light')
           setIsOpen(!isOpen)
         }}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-all text-xs font-bold hover:border-[#C85A32]/40"
+        className="flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-full bg-[#FFFDF9] border border-[#EFE9E1] text-[#2D231E] shadow-xs active:scale-95 transition-all text-xs font-bold hover:border-[#C85A32]/40"
         aria-label="Switch Language"
         aria-expanded={isOpen}
       >
         <span className="text-base leading-none" role="img" aria-label="Country Flag">
           {activeFlag}
         </span>
-        <span className="font-['Manrope'] text-[11px] font-extrabold uppercase tracking-wider text-[#3B2219]">
+        <span className="font-['Manrope'] text-[11px] font-extrabold uppercase tracking-wider text-[#2D231E]">
           {activeCodeDisplay}
         </span>
         <svg
-          className={`w-3 h-3 text-[#6F574E] transition-transform duration-200 ${
+          className={`w-3 h-3 text-[#7A6B63] transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
           viewBox="0 0 24 24"
@@ -168,8 +168,8 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-[0_12px_36px_rgba(59,34,25,0.16)] p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-          <div className="px-2.5 py-1 text-[9px] uppercase font-extrabold tracking-widest text-[#8E7C74]">
+        <div className="absolute right-0 mt-2 w-48 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-[0_12px_36px_rgba(45,35,30,0.12)] p-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
+          <div className="px-2.5 py-1 text-[9px] uppercase font-extrabold tracking-widest text-[#7A6B63]">
             Select Language
           </div>
           <div className="space-y-0.5">
@@ -183,10 +183,10 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                   key={lang.code}
                   type="button"
                   onClick={() => handleSelect(lang.code)}
-                  className={`w-full flex items-center justify-between px-2.5 py-2 rounded-[14px] text-left transition-colors ${
+                  className={`w-full min-h-[44px] flex items-center justify-between px-3 py-2 rounded-[14px] text-left transition-colors active:scale-95 ${
                     isActive
-                      ? 'bg-[#3B2219] text-white font-bold shadow-xs'
-                      : 'text-[#3B2219] hover:bg-[#FAF6F0]'
+                      ? 'bg-[#2D231E] text-white font-bold shadow-xs'
+                      : 'text-[#2D231E] hover:bg-[#FAF6F0]'
                   }`}
                 >
                   <div className="flex items-center gap-2 min-w-0">
@@ -199,7 +199,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
                     className={`text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-md ${
                       isActive
                         ? 'bg-[#C85A32] text-white'
-                        : 'bg-[#EFE9E1] text-[#6F574E]'
+                        : 'bg-[#EFE9E1] text-[#7A6B63]'
                     }`}
                   >
                     {codeDisplay}

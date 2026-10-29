@@ -5,29 +5,29 @@
 
 export const THEME_COLORS = {
   // Core Required Palette
-  background: '#FAF6F0', // Soft Cream / Off-White
-  card: '#EFE9E1', // Warm Taupe / Light Beige
-  primary: '#3B2219', // Rich Espresso Brown (Typography & Primary Elements)
-  accent: '#C85A32', // Warm Terracotta / Burnt Orange (Accents & CTA Buttons)
+  background: '#FFFDF9', // Soft Cream
+  card: '#EFE9E1', // Warm Card Border / Taupe
+  primary: '#2D231E', // Dark Espresso
+  accent: '#C85A32', // Deep Terracotta
 
   // Surface & Layer Variants
   surface: {
-    base: '#FAF6F0',
+    base: '#FFFDF9',
     paper: '#FFFDF9',
     container: '#EFE9E1',
     elevated: '#FFFFFF',
-    border: '#E6DED5',
-    borderSubtle: '#F0E9DF',
-    hover: '#E8E0D5',
+    border: '#EFE9E1',
+    borderSubtle: '#F7F4EF',
+    hover: '#F2ECE4',
   },
 
   // Typography Tones
   text: {
-    primary: '#3B2219', // Rich Espresso Brown
-    secondary: '#6F574E', // Warm Muted Brown
-    tertiary: '#9B887F', // Soft Taupe Stone
+    primary: '#2D231E', // Dark Espresso
+    secondary: '#7A6B63', // Soft Muted Tone
+    tertiary: '#A89B93', // Subtle Helper Tone
     inverse: '#FFFDF9', // Warm White
-    accent: '#C85A32', // Terracotta
+    accent: '#C85A32', // Deep Terracotta
   },
 
   // Accent & Action Variants
@@ -35,14 +35,14 @@ export const THEME_COLORS = {
     light: '#F8ECE7',
     soft: '#F3D6C9',
     DEFAULT: '#C85A32',
-    hover: '#B64F2A',
+    hover: '#B34E29',
     dark: '#933D1C',
   },
 
   espresso: {
-    light: '#6F574E',
-    DEFAULT: '#3B2219',
-    dark: '#24140E',
+    light: '#7A6B63',
+    DEFAULT: '#2D231E',
+    dark: '#1C1512',
   },
 
   // Contextual Badges & Indicators

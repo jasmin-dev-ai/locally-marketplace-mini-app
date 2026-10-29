@@ -120,7 +120,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   ]
 
   return (
-    <div className="min-h-screen bg-[#FAF6F0] pb-28">
+    <div className="min-h-screen bg-[#FFFDF9] pb-28">
       <Header
         title={t.header.yourProfile}
         subtitle={t.header.profileSubtitle}
@@ -128,7 +128,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
       <main className="px-5 pt-3 space-y-4">
         {/* User Profile Card */}
-        <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs flex items-center gap-3.5">
+        <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs flex items-center gap-3.5">
           {tgUser?.photo_url ? (
             <img
               src={tgUser.photo_url}
@@ -136,13 +136,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               className="w-16 h-16 rounded-full object-cover border-2 border-[#C85A32]/20 shadow-xs"
             />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-[#3B2219] text-[#FFFDF9] flex items-center justify-center text-xl font-extrabold font-['Manrope'] border-2 border-[#C85A32]/30 shadow-xs">
+            <div className="w-16 h-16 rounded-full bg-[#2D231E] text-[#FFFDF9] flex items-center justify-center text-xl font-extrabold font-['Manrope'] border-2 border-[#C85A32]/30 shadow-xs">
               {(tgUser?.first_name?.[0] || 'T') + (tgUser?.last_name?.[0] || 'A')}
             </div>
           )}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-extrabold text-[#3B2219] font-['Manrope'] truncate">
+              <h2 className="text-base font-extrabold text-[#2D231E] font-['Manrope'] truncate">
                 {tgUser
                   ? `${tgUser.first_name} ${tgUser.last_name || ''}`.trim()
                   : `${MOCK_USER.firstName} ${MOCK_USER.lastName}`}
@@ -157,10 +157,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 </Badge>
               )}
             </div>
-            <p className="text-xs font-semibold text-[#6F574E]">
+            <p className="text-xs font-semibold text-[#7A6B63]">
               @{tgUser?.username || MOCK_USER.telegramUsername}
             </p>
-            <div className="flex items-center gap-1 text-[11px] text-[#9B887F] truncate mt-0.5">
+            <div className="flex items-center gap-1 text-[11px] text-[#7A6B63] truncate mt-0.5">
               <MapPin className="w-3 h-3 text-[#C85A32] shrink-0" />
               <span className="truncate">{MOCK_USER.address}</span>
             </div>
@@ -172,7 +172,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 triggerHaptic('medium')
                 onOpenAdmin?.()
               }}
-              className="w-9 h-9 rounded-full bg-[#3B2219] text-[#FFFDF9] flex items-center justify-center hover:bg-[#C85A32] transition-colors shadow-xs shrink-0"
+              className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#2D231E] text-[#FFFDF9] flex items-center justify-center hover:bg-[#C85A32] active:scale-95 transition-all shadow-xs shrink-0"
               title={t.admin.panelTitle}
             >
               <ShieldCheck className="w-4 h-4 text-[#FFFDF9]" />
@@ -182,7 +182,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* Discreet Admin Panel Access Card (Authorized Admin Only) */}
         {isAdmin && (
-          <div className="p-4 rounded-[24px] bg-[#3B2219] text-[#FFFDF9] border border-[#C85A32]/40 shadow-xs flex items-center justify-between animate-in fade-in">
+          <div className="p-4 rounded-[24px] bg-[#2D231E] text-[#FFFDF9] border border-[#C85A32]/40 shadow-xs flex items-center justify-between animate-in fade-in">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-[#C85A32] flex items-center justify-center shadow-xs">
                 <ShieldCheck className="w-5 h-5 text-white" />
@@ -207,7 +207,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 triggerHaptic('medium')
                 onOpenAdmin?.()
               }}
-              className="px-3.5 py-1.5 rounded-xl bg-[#FFFDF9] text-[#3B2219] text-xs font-black hover:bg-[#FAF6F0] transition-transform active:scale-95 shadow-xs font-['Manrope'] flex items-center gap-1"
+              className="min-h-[44px] px-4 py-2 rounded-xl bg-[#FFFDF9] text-[#2D231E] text-xs font-black hover:bg-[#FFFDF9] transition-all active:scale-95 shadow-xs font-['Manrope'] flex items-center gap-1"
             >
               <span>Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -222,12 +222,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setActiveTab('orders')
             }}
-            className="p-3 rounded-[18px] bg-[#EFE9E1] border border-[#E6DED5] cursor-pointer hover:border-[#C85A32]/40 transition-colors"
+            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
           >
-            <span className="block text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {MOCK_USER.ordersCount}
             </span>
-            <span className="text-[10px] font-bold text-[#6F574E] uppercase">
+            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
               {t.profile.ordersStat}
             </span>
           </div>
@@ -237,12 +237,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setActiveTab('favorites')
             }}
-            className="p-3 rounded-[18px] bg-[#EFE9E1] border border-[#E6DED5] cursor-pointer hover:border-[#C85A32]/40 transition-colors"
+            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
           >
-            <span className="block text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {favorites.length}
             </span>
-            <span className="text-[10px] font-bold text-[#6F574E] uppercase">
+            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
               {t.profile.savedStat}
             </span>
           </div>
@@ -252,33 +252,33 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setIsLoyaltyModalOpen(true)
             }}
-            className="p-3 rounded-[18px] bg-[#EFE9E1] border border-[#E6DED5] cursor-pointer hover:border-[#C85A32]/40 transition-colors"
+            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
           >
-            <span className="block text-base font-extrabold text-[#3B2219] font-['Manrope']">
+            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
               {MOCK_USER.loyaltyPoints}
             </span>
-            <span className="text-[10px] font-bold text-[#6F574E] uppercase">
+            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
               {t.profile.pointsStat}
             </span>
           </div>
         </div>
 
         {/* Enhanced Customer Loyalty Points Card */}
-        <div className="p-4 rounded-[24px] bg-gradient-to-r from-[#FFFDF9] via-[#FAF4EC] to-[#F5ECE1] border border-[#E6DED5] shadow-xs flex items-center justify-between">
+        <div className="p-4 rounded-[24px] bg-gradient-to-r from-[#FFFDF9] via-[#FAF4EC] to-[#F5ECE1] border border-[#EFE9E1] shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-[#E5A118]/15 text-[#E5A118] flex items-center justify-center shrink-0 border border-[#E5A118]/20 shadow-xs">
               <Award className="w-5 h-5 text-[#E5A118]" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                <h3 className="text-xs font-black text-[#2D231E] font-['Manrope']">
                   {t.profile.loyaltyCardTitle}
                 </h3>
                 <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#E5A118]/20 text-[#9C6D12]">
                   {MOCK_USER.loyaltyPoints} BALL
                 </span>
               </div>
-              <p className="text-[10px] text-[#6F574E] mt-0.5">
+              <p className="text-[10px] text-[#7A6B63] mt-0.5">
                 {currentLocale === 'ru'
                   ? 'Золотой статус покупателя'
                   : currentLocale === 'uz-Cyrl'
@@ -295,7 +295,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setIsLoyaltyModalOpen(true)
             }}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#3B2219] text-[#FFFDF9] text-[11px] font-bold hover:bg-[#2C1810] active:scale-95 transition-transform shadow-xs"
+            className="flex items-center gap-1 min-h-[40px] px-3.5 py-2 rounded-xl bg-[#2D231E] text-[#FFFDF9] text-xs font-bold hover:bg-[#1C1512] active:scale-95 transition-all shadow-xs"
           >
             <Info className="w-3.5 h-3.5" />
             <span>{t.profile.howItWorks}</span>
@@ -303,25 +303,25 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         </div>
 
         {/* Role Switcher Card (Buyer vs Seller / Artisan) */}
-        <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs flex items-center justify-between">
+        <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#EFE9E1] text-[#3B2219] flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-[#EFE9E1] text-[#2D231E] flex items-center justify-center shadow-xs">
               {userRole === 'seller' ? (
                 <Store className="w-5 h-5 text-[#C85A32]" />
               ) : (
-                <ShoppingBag className="w-5 h-5 text-[#3B2219]" />
+                <ShoppingBag className="w-5 h-5 text-[#2D231E]" />
               )}
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                <h3 className="text-xs font-black text-[#2D231E] font-['Manrope']">
                   {userRole === 'seller' ? t.onboarding.sellerTitle : t.onboarding.buyerTitle}
                 </h3>
-                <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full ${userRole === 'seller' ? 'bg-[#C85A32] text-white' : 'bg-[#EFE9E1] text-[#3B2219]'}`}>
+                <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full ${userRole === 'seller' ? 'bg-[#C85A32] text-white' : 'bg-[#EFE9E1] text-[#2D231E]'}`}>
                   {userRole.toUpperCase()}
                 </span>
               </div>
-              <p className="text-[10px] text-[#6F574E] mt-0.5">
+              <p className="text-[10px] text-[#7A6B63] mt-0.5">
                 {userRole === 'seller' ? t.onboarding.sellerModeActive : t.onboarding.buyerModeActive}
               </p>
             </div>
@@ -329,27 +329,27 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           <button
             type="button"
             onClick={handleToggleRole}
-            className="px-3 py-1.5 rounded-xl bg-[#3B2219] text-[#FFFDF9] text-xs font-bold hover:bg-[#2C1810] transition-transform active:scale-95 shadow-xs font-['Manrope']"
+            className="min-h-[44px] px-4 py-2 rounded-xl bg-[#2D231E] text-[#FFFDF9] text-xs font-bold hover:bg-[#1C1512] transition-all active:scale-95 shadow-xs font-['Manrope'] flex items-center justify-center"
           >
             {t.onboarding.switchRole}
           </button>
         </div>
 
         {/* Navigation Tabs (Orders, Favorites, Seller) */}
-        <div className="flex bg-[#EFE9E1] p-1 rounded-[16px]">
+        <div className="flex bg-[#EFE9E1] p-1.5 rounded-[18px] gap-1">
           <button
             type="button"
             onClick={() => {
               triggerHaptic('light')
               setActiveTab('orders')
             }}
-            className={`flex-1 py-2 text-xs font-bold rounded-[12px] flex items-center justify-center gap-1.5 transition-all ${
+            className={`flex-1 min-h-[44px] py-2.5 px-3 text-xs font-bold rounded-[14px] flex items-center justify-center gap-1.5 transition-all active:scale-95 ${
               activeTab === 'orders'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
-            <Package className="w-3.5 h-3.5" />
+            <Package className="w-4 h-4" />
             <span>{t.profile.tabs.orders}</span>
           </button>
 
@@ -359,13 +359,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setActiveTab('favorites')
             }}
-            className={`flex-1 py-2 text-xs font-bold rounded-[12px] flex items-center justify-center gap-1.5 transition-all ${
+            className={`flex-1 min-h-[44px] py-2.5 px-3 text-xs font-bold rounded-[14px] flex items-center justify-center gap-1.5 transition-all active:scale-95 ${
               activeTab === 'favorites'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
-            <Heart className={`w-3.5 h-3.5 ${activeTab === 'favorites' ? 'fill-red-500 text-red-500' : ''}`} />
+            <Heart className={`w-4 h-4 ${activeTab === 'favorites' ? 'fill-red-500 text-red-500' : ''}`} />
             <span>{t.profile.tabs.favorites}</span>
             {favorites.length > 0 && (
               <span className="w-4 h-4 rounded-full bg-[#C85A32] text-white text-[9px] font-black flex items-center justify-center">
@@ -380,13 +380,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               setActiveTab('seller')
             }}
-            className={`flex-1 py-2 text-xs font-bold rounded-[12px] flex items-center justify-center gap-1.5 transition-all ${
+            className={`flex-1 min-h-[44px] py-2.5 px-3 text-xs font-bold rounded-[14px] flex items-center justify-center gap-1.5 transition-all active:scale-95 ${
               activeTab === 'seller'
-                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
-                : 'text-[#6F574E] hover:text-[#3B2219]'
+                ? 'bg-[#FFFDF9] text-[#2D231E] shadow-sm'
+                : 'text-[#7A6B63] hover:text-[#2D231E]'
             }`}
           >
-            <Store className="w-3.5 h-3.5" />
+            <Store className="w-4 h-4" />
             <span>{t.profile.tabs.seller}</span>
           </button>
         </div>
@@ -394,28 +394,28 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         {/* Tab 1: Orders History */}
         {activeTab === 'orders' && (
           <div className="space-y-2.5 animate-in fade-in duration-200">
-            <h4 className="text-xs font-bold text-[#6F574E] px-1 uppercase tracking-wider">
+            <h4 className="text-xs font-bold text-[#7A6B63] px-1 uppercase tracking-wider">
               {t.profile.recentOrders}
             </h4>
             {orderHistory.map((order) => (
               <div
                 key={order.id}
-                className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-1.5"
+                className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs space-y-1.5"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
+                  <span className="text-xs font-extrabold text-[#2D231E] font-['Manrope']">
                     #{order.id}
                   </span>
                   <Badge variant="fresh" size="sm">
                     {order.status}
                   </Badge>
                 </div>
-                <p className="text-xs text-[#6F574E] line-clamp-1">
+                <p className="text-xs text-[#7A6B63] line-clamp-1">
                   {order.items}
                 </p>
                 <div className="flex items-center justify-between pt-1 border-t border-[#EFE9E1] text-[11px]">
-                  <span className="text-[#9B887F]">{order.date}</span>
-                  <span className="font-extrabold text-[#3B2219] font-['Manrope']">
+                  <span className="text-[#7A6B63]">{order.date}</span>
+                  <span className="font-extrabold text-[#2D231E] font-['Manrope']">
                     {order.total}
                   </span>
                 </div>
@@ -428,23 +428,23 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         {activeTab === 'favorites' && (
           <div className="space-y-3 animate-in fade-in duration-200">
             <div className="flex items-center justify-between px-1">
-              <h4 className="text-xs font-bold text-[#6F574E] uppercase tracking-wider">
+              <h4 className="text-xs font-bold text-[#7A6B63] uppercase tracking-wider">
                 {t.profile.tabs.favorites}
               </h4>
-              <span className="text-xs font-semibold text-[#6F574E]">
+              <span className="text-xs font-semibold text-[#7A6B63]">
                 {favoriteProducts.length} {t.common.itemsCount}
               </span>
             </div>
 
             {favoriteProducts.length === 0 ? (
-              <div className="py-12 text-center rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5]">
+              <div className="py-12 text-center rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1]">
                 <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#C85A32] flex items-center justify-center mx-auto mb-2">
                   <Heart className="w-6 h-6" />
                 </div>
-                <h4 className="text-sm font-bold text-[#3B2219]">
+                <h4 className="text-sm font-bold text-[#2D231E]">
                   {t.profile.noFavoritesYet}
                 </h4>
-                <p className="text-xs text-[#6F574E] mt-1 max-w-[220px] mx-auto">
+                <p className="text-xs text-[#7A6B63] mt-1 max-w-[220px] mx-auto">
                   {t.profile.noFavoritesDesc}
                 </p>
                 <button
@@ -453,7 +453,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     triggerHaptic('light')
                     setNavTab('menu')
                   }}
-                  className="mt-4 px-4 py-2 rounded-[12px] bg-[#3B2219] text-[#FFFDF9] text-xs font-bold hover:bg-[#2C1810]"
+                  className="mt-4 px-4 py-2.5 min-h-[44px] rounded-[14px] bg-[#C85A32] text-white text-xs font-bold hover:bg-[#B34E29] active:scale-95 transition-all shadow-xs"
                 >
                   {t.cart.browseCatalog}
                 </button>
@@ -474,7 +474,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* Tab 3: Become a Seller */}
         {activeTab === 'seller' && (
-          <div className="p-5 rounded-[24px] bg-[#3B2219] text-white space-y-4 animate-in fade-in duration-200">
+          <div className="p-5 rounded-[24px] bg-[#2D231E] text-white space-y-4 animate-in fade-in duration-200">
             <div className="flex items-center justify-between">
               <div className="w-12 h-12 rounded-[16px] bg-[#C85A32] flex items-center justify-center shadow-xs">
                 <Sparkles className="w-6 h-6 text-white" />
@@ -485,7 +485,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                     vendorApp.status === 'approved'
                       ? 'fresh'
                       : vendorApp.status === 'rejected'
-                      ? 'secondary'
+                      ? 'neutral'
                       : 'accent'
                   }
                   size="sm"
@@ -536,11 +536,11 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 <ShieldCheck className="w-4 h-4 text-white" />
               </div>
               <div>
-                <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+                <h4 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] flex items-center gap-1.5">
                   <span>{t.admin.panelTitle}</span>
                   <Badge variant="accent" size="sm">Admin</Badge>
                 </h4>
-                <p className="text-[10px] text-[#6F574E] mt-0.5">
+                <p className="text-[10px] text-[#7A6B63] mt-0.5">
                   Buyurtmalar, tovarlar va arizalar
                 </p>
               </div>
@@ -551,7 +551,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 triggerHaptic('medium')
                 onOpenAdmin()
               }}
-              className="px-3.5 py-1.5 rounded-[12px] bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-colors shadow-xs active:scale-95"
+              className="min-h-[44px] px-4 py-2 rounded-[14px] bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-all shadow-xs active:scale-95"
             >
               Kirish
             </button>
@@ -559,13 +559,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         )}
 
         {/* Customer Care / Support */}
-        <div className="p-4 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] flex items-center justify-between shadow-xs">
+        <div className="p-4 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] flex items-center justify-between shadow-xs">
           <div>
-            <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+            <h4 className="text-xs font-extrabold text-[#2D231E] font-['Manrope'] flex items-center gap-1.5">
               <MessageSquare className="w-4 h-4 text-[#C85A32]" />
               <span>{t.profile.supportTitle}</span>
             </h4>
-            <p className="text-[10px] text-[#6F574E] mt-0.5">
+            <p className="text-[10px] text-[#7A6B63] mt-0.5">
               {t.profile.supportDesc} (@murxamidinova_jasmin)
             </p>
           </div>
@@ -575,7 +575,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               triggerHaptic('light')
               openTelegramSupport()
             }}
-            className="px-3 py-1.5 rounded-[12px] bg-[#EFE9E1] text-[#3B2219] text-xs font-bold hover:bg-[#E6DED5] transition-colors"
+            className="min-h-[44px] px-4 py-2 rounded-[14px] bg-[#EFE9E1] text-[#2D231E] text-xs font-bold hover:bg-[#E2D8CD] active:scale-95 transition-all"
           >
             {t.profile.contactSupport}
           </button>
@@ -583,7 +583,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* App Version Info */}
         <div className="text-center pt-2">
-          <span className="text-[10px] text-[#9B887F] font-semibold">
+          <span className="text-[10px] text-[#7A6B63] font-semibold">
             Locally Marketplace · {t.profile.appVersion} 1.2.0 (Multilingual Edition)
           </span>
         </div>
@@ -593,20 +593,20 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
       {isLoyaltyModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-[#2D231E]/50 backdrop-blur-sm transition-opacity"
             onClick={() => setIsLoyaltyModalOpen(false)}
           />
-          <div className="relative w-full max-w-sm rounded-[28px] bg-[#FFFDF9] border border-[#E6DED5] p-5 shadow-[0_24px_50px_rgba(59,34,25,0.22)] space-y-4 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-sm rounded-[28px] bg-[#FFFDF9] border border-[#EFE9E1] p-5 shadow-[0_24px_50px_rgba(45,35,30,0.22)] space-y-4 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between pb-3 border-b border-[#EFE9E1]">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-2xl bg-[#E5A118]/15 text-[#E5A118] flex items-center justify-center">
                   <Award className="w-5 h-5 text-[#E5A118]" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-extrabold text-[#3B2219] font-['Manrope']">
+                  <h3 className="text-sm font-extrabold text-[#2D231E] font-['Manrope']">
                     {t.profile.loyaltyCardTitle}
                   </h3>
-                  <span className="text-[10px] font-bold text-[#6F574E]">
+                  <span className="text-[10px] font-bold text-[#7A6B63]">
                     {MOCK_USER.loyaltyPoints} {t.profile.pointsStat}
                   </span>
                 </div>
@@ -614,54 +614,55 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <button
                 type="button"
                 onClick={() => setIsLoyaltyModalOpen(false)}
-                className="w-7 h-7 rounded-full bg-[#EFE9E1] text-[#6F574E] hover:text-[#3B2219] flex items-center justify-center"
+                className="w-10 h-10 min-w-[44px] min-h-[44px] rounded-full bg-[#EFE9E1] text-[#7A6B63] hover:text-[#2D231E] flex items-center justify-center active:scale-95 transition-all"
+                aria-label={t.common.close}
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Explainer Body */}
-            <div className="p-3.5 rounded-[20px] bg-[#FAF6F0] border border-[#E6DED5]/80 space-y-2">
-              <p className="text-xs text-[#3B2219] leading-relaxed font-medium">
+            <div className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-sm space-y-2">
+              <p className="text-xs text-[#2D231E] leading-relaxed font-medium">
                 {t.profile.loyaltyPointsExplainer}
               </p>
             </div>
 
             {/* How points can be redeemed */}
             <div className="space-y-2">
-              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#E6DED5]">
+              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#EFE9E1]">
                 <div className="w-7 h-7 rounded-lg bg-[#FAF0DC] text-[#C85A32] flex items-center justify-center shrink-0">
                   <Gift className="w-4 h-4 text-[#C85A32]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h5 className="text-[11px] font-bold text-[#3B2219]">1,000 ball</h5>
-                  <p className="text-[10px] text-[#6F574E]">10,000 so'mlik chegirma vaucheri</p>
+                  <h5 className="text-[11px] font-bold text-[#2D231E]">1,000 ball</h5>
+                  <p className="text-[10px] text-[#7A6B63]">10,000 so'mlik chegirma vaucheri</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#E6DED5]">
+              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#EFE9E1]">
                 <div className="w-7 h-7 rounded-lg bg-[#FAF0DC] text-[#C85A32] flex items-center justify-center shrink-0">
                   <Truck className="w-4 h-4 text-[#C85A32]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h5 className="text-[11px] font-bold text-[#3B2219]">1,500 ball</h5>
-                  <p className="text-[10px] text-[#6F574E]">Bepul kuryer orqali yetkazib berish</p>
+                  <h5 className="text-[11px] font-bold text-[#2D231E]">1,500 ball</h5>
+                  <p className="text-[10px] text-[#7A6B63]">Bepul kuryer orqali yetkazib berish</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#E6DED5]">
+              <div className="flex items-center gap-2.5 p-2 rounded-[14px] bg-[#FFFDF9] border border-[#EFE9E1]">
                 <div className="w-7 h-7 rounded-lg bg-[#FAF0DC] text-[#E5A118] flex items-center justify-center shrink-0">
                   <Crown className="w-4 h-4 text-[#E5A118]" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h5 className="text-[11px] font-bold text-[#3B2219]">3,000 ball</h5>
-                  <p className="text-[10px] text-[#6F574E]">Doimiy 5% VIP chegirma barcha buyurtmalarga</p>
+                  <h5 className="text-[11px] font-bold text-[#2D231E]">3,000 ball</h5>
+                  <p className="text-[10px] text-[#7A6B63]">Doimiy 5% VIP chegirma barcha buyurtmalarga</p>
                 </div>
               </div>
             </div>
 
             <Button
-              variant="primary"
+              variant="accent"
               size="md"
               fullWidth
               onClick={() => setIsLoyaltyModalOpen(false)}

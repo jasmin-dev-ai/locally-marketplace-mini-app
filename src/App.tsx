@@ -140,7 +140,7 @@ function LocallyApp() {
           haptic.impact('light')
           setActiveTab('cart')
         },
-        color: THEME_COLORS.primary, // Rich Espresso #3B2219
+        color: THEME_COLORS.primary, // Dark Espresso #2D231E
         textColor: '#FFFFFF',
       })
     } else {

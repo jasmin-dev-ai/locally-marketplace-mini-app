@@ -3,15 +3,15 @@
 
 :root {
   /* Design System Theme Tokens */
-  --bg-cream: #FAF6F0;       /* Soft Cream / Off-White */
+  --bg-cream: #FFFDF9;       /* Soft Cream / Off-White */
   --card-taupe: #EFE9E1;     /* Warm Taupe / Light Beige */
-  --primary-espresso: #3B2219; /* Rich Espresso Brown */
-  --accent-terracotta: #C85A32; /* Warm Terracotta / Burnt Orange */
+  --primary-espresso: #2D231E; /* Dark Espresso Text */
+  --accent-terracotta: #C85A32; /* Deep Terracotta / Burnt Orange */
 
   /* Neutral & Utility Shades */
   --surface-paper: #FFFDF9;
-  --text-muted: #6F574E;
-  --border-subtle: #E6DED5;
+  --text-muted: #7A6B63;
+  --border-subtle: #EFE9E1;
   --peach-soft: #F5D6C9;
   --mint-soft: #DCE8D5;
   --mint-text: #2D4E37;
