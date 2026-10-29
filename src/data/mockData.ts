@@ -255,7 +255,7 @@ export const MOCK_USER: UserProfile = {
   lastName: 'Alimov',
   telegramUsername: 'temur_alimov',
   avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-  address: 'Mirabad Avenue, Block 4, Apt 42, Tashkent',
+  address: 'Mirobod tumani, 4-blok, 42-uy, Toşkent',
   favoriteCount: 7,
   ordersCount: 14,
   loyaltyPoints: 3400,

@@ -91,28 +91,70 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     favorites.includes(p.id)
   ).map(getLocalizedProduct)
 
-  // Sample order history
+  // Sample order history localized
   const orderHistory = [
     {
       id: 'LOC-894120',
-      date: 'Yesterday, 15:40',
-      items: 'Golden Tandoor Samsa × 2, Medovik Honey Cake × 1',
+      date:
+        currentLocale === 'uz-Latn'
+          ? 'Keça, 15:40'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Кеча, 15:40'
+          : currentLocale === 'ru'
+          ? 'Вчера, 15:40'
+          : 'Yesterday, 15:40',
+      items:
+        currentLocale === 'uz-Latn'
+          ? 'Zarrin tandir somsa × 2, Mayin asal torti × 1'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Заррин тандир сомса × 2, Майин асал торти × 1'
+          : currentLocale === 'ru'
+          ? 'Тандырная самса с говядиной × 2, Медовик × 1'
+          : 'Golden Tandoor Samsa × 2, Medovik Honey Cake × 1',
       total: `124,000 ${t.common.currency}`,
       status: t.profile.deliveredStatus,
       statusVariant: 'fresh' as const,
     },
     {
       id: 'LOC-732109',
-      date: 'Oct 18, 2026',
-      items: 'Warm Sourdough Non × 3, Mountain Wildflower Honey × 1',
+      date:
+        currentLocale === 'uz-Latn'
+          ? '18-okt, 2026'
+          : currentLocale === 'uz-Cyrl'
+          ? '18-окт, 2026'
+          : currentLocale === 'ru'
+          ? '18 окт, 2026'
+          : 'Oct 18, 2026',
+      items:
+        currentLocale === 'uz-Latn'
+          ? 'Issiq açitqisiz non × 3, Çotqol toğ gul asali × 1'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Иссиқ ачитқисиз нон × 3, Чотқол тоғ гул асали × 1'
+          : currentLocale === 'ru'
+          ? 'Горячая лепёшка × 3, Горный мёд × 1'
+          : 'Warm Sourdough Non × 3, Mountain Wildflower Honey × 1',
       total: `139,000 ${t.common.currency}`,
       status: t.profile.deliveredStatus,
       statusVariant: 'fresh' as const,
     },
     {
       id: 'LOC-610944',
-      date: 'Oct 12, 2026',
-      items: 'Adras Ikat Table Runner × 1',
+      date:
+        currentLocale === 'uz-Latn'
+          ? '12-okt, 2026'
+          : currentLocale === 'uz-Cyrl'
+          ? '12-окт, 2026'
+          : currentLocale === 'ru'
+          ? '12 окт, 2026'
+          : 'Oct 12, 2026',
+      items:
+        currentLocale === 'uz-Latn'
+          ? 'Adras Ikat dasturxoni × 1'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Адрас Икат дастурхони × 1'
+          : currentLocale === 'ru'
+          ? 'Скатерть из адраса ручной работы × 1'
+          : 'Adras Ikat Table Runner × 1',
       total: `185,000 ${t.common.currency}`,
       status: t.profile.deliveredStatus,
       statusVariant: 'fresh' as const,
@@ -120,13 +162,13 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
   ]
 
   return (
-    <div className="min-h-screen bg-[#FFFDF9] pb-28">
+    <div className="min-h-screen bg-[#FFFDF9] pb-24">
       <Header
         title={t.header.yourProfile}
         subtitle={t.header.profileSubtitle}
       />
 
-      <main className="px-5 pt-3 space-y-4">
+      <main className="px-5 pt-3 pb-24 space-y-4">
         {/* User Profile Card */}
         <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#EFE9E1] shadow-xs flex items-center gap-3.5">
           {tgUser?.photo_url ? (
@@ -178,89 +220,6 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               <ShieldCheck className="w-4 h-4 text-[#FFFDF9]" />
             </button>
           )}
-        </div>
-
-        {/* Discreet Admin Panel Access Card (Authorized Admin Only) */}
-        {isAdmin && (
-          <div className="p-4 rounded-[24px] bg-[#2D231E] text-[#FFFDF9] border border-[#C85A32]/40 shadow-xs flex items-center justify-between animate-in fade-in">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#C85A32] flex items-center justify-center shadow-xs">
-                <ShieldCheck className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xs font-black font-['Manrope'] tracking-wide">
-                    {t.admin.panelTitle}
-                  </h3>
-                  <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-[#C85A32] text-white">
-                    ADMIN
-                  </span>
-                </div>
-                <p className="text-[10px] text-[#EFE9E1]/80">
-                  {t.admin.security.authorizedAs}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic('medium')
-                onOpenAdmin?.()
-              }}
-              className="min-h-[44px] px-4 py-2 rounded-xl bg-[#FFFDF9] text-[#2D231E] text-xs font-black hover:bg-[#FFFDF9] transition-all active:scale-95 shadow-xs font-['Manrope'] flex items-center gap-1"
-            >
-              <span>Dashboard</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
-
-        {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-2 text-center">
-          <div
-            onClick={() => {
-              triggerHaptic('light')
-              setActiveTab('orders')
-            }}
-            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
-          >
-            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
-              {MOCK_USER.ordersCount}
-            </span>
-            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
-              {t.profile.ordersStat}
-            </span>
-          </div>
-
-          <div
-            onClick={() => {
-              triggerHaptic('light')
-              setActiveTab('favorites')
-            }}
-            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
-          >
-            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
-              {favorites.length}
-            </span>
-            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
-              {t.profile.savedStat}
-            </span>
-          </div>
-
-          <div
-            onClick={() => {
-              triggerHaptic('light')
-              setIsLoyaltyModalOpen(true)
-            }}
-            className="p-3.5 rounded-[18px] bg-[#EFE9E1] border border-[#EFE9E1] cursor-pointer hover:border-[#C85A32]/40 transition-all active:scale-95"
-          >
-            <span className="block text-base font-extrabold text-[#2D231E] font-['Manrope']">
-              {MOCK_USER.loyaltyPoints}
-            </span>
-            <span className="text-[10px] font-bold text-[#7A6B63] uppercase">
-              {t.profile.pointsStat}
-            </span>
-          </div>
         </div>
 
         {/* Enhanced Customer Loyalty Points Card */}
@@ -315,10 +274,18 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
             <div>
               <div className="flex items-center gap-1.5">
                 <h3 className="text-xs font-black text-[#2D231E] font-['Manrope']">
-                  {userRole === 'seller' ? t.onboarding.sellerTitle : t.onboarding.buyerTitle}
+                  {userRole === 'seller'
+                    ? (currentLocale === 'uz-Latn' ? 'Sotuvçi / Hunarmand' : t.onboarding.sellerTitle)
+                    : (currentLocale === 'uz-Latn' ? 'Xaridor' : t.onboarding.buyerTitle)}
                 </h3>
                 <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full ${userRole === 'seller' ? 'bg-[#C85A32] text-white' : 'bg-[#EFE9E1] text-[#2D231E]'}`}>
-                  {userRole.toUpperCase()}
+                  {currentLocale === 'uz-Latn'
+                    ? (userRole === 'seller' ? 'SOTUVÇI' : 'XARIDOR')
+                    : currentLocale === 'uz-Cyrl'
+                    ? (userRole === 'seller' ? 'СОТУВЧИ' : 'ХАРИДОР')
+                    : currentLocale === 'ru'
+                    ? (userRole === 'seller' ? 'ПРОДАВЕЦ' : 'ПОКУПАТЕЛЬ')
+                    : userRole.toUpperCase()}
                 </span>
               </div>
               <p className="text-[10px] text-[#7A6B63] mt-0.5">
@@ -474,7 +441,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
 
         {/* Tab 3: Become a Seller */}
         {activeTab === 'seller' && (
-          <div className="p-5 rounded-[24px] bg-[#2D231E] text-white space-y-4 animate-in fade-in duration-200">
+          <div className="p-5 rounded-[24px] bg-[#2D231E] text-white space-y-4 animate-in fade-in duration-200 mb-6">
             <div className="flex items-center justify-between">
               <div className="w-12 h-12 rounded-[16px] bg-[#C85A32] flex items-center justify-center shadow-xs">
                 <Sparkles className="w-6 h-6 text-white" />
@@ -553,7 +520,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
               }}
               className="min-h-[44px] px-4 py-2 rounded-[14px] bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-all shadow-xs active:scale-95"
             >
-              Kirish
+              Kiriş
             </button>
           </div>
         )}
