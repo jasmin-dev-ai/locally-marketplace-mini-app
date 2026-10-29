@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { X, ShoppingBag, Minus, Plus } from 'lucide-react'
 import { CartItem } from '../../types'
 import { Button } from '../common/Button'
 import { triggerHaptic } from '../../utils/telegram'
@@ -89,9 +90,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             className="w-8 h-8 rounded-full bg-[#EFE9E1] text-[#3B2219] flex items-center justify-center hover:bg-[#E6DED5] active:scale-95 transition-transform"
             aria-label={t.common.close}
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
+            <X className="w-4 h-4 text-[#3B2219]" />
           </button>
         </div>
 
@@ -99,8 +98,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         <div className="flex-1 overflow-y-auto px-5 py-3 space-y-3">
           {items.length === 0 ? (
             <div className="py-12 text-center">
-              <div className="w-16 h-16 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-3xl mb-3">
-                🧺
+              <div className="w-16 h-16 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#8C746A] mb-3">
+                <ShoppingBag className="w-7 h-7" />
               </div>
               <h3 className="text-sm font-bold text-[#3B2219] font-['Manrope']">
                 {t.cart.emptyCartTitle}
@@ -165,7 +164,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       }}
                       className="w-6 h-6 rounded-[8px] bg-[#FFFDF9] text-[#3B2219] hover:bg-[#E6DED5] text-xs font-bold flex items-center justify-center active:scale-90"
                     >
-                      −
+                      <Minus className="w-3 h-3" />
                     </button>
                     <span className="w-5 text-center text-xs font-bold text-[#3B2219]">
                       {item.quantity}
@@ -178,7 +177,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       }}
                       className="w-6 h-6 rounded-[8px] bg-[#C85A32] text-white hover:bg-[#B64F2A] text-xs font-bold flex items-center justify-center active:scale-90"
                     >
-                      +
+                      <Plus className="w-3 h-3" />
                     </button>
                   </div>
                 </div>

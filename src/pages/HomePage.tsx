@@ -1,4 +1,5 @@
 import React from 'react'
+import { ArrowRight, Check, Star, Search } from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { SearchBar } from '../components/common/SearchBar'
 import { CategoryFilter } from '../components/product/CategoryFilter'
@@ -61,15 +62,6 @@ export const HomePage: React.FC<HomePageProps> = ({
     return matchesCategory && matchesSearch
   })
 
-  // Dynamic time-based greeting
-  const currentHour = new Date().getHours()
-  const greetingText =
-    currentHour < 12
-      ? t.home.greetingMorning
-      : currentHour < 18
-      ? t.home.greetingDay
-      : t.home.greetingEvening
-
   return (
     <div className="min-h-screen bg-[#FAF6F0] pb-28">
       {/* Safe Area Sticky Header */}
@@ -79,11 +71,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       />
 
       <main className="px-5 pt-3 space-y-5">
-        {/* Warm Personal Greeting */}
-        <div className="flex flex-col gap-0.5">
-          <span className="text-xs font-semibold text-[#6F574E] tracking-tight">
-            {greetingText}, {user?.first_name || 'Temur'} ☀️
-          </span>
+        {/* Clean Modern Headline */}
+        <div>
           <h2 className="text-2xl font-extrabold text-[#3B2219] font-['Manrope'] tracking-tight">
             {t.home.heroHeadline}
           </h2>
@@ -176,9 +165,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                   triggerHaptic('light')
                   setActiveTab('menu')
                 }}
-                className="text-xs font-bold text-[#C85A32] hover:underline"
+                className="text-xs font-bold text-[#C85A32] hover:underline flex items-center gap-1"
               >
-                {t.home.viewAll} →
+                <span>{t.home.viewAll}</span>
+                <ArrowRight className="w-3 h-3" />
               </button>
             </div>
 
@@ -203,8 +193,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                       {artisan.initials}
                     </div>
                     {artisan.verified && (
-                      <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#C85A32] text-white text-[9px] flex items-center justify-center font-bold ring-2 ring-white">
-                        ✓
+                      <span className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#C85A32] text-white flex items-center justify-center ring-2 ring-white">
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
                       </span>
                     )}
                   </div>
@@ -212,7 +202,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     {artisan.name}
                   </span>
                   <div className="flex items-center gap-0.5 text-[9px] font-bold text-[#6F574E]">
-                    <span className="text-[#E5A118]">★</span>
+                    <Star className="w-2.5 h-2.5 fill-[#E5A118] text-[#E5A118]" />
                     <span>{artisan.rating}</span>
                   </div>
                 </div>
@@ -234,7 +224,9 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           {filteredProducts.length === 0 ? (
             <div className="py-12 text-center rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5]">
-              <span className="text-3xl block mb-2">🔍</span>
+              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#6F574E] flex items-center justify-center mx-auto mb-2">
+                <Search className="w-5 h-5" />
+              </div>
               <h4 className="text-sm font-bold text-[#3B2219]">
                 {t.home.noProductsFound}
               </h4>
@@ -290,7 +282,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <span className="text-xs font-extrabold font-['Manrope']">
                 {subtotal.toLocaleString()} {t.common.currency}
               </span>
-              <span className="text-xs text-white/70">→</span>
+              <ArrowRight className="w-3.5 h-3.5 text-white/70" />
             </div>
           </button>
         </div>

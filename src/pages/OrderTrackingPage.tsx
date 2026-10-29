@@ -1,4 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react'
+import {
+  CheckCircle2,
+  ChefHat,
+  Truck,
+  Sparkles,
+  Clock,
+  MapPin,
+  CreditCard,
+  ShoppingBag,
+  ArrowLeft,
+  Check,
+} from 'lucide-react'
 import { Order, OrderStatus } from '../types'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -9,29 +21,29 @@ interface OrderTrackingPageProps {
 
 interface StatusStepConfig {
   key: OrderStatus
-  icon: string
+  icon: (active: boolean) => React.ReactNode
   estimatedMinutes: number
 }
 
 const STATUS_CONFIGS: StatusStepConfig[] = [
   {
     key: 'confirmed',
-    icon: '✅',
+    icon: (active) => <CheckCircle2 className={`w-4 h-4 ${active ? 'text-[#C85A32]' : 'text-[#8C746A]'}`} />,
     estimatedMinutes: 0,
   },
   {
     key: 'preparing',
-    icon: '👨‍🍳',
+    icon: (active) => <ChefHat className={`w-4 h-4 ${active ? 'text-[#C85A32]' : 'text-[#8C746A]'}`} />,
     estimatedMinutes: 15,
   },
   {
     key: 'delivering',
-    icon: '🛵',
+    icon: (active) => <Truck className={`w-4 h-4 ${active ? 'text-[#C85A32]' : 'text-[#8C746A]'}`} />,
     estimatedMinutes: 30,
   },
   {
     key: 'completed',
-    icon: '🎉',
+    icon: (active) => <Sparkles className={`w-4 h-4 ${active ? 'text-[#C85A32]' : 'text-[#8C746A]'}`} />,
     estimatedMinutes: 45,
   },
 ]
@@ -122,9 +134,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
           className="w-9 h-9 rounded-full flex items-center justify-center transition-all active:scale-90 bg-[#EFE9E1] text-[#3B2219]"
           aria-label={t.common.back}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeft className="w-4 h-4 text-[#3B2219]" />
         </button>
         <div>
           <h1 className="text-base font-bold leading-tight text-[#3B2219] font-['Manrope']">
@@ -153,13 +163,15 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
               boxShadow: '0 4px 20px rgba(200, 90, 50, 0.3)',
             }}
           >
-            <div className="text-4xl">⏱️</div>
+            <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+              <Clock className="w-6 h-6 text-white" />
+            </div>
             <div className="flex-1">
               <p className="text-white/80 text-xs font-medium uppercase tracking-wider mb-0.5">
                 {t.tracking.estimatedDelivery}
               </p>
               {countdown.done ? (
-                <p className="text-white font-bold text-xl">🎉 {t.tracking.steps.completed.label}</p>
+                <p className="text-white font-bold text-xl">{t.tracking.steps.completed.label}</p>
               ) : (
                 <p className="text-white font-bold text-2xl tabular-nums">
                   {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
@@ -172,7 +184,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center bg-white/15"
             >
-              <span className="text-2xl animate-pulse">{currentStep.icon}</span>
+              <div className="animate-pulse">{currentStep.icon(true)}</div>
             </div>
           </div>
         )}
@@ -186,7 +198,9 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
               boxShadow: '0 4px 20px rgba(45,122,79,0.3)',
             }}
           >
-            <div className="text-5xl mb-2">🎉</div>
+            <div className="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center mx-auto mb-2">
+              <Sparkles className="w-7 h-7" />
+            </div>
             <p className="text-white font-bold text-xl">{t.tracking.steps.completed.label}!</p>
             <p className="text-white/75 text-sm mt-1">{t.tracking.steps.completed.description}</p>
           </div>
@@ -235,13 +249,9 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                       }}
                     >
                       {isDone ? (
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      ) : isActive ? (
-                        <span className="text-base animate-pulse">{step.icon}</span>
+                        <Check className="w-4 h-4 text-white stroke-[3]" />
                       ) : (
-                        <span className="text-sm text-[#C4B5AC]">{step.icon}</span>
+                        step.icon(isActive)
                       )}
                     </div>
                   </div>
@@ -255,9 +265,9 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                       {stepTrans.label}
                       {isActive && (
                         <span
-                          className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-[#C85A32] text-white"
+                          className="ml-2 text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#C85A32] text-white uppercase"
                         >
-                          ●
+                          Active
                         </span>
                       )}
                     </p>
@@ -303,7 +313,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                   className="px-5 py-3 flex items-center gap-3 border-b border-[#EFE9E1]"
                 >
                   <div
-                    className="w-12 h-12 rounded-xl overflow-hidden shrink-0 flex items-center justify-center text-xl bg-[#FAF6F0]"
+                    className="w-12 h-12 rounded-xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FAF6F0]"
                   >
                     {product.imageUrl ? (
                       <img
@@ -312,7 +322,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      '🛍️'
+                      <ShoppingBag className="w-5 h-5 text-[#8C746A]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -339,7 +349,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
             </div>
             <div className="flex justify-between text-xs mb-3 text-[#8B6E5A]">
               <span>{t.cart.deliveryFee}</span>
-              <span>{order.deliveryFee === 0 ? `${t.common.free} 🎁` : `${order.deliveryFee.toLocaleString()} ${t.common.currency}`}</span>
+              <span>{order.deliveryFee === 0 ? t.common.free : `${order.deliveryFee.toLocaleString()} ${t.common.currency}`}</span>
             </div>
             <div
               className="flex justify-between text-sm font-bold pt-2 border-t border-[#EFE9E1] text-[#3B2219]"
@@ -359,21 +369,23 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
           </h2>
           <div className="flex items-start gap-3">
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm bg-[#FAF6F0]"
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-[#FAF6F0] text-[#C85A32]"
             >
-              📍
+              <MapPin className="w-4 h-4 text-[#C85A32]" />
             </div>
             <div>
               <p className="text-sm font-medium text-[#3B2219]">
                 {order.deliveryAddress}
               </p>
               {order.deliveryTimeSlot && (
-                <p className="text-xs mt-0.5 text-[#8B6E5A]">
-                  🕒 {order.deliveryTimeSlot}
+                <p className="text-xs mt-0.5 text-[#8B6E5A] flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#8B6E5A]" />
+                  <span>{order.deliveryTimeSlot}</span>
                 </p>
               )}
-              <p className="text-xs mt-0.5 capitalize text-[#8B6E5A]">
-                💳 {order.paymentMethod}
+              <p className="text-xs mt-0.5 capitalize text-[#8B6E5A] flex items-center gap-1">
+                <CreditCard className="w-3 h-3 text-[#8B6E5A]" />
+                <span>{order.paymentMethod}</span>
               </p>
             </div>
           </div>
@@ -389,7 +401,7 @@ export const OrderTrackingPage: React.FC<OrderTrackingPageProps> = ({ order, onC
                 : 'bg-[#EFE9E1] text-[#3B2219]'
             }`}
           >
-            {isCompleted ? `🛍️ ${t.common.close}` : t.tracking.closeTracking}
+            {isCompleted ? t.common.close : t.tracking.closeTracking}
           </button>
         </div>
       </div>

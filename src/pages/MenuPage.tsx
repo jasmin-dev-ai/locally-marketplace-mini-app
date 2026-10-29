@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ArrowUpDown, Check, ChevronDown, PackageSearch } from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { SearchBar } from '../components/common/SearchBar'
 import { CategoryFilter } from '../components/product/CategoryFilter'
@@ -31,6 +32,7 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
 
   const [sortBy, setSortBy] = useState<SortOption>('recommended')
   const [activeTag, setActiveTag] = useState<string>('all')
+  const [isSortOpen, setIsSortOpen] = useState(false)
 
   const tags = [
     { key: 'all', label: t.catalog.tags.all },
@@ -126,23 +128,55 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
             })}
           </div>
 
-          {/* Sort Dropdown */}
-          <div className="shrink-0">
-            <select
-              value={sortBy}
-              onChange={(e) => {
-                triggerHaptic('selection')
-                setSortBy(e.target.value as SortOption)
+          {/* Refined Sort Popover */}
+          <div className="relative shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('light')
+                setIsSortOpen((prev) => !prev)
               }}
-              aria-label={t.catalog.sortBy}
-              className="text-[11px] font-bold bg-[#FFFDF9] border border-[#E6DED5] rounded-[10px] px-2 py-1 text-[#3B2219] focus:outline-none"
+              className="flex items-center gap-1.5 text-[11px] font-bold bg-[#FFFDF9] border border-[#E6DED5] rounded-[10px] px-2.5 py-1 text-[#3B2219] shadow-2xs hover:border-[#C85A32]/40 transition-colors"
             >
-              {sortOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+              <ArrowUpDown className="w-3 h-3 text-[#C85A32]" />
+              <span className="truncate max-w-[100px]">
+                {sortOptions.find((o) => o.value === sortBy)?.label}
+              </span>
+              <ChevronDown className="w-3 h-3 text-[#8C746A]" />
+            </button>
+
+            {isSortOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-30"
+                  onClick={() => setIsSortOpen(false)}
+                />
+                <div className="absolute right-0 top-8 z-40 w-44 rounded-[16px] bg-[#FFFDF9]/95 backdrop-blur-md border border-[#E6DED5] shadow-[0_8px_24px_rgba(59,34,25,0.12)] p-1 space-y-0.5 animate-in fade-in zoom-in-95 duration-100">
+                  {sortOptions.map((opt) => {
+                    const isSelected = opt.value === sortBy
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          triggerHaptic('selection')
+                          setSortBy(opt.value)
+                          setIsSortOpen(false)
+                        }}
+                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[10px] text-[11px] font-bold transition-colors ${
+                          isSelected
+                            ? 'bg-[#EFE9E1] text-[#3B2219]'
+                            : 'text-[#6F574E] hover:bg-[#FAF6F0] hover:text-[#3B2219]'
+                        }`}
+                      >
+                        <span>{opt.label}</span>
+                        {isSelected && <Check className="w-3 h-3 text-[#C85A32]" />}
+                      </button>
+                    )
+                  })}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -150,7 +184,9 @@ export const MenuPage: React.FC<MenuPageProps> = ({ onProductClick }) => {
         <div className="pt-2">
           {filteredProducts.length === 0 ? (
             <div className="py-14 text-center rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5]">
-              <span className="text-3xl block mb-2">🍽️</span>
+              <div className="w-12 h-12 rounded-full bg-[#EFE9E1] text-[#8C746A] flex items-center justify-center mx-auto mb-2">
+                <PackageSearch className="w-5 h-5" />
+              </div>
               <h4 className="text-sm font-bold text-[#3B2219]">
                 {t.home.noProductsFound}
               </h4>

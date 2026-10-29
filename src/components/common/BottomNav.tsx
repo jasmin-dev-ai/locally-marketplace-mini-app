@@ -1,4 +1,5 @@
 import React from 'react'
+import { Home, LayoutGrid, ShoppingBag, User } from 'lucide-react'
 import { NavTab } from '../../types'
 import { triggerHaptic } from '../../utils/telegram'
 import { useLanguage } from '../../context/LanguageContext'
@@ -37,39 +38,20 @@ export const BottomNav: React.FC<BottomNavProps> = ({
       id: 'home',
       label: t.nav.home,
       icon: (active) => (
-        <svg
-          className={`w-6 h-6 transition-transform ${active ? 'scale-105' : ''}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={active ? '2.4' : '1.8'}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M3 10.5 12 3l9 7.5" />
-          <path d="M5.5 9.5V21h13V9.5" />
-          <path d="M9 21v-6h6v6" />
-        </svg>
+        <Home
+          className={`w-5 h-5 transition-transform ${active ? 'scale-110' : ''}`}
+          strokeWidth={active ? 2.5 : 1.9}
+        />
       ),
     },
     {
       id: 'menu',
       label: t.nav.menu,
       icon: (active) => (
-        <svg
-          className={`w-6 h-6 transition-transform ${active ? 'scale-105' : ''}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={active ? '2.4' : '1.8'}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="4" width="7" height="7" rx="2" />
-          <rect x="14" y="4" width="7" height="7" rx="2" />
-          <rect x="3" y="14" width="7" height="7" rx="2" />
-          <rect x="14" y="14" width="7" height="7" rx="2" />
-        </svg>
+        <LayoutGrid
+          className={`w-5 h-5 transition-transform ${active ? 'scale-110' : ''}`}
+          strokeWidth={active ? 2.5 : 1.9}
+        />
       ),
     },
     {
@@ -77,37 +59,20 @@ export const BottomNav: React.FC<BottomNavProps> = ({
       label: t.nav.cart,
       badge: cartCount,
       icon: (active) => (
-        <svg
-          className={`w-6 h-6 transition-transform ${active ? 'scale-105' : ''}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={active ? '2.4' : '1.8'}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-          <path d="M3 6h18" />
-          <path d="M16 10a4 4 0 0 1-8 0" />
-        </svg>
+        <ShoppingBag
+          className={`w-5 h-5 transition-transform ${active ? 'scale-110' : ''}`}
+          strokeWidth={active ? 2.5 : 1.9}
+        />
       ),
     },
     {
       id: 'profile',
       label: t.nav.profile,
       icon: (active) => (
-        <svg
-          className={`w-6 h-6 transition-transform ${active ? 'scale-105' : ''}`}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={active ? '2.4' : '1.8'}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="8" r="4" />
-          <path d="M5 20a7 7 0 0 1 14 0" />
-        </svg>
+        <User
+          className={`w-5 h-5 transition-transform ${active ? 'scale-110' : ''}`}
+          strokeWidth={active ? 2.5 : 1.9}
+        />
       ),
     },
   ]

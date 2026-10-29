@@ -1,4 +1,5 @@
 import React from 'react'
+import { Heart, Star, Check, Plus, Minus } from 'lucide-react'
 import { Product } from '../../types'
 import { triggerHaptic } from '../../utils/telegram'
 import { useLanguage } from '../../context/LanguageContext'
@@ -83,17 +84,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           }`}
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
-          <svg
-            className="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill={isFavorite ? 'currentColor' : 'none'}
-            stroke="currentColor"
-            strokeWidth={isFavorite ? '0' : '2'}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-          </svg>
+          <Heart
+            className={`w-4 h-4 transition-colors ${
+              isFavorite ? 'fill-[#C85A32] text-[#C85A32]' : 'text-[#6F574E]'
+            }`}
+          />
         </button>
 
         {/* Badge / Tag on Image */}
@@ -107,7 +102,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Rating Pill */}
         <div className="absolute bottom-2 left-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FFFDF9]/95 backdrop-blur-md shadow-xs">
-          <span className="text-[#E5A118] text-[10px]">★</span>
+          <Star className="w-2.5 h-2.5 fill-[#E5A118] text-[#E5A118]" />
           <span className="text-[10px] font-bold text-[#3B2219]">
             {product.rating.toFixed(1)}
           </span>
@@ -128,9 +123,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {product.seller.name}
           </span>
           {product.seller.isVerified && (
-            <span className="text-[#C85A32] text-[10px] shrink-0" title={t.product.verifiedArtisan}>
-              ✓
-            </span>
+            <Check
+              className="w-3 h-3 text-[#C85A32] shrink-0 stroke-[3]"
+              title={t.product.verifiedArtisan}
+            />
           )}
         </div>
 
@@ -139,19 +135,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product.title}
         </h3>
 
-        {/* Bottom Price & Add Action */}
-        <div className="mt-auto pt-2 flex items-center justify-between border-t border-[#EFE9E1]">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-1">
-              <span className="text-sm font-extrabold text-[#3B2219] font-['Manrope']">
+        {/* Bottom Price & Add Action with Strict Overflow Prevention */}
+        <div className="mt-auto pt-2 flex items-center justify-between border-t border-[#EFE9E1] gap-1.5 min-w-0">
+          <div className="flex flex-col min-w-0 flex-1">
+            <div className="flex items-baseline gap-1 truncate">
+              <span className="text-xs sm:text-sm font-extrabold text-[#3B2219] font-['Manrope'] truncate">
                 {product.price.toLocaleString()}
               </span>
-              <span className="text-[9px] font-bold text-[#6F574E]">
+              <span className="text-[9px] font-bold text-[#6F574E] shrink-0">
                 {t.common.currency}
               </span>
             </div>
             {product.unit && (
-              <span className="text-[8px] text-[#9B887F] -mt-0.5">
+              <span className="text-[8px] text-[#9B887F] -mt-0.5 truncate">
                 {product.unit}
               </span>
             )}
@@ -160,7 +156,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {/* "+Add" or Quantity Controls */}
           {quantityInCart > 0 ? (
             <div
-              className="flex items-center bg-[#EFE9E1] border border-[#E6DED5] rounded-[10px] p-0.5"
+              className="flex items-center bg-[#EFE9E1] border border-[#E6DED5] rounded-[10px] p-0.5 shrink-0"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -169,7 +165,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 className="w-6 h-6 rounded-[8px] bg-[#FFFDF9] text-[#3B2219] hover:bg-[#E6DED5] text-xs font-bold flex items-center justify-center active:scale-90 transition-transform"
                 aria-label="Decrease quantity"
               >
-                −
+                <Minus className="w-3 h-3" />
               </button>
               <span className="w-5 text-center text-xs font-bold text-[#3B2219]">
                 {quantityInCart}
@@ -180,19 +176,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 className="w-6 h-6 rounded-[8px] bg-[#C85A32] text-white hover:bg-[#B64F2A] text-xs font-bold flex items-center justify-center active:scale-90 transition-transform"
                 aria-label="Increase quantity"
               >
-                +
+                <Plus className="w-3 h-3" />
               </button>
             </div>
           ) : (
             <button
               type="button"
               onClick={handleAddClick}
-              className="inline-flex items-center gap-1 h-7 px-2.5 rounded-[10px] bg-[#F5D6C9] hover:bg-[#F0C5B3] text-[#C85A32] active:scale-95 font-extrabold text-[11px] transition-all duration-150"
+              className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-[10px] bg-[#F5D6C9] hover:bg-[#F0C5B3] text-[#C85A32] active:scale-95 font-extrabold text-[11px] transition-all duration-150 shrink-0 max-w-[90px] min-w-0"
             >
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8">
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-              <span>{t.product.addToBasket}</span>
+              <Plus className="w-3 h-3 shrink-0" />
+              <span className="truncate">{t.product.addToBasket}</span>
             </button>
           )}
         </div>

@@ -1,4 +1,15 @@
 import React, { useState } from 'react'
+import {
+  ShoppingBag,
+  Minus,
+  Plus,
+  MapPin,
+  Clock,
+  CreditCard,
+  Zap,
+  Wallet,
+  Banknote,
+} from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { Button } from '../components/common/Button'
 import { CartSummary } from '../components/cart/CartSummary'
@@ -35,11 +46,28 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
   const [orderNote, setOrderNote] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const paymentOptions: { id: PaymentMethod; label: string; icon: string; badge?: string }[] = [
-    { id: 'telegram_pay', label: t.cart.payments.telegramPay, icon: '⚡', badge: 'Fastest' },
-    { id: 'click', label: t.cart.payments.click, icon: '🔵' },
-    { id: 'payme', label: t.cart.payments.payme, icon: '🟢' },
-    { id: 'cash_on_delivery', label: t.cart.payments.cashOnDelivery, icon: '💵' },
+  const paymentOptions: { id: PaymentMethod; label: string; icon: React.ReactNode; badge?: string }[] = [
+    {
+      id: 'telegram_pay',
+      label: t.cart.payments.telegramPay,
+      icon: <Zap className="w-4 h-4 text-[#C85A32]" />,
+      badge: 'Fastest',
+    },
+    {
+      id: 'click',
+      label: t.cart.payments.click,
+      icon: <CreditCard className="w-4 h-4 text-[#2E78B7]" />,
+    },
+    {
+      id: 'payme',
+      label: t.cart.payments.payme,
+      icon: <Wallet className="w-4 h-4 text-[#10B981]" />,
+    },
+    {
+      id: 'cash_on_delivery',
+      label: t.cart.payments.cashOnDelivery,
+      icon: <Banknote className="w-4 h-4 text-[#8C746A]" />,
+    },
   ]
 
   const deliverySlotOptions = [
@@ -100,7 +128,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
       clearCart()
 
       await showAlert(
-        `🎉 #${generatedOrderNum} · ${t.cart.checkoutSuccessAlert}\n\n${t.cart.checkoutSuccessSubtitle}`
+        `#${generatedOrderNum} · ${t.cart.checkoutSuccessAlert}\n\n${t.cart.checkoutSuccessSubtitle}`
       )
 
       // Navigate to order tracking screen
@@ -142,8 +170,8 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
       <main className="px-5 pt-3 space-y-4">
         {items.length === 0 ? (
           <div className="py-20 text-center rounded-[28px] bg-[#FFFDF9] border border-[#E6DED5] p-6 shadow-xs">
-            <div className="w-20 h-20 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-4xl mb-4">
-              🧺
+            <div className="w-20 h-20 mx-auto rounded-full bg-[#EFE9E1] flex items-center justify-center text-[#8C746A] mb-4">
+              <ShoppingBag className="w-10 h-10" />
             </div>
             <h2 className="text-base font-extrabold text-[#3B2219] font-['Manrope']">
               {t.cart.emptyCartTitle}
@@ -211,7 +239,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                         }}
                         className="w-7 h-7 rounded-[10px] bg-[#FFFDF9] text-[#3B2219] hover:bg-[#E6DED5] text-xs font-bold flex items-center justify-center active:scale-90"
                       >
-                        −
+                        <Minus className="w-3.5 h-3.5" />
                       </button>
                       <span className="w-6 text-center text-xs font-bold text-[#3B2219]">
                         {item.quantity}
@@ -224,7 +252,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                         }}
                         className="w-7 h-7 rounded-[10px] bg-[#C85A32] text-white hover:bg-[#B64F2A] text-xs font-bold flex items-center justify-center active:scale-90"
                       >
-                        +
+                        <Plus className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
@@ -235,8 +263,9 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
             {/* Delivery Address & Time Slot Card */}
             <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold font-['Manrope'] text-[#3B2219]">
-                  📍 {t.cart.deliveryAddress}
+                <span className="text-xs font-extrabold font-['Manrope'] text-[#3B2219] flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#C85A32]" />
+                  <span>{t.cart.deliveryAddress}</span>
                 </span>
                 <span className="text-[10px] text-[#C85A32] font-bold">Tashkent</span>
               </div>
@@ -250,8 +279,9 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
               />
 
               <div className="pt-2 border-t border-[#EFE9E1]">
-                <span className="block text-[11px] font-bold text-[#6F574E] mb-1.5">
-                  🕒 {t.cart.deliverySlot}
+                <span className="block text-[11px] font-bold text-[#6F574E] mb-1.5 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#C85A32]" />
+                  <span>{t.cart.deliverySlot}</span>
                 </span>
                 <div className="grid grid-cols-1 gap-1.5">
                   {deliverySlotOptions.map((slot) => {
@@ -280,8 +310,9 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
 
             {/* Payment Methods */}
             <section className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-2.5">
-              <span className="block text-xs font-extrabold font-['Manrope'] text-[#3B2219]">
-                💳 {t.cart.paymentMethod}
+              <span className="block text-xs font-extrabold font-['Manrope'] text-[#3B2219] flex items-center gap-1.5">
+                <CreditCard className="w-3.5 h-3.5 text-[#C85A32]" />
+                <span>{t.cart.paymentMethod}</span>
               </span>
               <div className="grid grid-cols-2 gap-2">
                 {paymentOptions.map((opt) => {
@@ -300,7 +331,7 @@ export const CartPage: React.FC<CartPageProps> = ({ onOrderPlaced }) => {
                           : 'border-[#E6DED5] bg-[#FFFDF9] hover:bg-[#FAF6F0]'
                       }`}
                     >
-                      <span className="text-base">{opt.icon}</span>
+                      <div className="shrink-0">{opt.icon}</div>
                       <div className="min-w-0">
                         <span className="block text-xs font-bold text-[#3B2219] truncate">
                           {opt.label}

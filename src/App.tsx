@@ -11,8 +11,6 @@ import { OrderTrackingPage } from './pages/OrderTrackingPage'
 import { AdminDashboard } from './pages/AdminDashboard'
 import { CartDrawer } from './components/cart/CartDrawer'
 import { ProductDetailModal } from './components/product/ProductDetailModal'
-import { RoleOnboardingModal } from './components/auth/RoleOnboardingModal'
-import { hasCompletedOnboarding, UserRole } from './services/roleService'
 import { Order, Product } from './types'
 import { THEME_COLORS } from './constants/theme'
 
@@ -44,7 +42,6 @@ function LocallyApp() {
 
   const [activeOrder, setActiveOrder] = React.useState<Order | null>(null)
   const [isAdminOpen, setIsAdminOpen] = React.useState<boolean>(false)
-  const [isOnboardingOpen, setIsOnboardingOpen] = React.useState<boolean>(() => !hasCompletedOnboarding())
 
   // Ensure Telegram WebApp theme matches Locally palette
   useEffect(() => {
@@ -90,8 +87,8 @@ function LocallyApp() {
 
   // Lifecycle sync for Telegram native MainButton
   useEffect(() => {
-    // Hide main button on onboarding, admin panel or order tracking screen
-    if (isOnboardingOpen || isAdminOpen || activeOrder) {
+    // Hide main button on admin panel or order tracking screen
+    if (isAdminOpen || activeOrder) {
       mainButton.hide()
       return () => mainButton.hide()
     }
@@ -152,7 +149,7 @@ function LocallyApp() {
     return () => {
       mainButton.hide()
     }
-  }, [isOnboardingOpen, isAdminOpen, activeOrder, activeTab, totalItems, total, selectedProduct, isCartDrawerOpen, mainButton, haptic, addItem, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, t])
+  }, [isAdminOpen, activeOrder, activeTab, totalItems, total, selectedProduct, isCartDrawerOpen, mainButton, haptic, addItem, setSelectedProduct, setIsCartDrawerOpen, setActiveTab, t])
 
   const handleProductClick = (product: Product) => {
     haptic.selection()
@@ -161,18 +158,6 @@ function LocallyApp() {
 
   return (
     <div className="telegram-mini-app-shell relative flex flex-col justify-between">
-      {/* First-Time Role Onboarding Modal (Buyer vs Seller / Artisan) */}
-      <RoleOnboardingModal
-        isOpen={isOnboardingOpen}
-        onSelectRole={(role) => {
-          setIsOnboardingOpen(false)
-          if (role === 'seller') {
-            setActiveTab('profile')
-          }
-        }}
-        onClose={() => setIsOnboardingOpen(false)}
-      />
-
       {/* Admin Dashboard Fullscreen Overlay */}
       {isAdminOpen && (
         <div className="absolute inset-0 z-50">
@@ -219,6 +204,7 @@ function LocallyApp() {
               haptic.selection()
               setIsAdminOpen(true)
             }}
+            onProductClick={handleProductClick}
           />
         )}
       </div>

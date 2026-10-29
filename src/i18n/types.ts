@@ -162,8 +162,14 @@ export interface TranslationSchema {
     pointsStat: string
     tabs: {
       orders: string
+      favorites: string
       seller: string
     }
+    loyaltyCardTitle: string
+    loyaltyPointsExplainer: string
+    howItWorks: string
+    noFavoritesYet: string
+    noFavoritesDesc: string
     languageSectionTitle: string
     languageSectionSubtitle: string
     recentOrders: string

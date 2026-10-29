@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { MapPin, Bell, ChevronDown, ArrowLeft, CheckCheck, X, Sparkles, Tag, ShoppingBag } from 'lucide-react'
 import { triggerHaptic } from '../../utils/telegram'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { useLanguage } from '../../context/LanguageContext'
@@ -20,12 +21,20 @@ export interface HeaderProps {
   className?: string
 }
 
+interface NotificationItem {
+  id: string
+  title: string
+  message: string
+  time: string
+  unread: boolean
+  icon: 'sparkles' | 'tag' | 'bag'
+}
+
 export const Header: React.FC<HeaderProps> = ({
   locationText,
   eyebrowText,
   onLocationClick,
   onNotificationClick,
-  unreadNotifications = true,
   showBack = false,
   onBackClick,
   title,
@@ -34,13 +43,91 @@ export const Header: React.FC<HeaderProps> = ({
   showLanguageSwitcher = true,
   className = '',
 }) => {
-  const { t } = useLanguage()
+  const { t, currentLocale } = useLanguage()
 
-  // Dynamic user location state (stored in localStorage, no hardcoded address)
+  // Dynamic user location state
   const [currentLocation, setCurrentLocation] = useState<string | null>(
     () => locationText ?? getUserLocation()
   )
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false)
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false)
+
+  // Notification items state
+  const [notifications, setNotifications] = useState<NotificationItem[]>([
+    {
+      id: 'notif-1',
+      title:
+        currentLocale === 'ru'
+          ? 'Добро пожаловать в Locally!'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Locally бозорига хуш келибсиз!'
+          : currentLocale === 'en'
+          ? 'Welcome to Locally!'
+          : "Locally bozoriga xush kelibsiz!",
+      message:
+        currentLocale === 'ru'
+          ? 'Свежая домашняя выпечка и ремесленные изделия с быстрой доставкой.'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Янги уй пишириқлари ва қўл меҳнати буюмлари тезкор етказиб бериш билан.'
+          : currentLocale === 'en'
+          ? 'Small-batch artisan delicacies and handcrafted treasures.'
+          : "Yangi uy pishiriqlari va qo'l mehnati buyumlari tezkor yetkazib berish bilan.",
+      time: '10:00',
+      unread: true,
+      icon: 'sparkles',
+    },
+    {
+      id: 'notif-2',
+      title:
+        currentLocale === 'ru'
+          ? 'Скидка на первый заказ'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Биринчи буюртмага чегирма'
+          : currentLocale === 'en'
+          ? 'First Order Bonus'
+          : "Birinchi buyurtmaga chegirma",
+      message:
+        currentLocale === 'ru'
+          ? 'Бесплатная доставка курьером при заказе от 100 000 сум.'
+          : currentLocale === 'uz-Cyrl'
+          ? '100 000 сўмдан юқори буюртмаларда курьер хизмати бепул.'
+          : currentLocale === 'en'
+          ? 'Enjoy complimentary delivery on orders over 100,000 UZS.'
+          : "100 000 so'mdan yuqori buyurtmalarda kuryer xizmati bepul.",
+      time: '09:15',
+      unread: true,
+      icon: 'tag',
+    },
+    {
+      id: 'notif-3',
+      title:
+        currentLocale === 'ru'
+          ? 'Мастера на связи'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Усталар билан тўғридан-тўғри алоқа'
+          : currentLocale === 'en'
+          ? 'Direct Artisan Support'
+          : "Ustalar bilan to'g'ridan-to'g'ri aloqa",
+      message:
+        currentLocale === 'ru'
+          ? 'Каждый заказ готовится индивидуально под вас.'
+          : currentLocale === 'uz-Cyrl'
+          ? 'Ҳар бир таом ва буюм сиз учун алоҳида тайёрланади.'
+          : currentLocale === 'en'
+          ? 'Every item is hand-prepared with care upon ordering.'
+          : "Har bir taom va buyum siz uchun alohida tayyorlanadi.",
+      time: '18:40',
+      unread: false,
+      icon: 'bag',
+    },
+  ])
+
+  const hasUnread = notifications.some((n) => n.unread)
+
+  const handleMarkAllRead = () => {
+    triggerHaptic('light')
+    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })))
+  }
 
   useEffect(() => {
     if (locationText !== undefined) {
@@ -66,6 +153,12 @@ export const Header: React.FC<HeaderProps> = ({
     setIsLocationModalOpen(true)
   }
 
+  const handleNotificationPress = () => {
+    triggerHaptic('light')
+    setIsNotificationOpen((prev) => !prev)
+    onNotificationClick?.()
+  }
+
   const resolvedEyebrow = eyebrowText ?? t.header.deliveringTo
   const displayLocation = currentLocation || t.location.defaultPlaceholder
 
@@ -88,9 +181,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-transform"
               aria-label={t.common.back}
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m15 18-6-6 6-6" />
-              </svg>
+              <ArrowLeft className="w-5 h-5 text-[#3B2219]" />
             </button>
             {title && (
               <div>
@@ -124,57 +215,121 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={handleLocationPress}
               className="flex items-center gap-1.5 font-bold text-sm text-[#3B2219] mt-0.5 hover:text-[#C85A32] transition-colors"
             >
-              <svg
-                className="w-4 h-4 text-[#C85A32] shrink-0"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
+              <MapPin className="w-4 h-4 text-[#C85A32] shrink-0" />
               <span className={`truncate max-w-[170px] ${!currentLocation ? 'text-[#C85A32] font-semibold' : ''}`}>
                 {displayLocation}
               </span>
-              <span className="text-xs text-[#6F574E] font-medium">⌄</span>
+              <ChevronDown className="w-3.5 h-3.5 text-[#6F574E] shrink-0" />
             </button>
           </div>
         )}
 
         {/* Right Action: Language Switcher and Notification Bell */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 relative">
           {showLanguageSwitcher && <LanguageSwitcher variant="dropdown" />}
           {rightAction ? (
             rightAction
           ) : (
-            <button
-              type="button"
-              onClick={() => {
-                triggerHaptic('light')
-                onNotificationClick?.()
-              }}
-              className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-transform"
-              aria-label={t.header.notifications}
-            >
-              <svg
-                className="w-5 h-5 text-[#3B2219]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            <div className="relative">
+              <button
+                type="button"
+                onClick={handleNotificationPress}
+                className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#FFFDF9] border border-[#E6DED5] text-[#3B2219] shadow-xs active:scale-95 transition-transform"
+                aria-label={t.header.notifications}
               >
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-              {unreadNotifications && (
-                <span className="absolute top-2 right-2 w-2 h-2 bg-[#C85A32] rounded-full ring-2 ring-[#FFFDF9]" />
+                <Bell className="w-5 h-5 text-[#3B2219]" />
+                {hasUnread && (
+                  <span className="absolute top-2 right-2 w-2 h-2 bg-[#C85A32] rounded-full ring-2 ring-[#FFFDF9]" />
+                )}
+              </button>
+
+              {/* Redesigned Notification Popover with Smooth Backdrop Blur */}
+              {isNotificationOpen && (
+                <>
+                  {/* Backdrop overlay */}
+                  <div
+                    className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px]"
+                    onClick={() => setIsNotificationOpen(false)}
+                  />
+
+                  {/* Popover Card */}
+                  <div className="absolute right-0 top-12 z-50 w-[300px] sm:w-[320px] rounded-[24px] bg-[#FFFDF9]/95 backdrop-blur-xl border border-[#E6DED5] shadow-[0_16px_40px_rgba(59,34,25,0.18)] p-4 space-y-3 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#EFE9E1]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
+                          {t.header.notifications}
+                        </span>
+                        {hasUnread && (
+                          <span className="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-[#C85A32] text-white">
+                            {notifications.filter((n) => n.unread).length}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {hasUnread && (
+                          <button
+                            type="button"
+                            onClick={handleMarkAllRead}
+                            className="text-[10px] font-bold text-[#C85A32] hover:underline flex items-center gap-1"
+                            title="Mark all as read"
+                          >
+                            <CheckCheck className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => setIsNotificationOpen(false)}
+                          className="w-5 h-5 rounded-full flex items-center justify-center text-[#8C746A] hover:text-[#3B2219]"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Notification items */}
+                    <div className="space-y-2 max-h-[260px] overflow-y-auto no-scrollbar">
+                      {notifications.map((item) => (
+                        <div
+                          key={item.id}
+                          className={`p-2.5 rounded-[16px] border transition-colors flex items-start gap-2.5 ${
+                            item.unread
+                              ? 'bg-[#FAF6F0] border-[#E6DED5]'
+                              : 'bg-transparent border-transparent'
+                          }`}
+                        >
+                          <div className="w-7 h-7 rounded-xl bg-[#EFE9E1] text-[#C85A32] flex items-center justify-center shrink-0 mt-0.5">
+                            {item.icon === 'sparkles' ? (
+                              <Sparkles className="w-3.5 h-3.5" />
+                            ) : item.icon === 'tag' ? (
+                              <Tag className="w-3.5 h-3.5" />
+                            ) : (
+                              <ShoppingBag className="w-3.5 h-3.5" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between">
+                              <h4 className="text-xs font-bold text-[#3B2219] truncate font-['Manrope']">
+                                {item.title}
+                              </h4>
+                              <span className="text-[9px] text-[#8C746A] shrink-0 ml-1">
+                                {item.time}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-[#6F574E] mt-0.5 leading-snug line-clamp-2">
+                              {item.message}
+                            </p>
+                          </div>
+                          {item.unread && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#C85A32] shrink-0 mt-1.5" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
               )}
-            </button>
+            </div>
           )}
         </div>
       </header>
