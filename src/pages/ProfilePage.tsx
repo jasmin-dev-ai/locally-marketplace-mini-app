@@ -528,6 +528,36 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         )}
 
+        {/* Admin Dashboard Entry (Visible to authorized administrators) */}
+        {onOpenAdmin && isAdminUser(tgUser) && (
+          <div className="p-4 rounded-[20px] bg-gradient-to-r from-[#FAF0DC] to-[#FFFDF9] border border-[#C85A32]/30 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-[#C85A32] text-white flex items-center justify-center text-sm font-bold shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+                  <span>{t.admin.panelTitle}</span>
+                  <Badge variant="accent" size="sm">Admin</Badge>
+                </h4>
+                <p className="text-[10px] text-[#6F574E] mt-0.5">
+                  Buyurtmalar, tovarlar va arizalar
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic('medium')
+                onOpenAdmin()
+              }}
+              className="px-3.5 py-1.5 rounded-[12px] bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-colors shadow-xs active:scale-95"
+            >
+              Kirish
+            </button>
+          </div>
+        )}
+
         {/* Customer Care / Support */}
         <div className="p-4 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] flex items-center justify-between shadow-xs">
           <div>

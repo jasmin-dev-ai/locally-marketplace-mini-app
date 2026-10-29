@@ -198,10 +198,17 @@ export interface TranslationSchema {
       activeOrders: string
       totalProducts: string
       registeredMakers: string
+      overviewTitle: string
+      grossMerchandiseValue: string
+      totalProcessedOrders: string
+      activeDeliveryQueue: string
+      verifiedLocalArtisans: string
+      completedCountSuffix: string
     }
     tabs: {
       orders: string
       products: string
+      applications: string
       analytics: string
     }
     orders: {
@@ -220,6 +227,35 @@ export interface TranslationSchema {
       markDelivered: string
       cancelOrder: string
       statusUpdated: string
+      standardDelivery: string
+    }
+    orderStatuses: {
+      confirmed: string
+      preparing: string
+      delivering: string
+      completed: string
+      cancelled: string
+    }
+    applicationStatuses: {
+      pending: string
+      approved: string
+      rejected: string
+    }
+    applications: {
+      title: string
+      filterAll: string
+      filterPending: string
+      filterApproved: string
+      artisan: string
+      contact: string
+      status: string
+      description: string
+      approve: string
+      reject: string
+      activeInMarket: string
+      rejectedStatus: string
+      approvedSuccess: string
+      rejectedNotice: string
     }
     products: {
       title: string
@@ -233,11 +269,30 @@ export interface TranslationSchema {
       formTitle: string
       formPrice: string
       formCategory: string
+      formTitlePlaceholder: string
+    }
+    categories: {
+      bakery: string
+      national: string
+      sweets: string
+      crafts: string
+      dairy: string
     }
     security: {
       authorizedAs: string
       whitelistNotice: string
       developerMode: string
+      accessControlTitle: string
+      currentAdmin: string
+      telegramUser: string
+      telegramId: string
+      authMode: string
+      authModeProduction: string
+      authModeDev: string
+      toggleDevMode: string
+      browserPreview: string
+      devOverrideActive: string
+      devOverrideOff: string
     }
   }
   location: {

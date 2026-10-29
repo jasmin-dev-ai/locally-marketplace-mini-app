@@ -31,7 +31,10 @@ import {
   ShieldCheck,
   User,
   Phone,
-  FileText,
+  Truck,
+  TrendingUp,
+  Plus,
+  X,
 } from 'lucide-react'
 
 interface AdminDashboardProps {
@@ -77,7 +80,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     const updated = updateOrderStatus(orderId, nextStatus)
     setOrders(updated)
     setMetrics(computeAdminMetrics())
-    showToast(`${t.admin.orders.statusUpdated}: #${orderId} ➔ ${nextStatus}`)
+    const statusText = t.admin.orderStatuses[nextStatus] || nextStatus
+    showToast(`${t.admin.orders.statusUpdated}: #${orderId} ➔ ${statusText}`)
   }
 
   const handleToggleStock = (productId: string) => {
@@ -93,7 +97,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     setApplications(updated)
     setProducts(getAdminProducts())
     setMetrics(computeAdminMetrics())
-    showToast(`Ariza #${appId} tasdiqlandi! Do'kon bozorga qo'shildi.`)
+    showToast(t.admin.applications.approvedSuccess)
   }
 
   const handleRejectApplication = (appId: string) => {
@@ -101,7 +105,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     const updated = updateVendorApplicationStatus(appId, 'rejected', 'Hujjatlar to‘liq emas')
     setApplications(updated)
     setMetrics(computeAdminMetrics())
-    showToast(`Ariza #${appId} rad etildi.`)
+    showToast(t.admin.applications.rejectedNotice)
   }
 
   const handleAddProductSubmit = (e: React.FormEvent) => {
@@ -151,6 +155,84 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   }
 
   // ───────────────────────────────────────────────────────────────────────────
+  // ORDER STATUS BADGE STYLING
+  // ───────────────────────────────────────────────────────────────────────────
+  const getOrderStatusBadge = (s: OrderStatus) => {
+    switch (s) {
+      case 'confirmed':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#FAF0DC] text-[#B87A00] border border-[#E5A118]/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#E5A118]" />
+            <span>{t.admin.orderStatuses.confirmed}</span>
+          </span>
+        )
+      case 'preparing':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#FDF0EB] text-[#C85A32] border border-[#C85A32]/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C85A32] animate-pulse" />
+            <span>{t.admin.orderStatuses.preparing}</span>
+          </span>
+        )
+      case 'delivering':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EBF3FB] text-[#2B6CB0] border border-[#3182CE]/30">
+            <Truck className="w-3 h-3 text-[#2B6CB0]" />
+            <span>{t.admin.orderStatuses.delivering}</span>
+          </span>
+        )
+      case 'completed':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EDF7ED] text-[#2E7D32] border border-[#4CAF50]/30">
+            <CheckCircle2 className="w-3 h-3 text-[#2E7D32]" />
+            <span>{t.admin.orderStatuses.completed}</span>
+          </span>
+        )
+      case 'cancelled':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#9B887F] border border-[#E6DED5]">
+            <XCircle className="w-3 h-3 text-[#9B887F]" />
+            <span>{t.admin.orderStatuses.cancelled}</span>
+          </span>
+        )
+      default:
+        return (
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#EFE9E1] text-[#6F574E]">
+            {s}
+          </span>
+        )
+    }
+  }
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // APPLICATION STATUS BADGE STYLING
+  // ───────────────────────────────────────────────────────────────────────────
+  const getAppStatusBadge = (status: 'pending' | 'approved' | 'rejected') => {
+    switch (status) {
+      case 'pending':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#FAF0DC] text-[#B87A00] border border-[#E5A118]/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#E5A118] animate-pulse" />
+            <span>{t.admin.applicationStatuses.pending}</span>
+          </span>
+        )
+      case 'approved':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EDF7ED] text-[#2E7D32] border border-[#4CAF50]/30">
+            <CheckCircle2 className="w-3 h-3 text-[#2E7D32]" />
+            <span>{t.admin.applicationStatuses.approved}</span>
+          </span>
+        )
+      case 'rejected':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-[#EFE9E1] text-[#9B887F] border border-[#E6DED5]">
+            <XCircle className="w-3 h-3 text-[#9B887F]" />
+            <span>{t.admin.applicationStatuses.rejected}</span>
+          </span>
+        )
+    }
+  }
+
+  // ───────────────────────────────────────────────────────────────────────────
   // ACCESS DENIED VIEW
   // ───────────────────────────────────────────────────────────────────────────
   if (!isAdmin) {
@@ -158,7 +240,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
       <div className="min-h-screen bg-[#FAF6F0] flex flex-col justify-between p-6">
         <div className="pt-12 text-center space-y-4">
           <div className="w-20 h-20 mx-auto rounded-3xl bg-[#C85A32]/10 border-2 border-[#C85A32]/30 flex items-center justify-center text-4xl shadow-sm">
-            🔒
+            <ShieldCheck className="w-10 h-10 text-[#C85A32]" />
           </div>
           <div className="space-y-2">
             <h1 className="text-2xl font-black text-[#3B2219] font-['Manrope']">
@@ -171,19 +253,20 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
 
           <div className="p-4 rounded-2xl bg-[#FFFDF9] border border-[#E6DED5] text-left text-xs space-y-2 max-w-sm mx-auto shadow-xs">
             <div className="flex items-center justify-between text-[#6F574E]">
-              <span>Telegram User:</span>
+              <span>{t.admin.security.telegramUser}:</span>
               <span className="font-bold text-[#3B2219]">
                 {tgUser?.username ? `@${tgUser.username}` : (tgUser?.first_name || 'Anonymous')}
               </span>
             </div>
             <div className="flex items-center justify-between text-[#6F574E]">
-              <span>Telegram ID:</span>
+              <span>{t.admin.security.telegramId}:</span>
               <span className="font-mono font-bold text-[#3B2219]">
-                {tgUser?.id || 'Browser Preview (No TG ID)'}
+                {tgUser?.id || t.admin.security.browserPreview}
               </span>
             </div>
-            <div className="pt-2 border-t border-[#EFE9E1] text-[11px] text-[#9B887F]">
-              🛡️ {t.admin.security.whitelistNotice}
+            <div className="pt-2 border-t border-[#EFE9E1] text-[11px] text-[#9B887F] flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#C85A32] shrink-0" />
+              <span>{t.admin.security.whitelistNotice}</span>
             </div>
           </div>
         </div>
@@ -199,7 +282,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             onClick={handleDevOverrideToggle}
             className="w-full py-2.5 text-center text-[11px] font-bold text-[#9B887F] hover:text-[#C85A32] transition-colors"
           >
-            ⚙️ {t.admin.security.developerMode}: {devOverride ? 'Enabled' : 'Bypass for Preview'}
+            {t.admin.security.developerMode}: {devOverride ? t.admin.security.devOverrideActive : t.admin.security.toggleDevMode}
           </button>
         </div>
       </div>
@@ -233,7 +316,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
       <header className="sticky top-0 z-30 bg-[#FAF6F0]/95 backdrop-blur-md px-5 py-4 border-b border-[#E6DED5] flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-[#C85A32] text-white flex items-center justify-center text-lg font-bold shadow-xs">
-            🛡️
+            <ShieldCheck className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -241,7 +324,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 {t.admin.panelTitle}
               </h1>
               <Badge variant="accent" size="sm">
-                ADMIN
+                Admin
               </Badge>
             </div>
             <p className="text-[11px] font-medium text-[#6F574E]">
@@ -256,10 +339,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             haptic.selection()
             onClose()
           }}
-          className="w-9 h-9 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] font-bold flex items-center justify-center transition-colors text-sm"
+          className="w-9 h-9 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] flex items-center justify-center transition-colors"
           aria-label={t.common.close}
         >
-          ✕
+          <X className="w-4 h-4" />
         </button>
       </header>
 
@@ -268,24 +351,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         {/* Analytics Highlights Row */}
         <div className="grid grid-cols-2 gap-2.5">
           <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs">
-            <span className="text-[10px] font-bold uppercase text-[#6F574E] block">
-              💰 {t.admin.metrics.totalRevenue}
+            <span className="text-[10px] font-bold uppercase text-[#6F574E] flex items-center gap-1.5">
+              <TrendingUp className="w-3.5 h-3.5 text-[#C85A32]" />
+              <span>{t.admin.metrics.totalRevenue}</span>
             </span>
-            <span className="text-lg font-black text-[#3B2219] font-['Manrope'] mt-1 block">
+            <span className="text-base font-black text-[#3B2219] font-['Manrope'] mt-1 block">
               {metrics.totalRevenue.toLocaleString()} {t.common.currency}
             </span>
           </div>
 
           <div className="p-3.5 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs">
-            <span className="text-[10px] font-bold uppercase text-[#6F574E] block">
-              ⚡ {t.admin.metrics.activeOrders}
+            <span className="text-[10px] font-bold uppercase text-[#6F574E] flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-[#C85A32]" />
+              <span>{t.admin.metrics.activeOrders}</span>
             </span>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-lg font-black text-[#C85A32] font-['Manrope']">
+              <span className="text-base font-black text-[#C85A32] font-['Manrope']">
                 {metrics.activeOrdersCount}
               </span>
               <span className="text-[11px] text-[#6F574E]">
-                / {metrics.completedOrdersCount} done
+                / {metrics.completedOrdersCount} {t.admin.metrics.completedCountSuffix}
               </span>
             </div>
           </div>
@@ -306,7 +391,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             }`}
           >
             <Package className="w-3.5 h-3.5" />
-            <span>Buyurtmalar ({orders.length})</span>
+            <span>{t.admin.tabs.orders} ({orders.length})</span>
           </button>
           <button
             type="button"
@@ -321,7 +406,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             }`}
           >
             <Tag className="w-3.5 h-3.5" />
-            <span>Mahsulot ({products.length})</span>
+            <span>{t.admin.tabs.products} ({products.length})</span>
           </button>
           <button
             type="button"
@@ -336,7 +421,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             }`}
           >
             <Store className="w-3.5 h-3.5" />
-            <span>Arizalar ({applications.length})</span>
+            <span>{t.admin.tabs.applications} ({applications.length})</span>
             {metrics.pendingApplicationsCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-[#C85A32] text-white text-[9px] font-black flex items-center justify-center shrink-0">
                 {metrics.pendingApplicationsCount}
@@ -356,7 +441,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             }`}
           >
             <BarChart3 className="w-3.5 h-3.5" />
-            <span>Statistika</span>
+            <span>{t.admin.tabs.analytics}</span>
           </button>
         </div>
 
@@ -376,7 +461,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
                 }`}
               >
-                {t.admin.orders.filterAll}
+                {t.admin.orders.filterAll} ({orders.length})
               </button>
               <button
                 type="button"
@@ -398,30 +483,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
                 }`}
               >
-                {t.admin.orders.filterCompleted}
+                {t.admin.orders.filterCompleted} ({metrics.completedOrdersCount})
               </button>
             </div>
 
             {/* Orders List */}
             <div className="space-y-3">
               {filteredOrders.map((order) => {
-                const getStatusBadgeVariant = (s: OrderStatus) => {
-                  switch (s) {
-                    case 'confirmed':
-                      return 'gold'
-                    case 'preparing':
-                      return 'accent'
-                    case 'delivering':
-                      return 'outline'
-                    case 'completed':
-                      return 'fresh'
-                    case 'cancelled':
-                      return 'secondary'
-                    default:
-                      return 'secondary'
-                  }
-                }
-
                 return (
                   <div
                     key={order.id}
@@ -433,12 +501,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           #{order.orderNumber || order.id}
                         </span>
                         <span className="text-[10px] text-[#9B887F] block">
-                          {order.deliveryTimeSlot || 'Standard Delivery'}
+                          {order.deliveryTimeSlot || t.admin.orders.standardDelivery}
                         </span>
                       </div>
-                      <Badge variant={getStatusBadgeVariant(order.status)} size="sm">
-                        {order.status.toUpperCase()}
-                      </Badge>
+                      {getOrderStatusBadge(order.status)}
                     </div>
 
                     {/* Order Items */}
@@ -487,37 +553,40 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'preparing')}
-                            className="px-2.5 py-1.5 rounded-[12px] bg-[#C85A32] text-white text-[11px] font-bold hover:bg-[#B34E29] transition-colors"
+                            className="px-3 py-1.5 rounded-full bg-[#C85A32] hover:bg-[#B34E29] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
                           >
-                            {t.admin.orders.markPreparing}
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>{t.admin.orders.markPreparing}</span>
                           </button>
                         )}
                         {order.status === 'preparing' && (
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'delivering')}
-                            className="px-2.5 py-1.5 rounded-[12px] bg-[#3B2219] text-white text-[11px] font-bold hover:bg-[#2C1810] transition-colors"
+                            className="px-3 py-1.5 rounded-full bg-[#8C4A28] hover:bg-[#723B1E] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
                           >
-                            {t.admin.orders.markDelivering}
+                            <Truck className="w-3.5 h-3.5" />
+                            <span>{t.admin.orders.markDelivering}</span>
                           </button>
                         )}
                         {order.status === 'delivering' && (
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'completed')}
-                            className="px-2.5 py-1.5 rounded-[12px] bg-[#2E7D32] text-white text-[11px] font-bold hover:bg-[#256628] transition-colors"
+                            className="px-3.5 py-1.5 rounded-full bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 active:scale-95"
                           >
-                            {t.admin.orders.markDelivered}
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span>{t.admin.orders.markDelivered}</span>
                           </button>
                         )}
                         {order.status !== 'completed' && order.status !== 'cancelled' && (
                           <button
                             type="button"
                             onClick={() => handleStatusChange(order.id, 'cancelled')}
-                            className="px-2 py-1.5 rounded-[12px] bg-[#EFE9E1] text-[#9B887F] hover:text-[#C85A32] text-[11px] font-semibold transition-colors"
+                            className="w-7 h-7 rounded-full bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#9B887F] hover:text-[#C85A32] flex items-center justify-center transition-colors"
                             title={t.admin.orders.cancelOrder}
                           >
-                            ✕
+                            <X className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>
@@ -558,8 +627,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                 onSubmit={handleAddProductSubmit}
                 className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#C85A32]/40 shadow-sm space-y-3 animate-in fade-in"
               >
-                <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
-                  ✨ {t.admin.products.addNew}
+                <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
+                  <Plus className="w-3.5 h-3.5 text-[#C85A32]" />
+                  <span>{t.admin.products.addNew}</span>
                 </h4>
 
                 <div>
@@ -571,7 +641,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     required
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
-                    placeholder="e.g., Mountain Walnut Baklava"
+                    placeholder={t.admin.products.formTitlePlaceholder}
                     className="w-full px-3 py-2 rounded-[12px] bg-[#FAF6F0] border border-[#E6DED5] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
                   />
                 </div>
@@ -599,11 +669,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                       onChange={(e) => setNewCategory(e.target.value as any)}
                       className="w-full px-2 py-2 rounded-[12px] bg-[#FAF6F0] border border-[#E6DED5] text-xs font-medium focus:outline-none focus:border-[#C85A32]"
                     >
-                      <option value="bakery">Bakery</option>
-                      <option value="national">National</option>
-                      <option value="sweets">Sweets</option>
-                      <option value="crafts">Crafts</option>
-                      <option value="dairy">Dairy</option>
+                      <option value="bakery">{t.admin.categories.bakery}</option>
+                      <option value="national">{t.admin.categories.national}</option>
+                      <option value="sweets">{t.admin.categories.sweets}</option>
+                      <option value="crafts">{t.admin.categories.crafts}</option>
+                      <option value="dairy">{t.admin.categories.dairy}</option>
                     </select>
                   </div>
                 </div>
@@ -618,6 +688,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
             <div className="space-y-2.5">
               {products.map((p) => {
                 const loc = getLocalizedProduct(p)
+                const categoryLabel = (t.admin.categories as any)[p.category] || p.category
                 return (
                   <div
                     key={p.id}
@@ -635,7 +706,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                         </h4>
                       </div>
                       <p className="text-[10px] text-[#6F574E] truncate">
-                        {p.seller.name} · {p.category}
+                        {p.seller.name} · {categoryLabel}
                       </p>
                       <span className="text-xs font-extrabold text-[#3B2219] font-['Manrope']">
                         {p.price.toLocaleString()} {t.common.currency}
@@ -677,7 +748,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
                 }`}
               >
-                Barchasi ({applications.length})
+                {t.admin.applications.filterAll} ({applications.length})
               </button>
               <button
                 type="button"
@@ -688,7 +759,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
                 }`}
               >
-                Kutilmoqda ({metrics.pendingApplicationsCount})
+                {t.admin.applications.filterPending} ({metrics.pendingApplicationsCount})
               </button>
               <button
                 type="button"
@@ -699,7 +770,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
                 }`}
               >
-                Tasdiqlangan
+                {t.admin.applications.filterApproved}
               </button>
             </div>
 
@@ -721,25 +792,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                           {app.shopName}
                         </h4>
                       </div>
-                      <Badge
-                        variant={
-                          app.status === 'approved'
-                            ? 'fresh'
-                            : app.status === 'rejected'
-                            ? 'secondary'
-                            : 'accent'
-                        }
-                        size="sm"
-                      >
-                        {app.status.toUpperCase()}
-                      </Badge>
+                      {getAppStatusBadge(app.status)}
                     </div>
 
                     <div className="bg-[#FAF6F0] p-2.5 rounded-[14px] text-xs space-y-1.5">
                       <div className="flex items-center justify-between text-[#6F574E]">
                         <span className="flex items-center gap-1">
                           <User className="w-3 h-3 text-[#C85A32]" />
-                          <span>Usta / Muallif:</span>
+                          <span>{t.admin.applications.artisan}:</span>
                         </span>
                         <span className="font-bold text-[#3B2219]">
                           {app.ownerName} {app.telegramUsername ? `(@${app.telegramUsername})` : ''}
@@ -748,14 +808,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                       <div className="flex items-center justify-between text-[#6F574E]">
                         <span className="flex items-center gap-1">
                           <Phone className="w-3 h-3 text-[#C85A32]" />
-                          <span>Aloqa:</span>
+                          <span>{t.admin.applications.contact}:</span>
                         </span>
                         <span className="font-mono font-bold text-[#3B2219]">{app.phone}</span>
                       </div>
                       <div className="flex items-center justify-between text-[#6F574E]">
                         <span className="flex items-center gap-1">
                           <ShieldCheck className="w-3 h-3 text-[#C85A32]" />
-                          <span>Maqomi:</span>
+                          <span>{t.admin.applications.status}:</span>
                         </span>
                         <span className="font-bold text-[#3B2219]">{app.legalStatusLabel}</span>
                       </div>
@@ -763,7 +823,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
 
                     <div>
                       <span className="text-[10px] font-bold uppercase text-[#9B887F] block mb-0.5">
-                        Tavsif
+                        {t.admin.applications.description}
                       </span>
                       <p className="text-xs text-[#3B2219] leading-relaxed italic">
                         "{app.description}"
@@ -784,27 +844,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                               onClick={() => handleRejectApplication(app.id)}
                               className="px-3 py-1.5 rounded-[12px] bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#6F574E] text-xs font-bold transition-colors"
                             >
-                              Rad etish
+                              {t.admin.applications.reject}
                             </button>
                             <button
                               type="button"
                               onClick={() => handleApproveApplication(app.id)}
                               className="px-3.5 py-1.5 rounded-[12px] bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-colors shadow-xs"
                             >
-                              Tasdiqlash (Do'kon ochish)
+                              {t.admin.applications.approve}
                             </button>
                           </>
                         )}
                         {app.status === 'approved' && (
                           <span className="text-xs font-bold text-[#2E7D32] flex items-center gap-1">
                             <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
-                            <span>Bozorda faol</span>
+                            <span>{t.admin.applications.activeInMarket}</span>
                           </span>
                         )}
                         {app.status === 'rejected' && (
                           <span className="text-xs font-bold text-[#9B887F] flex items-center gap-1">
                             <XCircle className="w-4 h-4 text-[#9B887F]" />
-                            <span>Rad etilgan</span>
+                            <span>{t.admin.applications.rejectedStatus}</span>
                           </span>
                         )}
                       </div>
@@ -816,72 +876,80 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         )}
 
         {/* ─────────────────────────────────────────────────────────────────── */}
-        {/* TAB 3: ANALYTICS & SECURITY CONFIG */}
+        {/* TAB 4: ANALYTICS & SECURITY CONFIG */}
         {/* ─────────────────────────────────────────────────────────────────── */}
         {activeTab === 'analytics' && (
           <section className="space-y-4 animate-in fade-in duration-200">
             {/* Extended Analytics Cards */}
             <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
               <h3 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-2">
-                <span>📈</span> Marketplace Performance Overview
+                <TrendingUp className="w-4 h-4 text-[#C85A32]" />
+                <span>{t.admin.metrics.overviewTitle}</span>
               </h3>
 
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">Gross Merchandised Value:</span>
+                  <span className="text-[#6F574E]">{t.admin.metrics.grossMerchandiseValue}:</span>
                   <span className="font-extrabold text-[#3B2219]">
                     {metrics.totalRevenue.toLocaleString()} {t.common.currency}
                   </span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">Total Processed Orders:</span>
-                  <span className="font-extrabold text-[#3B2219]">{orders.length}</span>
+                  <span className="text-[#6F574E]">{t.admin.metrics.totalProcessedOrders}:</span>
+                  <span className="font-extrabold text-[#3B2219]">{orders.length} ta</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">Active Delivery Queue:</span>
+                  <span className="text-[#6F574E]">{t.admin.metrics.activeDeliveryQueue}:</span>
                   <span className="font-extrabold text-[#C85A32]">
-                    {metrics.activeOrdersCount}
+                    {metrics.activeOrdersCount} ta
                   </span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#EFE9E1]">
-                  <span className="text-[#6F574E]">Verified Local Artisans:</span>
+                  <span className="text-[#6F574E]">{t.admin.metrics.verifiedLocalArtisans}:</span>
                   <span className="font-extrabold text-[#3B2219]">
-                    {metrics.registeredMakersCount}
+                    {metrics.registeredMakersCount} ta
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Access & Security Whitelist Box */}
-            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-2.5">
+            <div className="p-4 rounded-[24px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3">
               <h3 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] flex items-center gap-1.5">
-                <span>🔐</span> Access Control & Whitelist Status
+                <ShieldCheck className="w-4 h-4 text-[#2E7D32]" />
+                <span>{t.admin.security.accessControlTitle}</span>
               </h3>
               <p className="text-[11px] text-[#6F574E] leading-relaxed">
                 {t.admin.security.whitelistNotice}
               </p>
 
-              <div className="p-3 rounded-2xl bg-[#FAF6F0] border border-[#E6DED5] text-[11px] space-y-1 font-mono text-[#6F574E]">
-                <p>
-                  Current Admin: <b className="text-[#3B2219]">@{tgUser?.username || 'admin'}</b>
-                </p>
-                <p>
-                  Telegram ID: <b className="text-[#3B2219]">{tgUser?.id || '8850768299'}</b>
-                </p>
-                <p>
-                  Auth Mode:{' '}
-                  <b className="text-[#2E7D32]">
-                    {devOverride ? 'Dev Mode Override (Active)' : 'Production Telegram ID Whitelist'}
-                  </b>
-                </p>
+              <div className="p-3.5 rounded-2xl bg-[#FAF6F0] border border-[#E6DED5] text-xs space-y-2 text-[#6F574E]">
+                <div className="flex items-center justify-between">
+                  <span>{t.admin.security.currentAdmin}:</span>
+                  <span className="font-bold text-[#3B2219]">
+                    @{tgUser?.username || 'admin'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>{t.admin.security.telegramId}:</span>
+                  <span className="font-mono font-bold text-[#3B2219]">
+                    {tgUser?.id || '8850768299'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between pt-1 border-t border-[#EFE9E1]">
+                  <span>{t.admin.security.authMode}:</span>
+                  <span className="font-bold text-[#2E7D32]">
+                    {devOverride ? t.admin.security.authModeDev : t.admin.security.authModeProduction}
+                  </span>
+                </div>
               </div>
 
               <button
                 type="button"
                 onClick={handleDevOverrideToggle}
-                className="w-full mt-2 py-2 rounded-xl bg-[#EFE9E1] text-[#3B2219] text-xs font-bold hover:bg-[#E6DED5] transition-colors"
+                className="w-full mt-2 py-2.5 rounded-xl bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] text-xs font-bold transition-colors"
               >
-                Toggle Dev Mode Override ({devOverride ? 'Active' : 'Off'})
+                {t.admin.security.toggleDevMode} ({devOverride ? t.admin.security.devOverrideActive : t.admin.security.devOverrideOff})
               </button>
             </div>
           </section>
