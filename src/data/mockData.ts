@@ -82,7 +82,7 @@ export const MOCK_PRODUCTS: Product[] = [
     categoryId: 'crafts',
     rating: 5.0,
     reviewsCount: 38,
-    imageUrl: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=900&q=85',
+    imageUrl: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=900&q=85',
     seller: {
       id: 'sel-3',
       name: 'Margilan Weaver Guild',

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { TelegramProvider, useTelegram } from './context/TelegramContext'
 import { CartProvider, useCart } from './context/CartContext'
 import { LanguageProvider, useLanguage } from './context/LanguageContext'
+import { FavoritesProvider } from './context/FavoritesContext'
 import { BottomNav } from './components/common/BottomNav'
 import { HomePage } from './pages/HomePage'
 import { MenuPage } from './pages/MenuPage'
@@ -253,9 +254,11 @@ export default function App() {
   return (
     <TelegramProvider>
       <LanguageProvider>
-        <CartProvider>
-          <LocallyApp />
-        </CartProvider>
+        <FavoritesProvider>
+          <CartProvider>
+            <LocallyApp />
+          </CartProvider>
+        </FavoritesProvider>
       </LanguageProvider>
     </TelegramProvider>
   )

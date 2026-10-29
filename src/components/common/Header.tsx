@@ -3,7 +3,7 @@ import { MapPin, Bell, ChevronDown, ArrowLeft, CheckCheck, X, Sparkles, Tag, Sho
 import { triggerHaptic } from '../../utils/telegram'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { useLanguage } from '../../context/LanguageContext'
-import { getUserLocation, saveUserLocation } from '../../services/locationService'
+import { getUserLocation, saveUserLocation, formatCleanCityDistrict } from '../../services/locationService'
 import { LocationPickerModal } from './LocationPickerModal'
 
 export interface HeaderProps {
@@ -160,7 +160,7 @@ export const Header: React.FC<HeaderProps> = ({
   }
 
   const resolvedEyebrow = eyebrowText ?? t.header.deliveringTo
-  const displayLocation = currentLocation || t.location.defaultPlaceholder
+  const displayLocation = formatCleanCityDistrict(currentLocation || t.location.defaultPlaceholder)
 
   return (
     <>

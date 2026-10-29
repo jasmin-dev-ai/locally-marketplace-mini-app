@@ -44,6 +44,7 @@ export interface AdminMetrics {
   completedOrdersCount: number
   totalProductsCount: number
   registeredMakersCount: number
+  pendingApplicationsCount: number
 }
 
 /**
@@ -278,6 +279,7 @@ export function addAdminProduct(newProduct: Omit<Product, 'id'>): Product[] {
 export function computeAdminMetrics(): AdminMetrics {
   const orders = getAdminOrders()
   const products = getAdminProducts()
+  const apps = getVendorApplications()
 
   const totalRevenue = orders.reduce((sum, o) => {
     if (o.status !== 'cancelled') {
@@ -294,11 +296,142 @@ export function computeAdminMetrics(): AdminMetrics {
 
   const makersSet = new Set(products.map((p) => p.seller.id))
 
+  const pendingApplicationsCount = apps.filter((a) => a.status === 'pending').length
+
   return {
     totalRevenue,
     activeOrdersCount,
     completedOrdersCount,
     totalProductsCount: products.length,
     registeredMakersCount: makersSet.size,
+    pendingApplicationsCount,
   }
 }
+
+// ─── Vendor Onboarding & Store Applications ──────────────────────────────────
+
+export type VendorLegalStatus =
+  | 'craft_certificate'
+  | 'individual_entrepreneur'
+  | 'home_artisan'
+
+export type VendorApplicationStatus = 'pending' | 'approved' | 'rejected'
+
+export interface VendorApplication {
+  id: string
+  shopName: string
+  ownerName: string
+  telegramUsername?: string
+  phone: string
+  category: string
+  legalStatus: VendorLegalStatus
+  legalStatusLabel: string
+  description: string
+  status: VendorApplicationStatus
+  createdAt: string
+  reviewedAt?: string
+  rejectionReason?: string
+}
+
+const STORAGE_ADMIN_VENDOR_APPS = 'locally_admin_vendor_apps'
+
+const INITIAL_VENDOR_APPS: VendorApplication[] = [
+  {
+    id: 'VAPP-401',
+    shopName: 'Samarqand Halva Artel',
+    ownerName: 'Akmal Razzoqov',
+    telegramUsername: 'akmal_halva',
+    phone: '+998 90 123 45 67',
+    category: 'sweets',
+    legalStatus: 'craft_certificate',
+    legalStatusLabel: 'Hunarmand guvohnomasi bor',
+    description: 'Qadimiy Samarqand yong‘oqli holvalari va pashmaklarini 3-avlod retsepti bo‘yicha tayyorlaymiz.',
+    status: 'pending',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+  },
+  {
+    id: 'VAPP-392',
+    shopName: 'Margilan Silk & Woodcraft',
+    ownerName: 'Nodira To‘rayeva',
+    telegramUsername: 'nodira_craft',
+    phone: '+998 93 987 65 43',
+    category: 'crafts',
+    legalStatus: 'individual_entrepreneur',
+    legalStatusLabel: 'YTT / O‘zini o‘zi band qilgan',
+    description: 'Marg‘ilon tabiiy ipak ro‘mollari va qo‘lda o‘yilgan yog‘och sandiqchalar.',
+    status: 'approved',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    reviewedAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
+  },
+]
+
+export function getVendorApplications(): VendorApplication[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_ADMIN_VENDOR_APPS)
+    if (raw) {
+      return JSON.parse(raw)
+    }
+  } catch {
+    // fallback
+  }
+  return INITIAL_VENDOR_APPS
+}
+
+export function saveVendorApplications(apps: VendorApplication[]): void {
+  try {
+    localStorage.setItem(STORAGE_ADMIN_VENDOR_APPS, JSON.stringify(apps))
+    window.dispatchEvent(new CustomEvent('locally_vendor_apps_updated', { detail: apps }))
+  } catch {
+    // ignore
+  }
+}
+
+export function submitVendorApplication(
+  data: Omit<VendorApplication, 'id' | 'status' | 'createdAt'>
+): VendorApplication {
+  const current = getVendorApplications()
+  const newApp: VendorApplication = {
+    ...data,
+    id: `VAPP-${Date.now().toString().slice(-4)}`,
+    status: 'pending',
+    createdAt: new Date().toISOString(),
+  }
+
+  const updated = [newApp, ...current]
+  saveVendorApplications(updated)
+  return newApp
+}
+
+export function updateVendorApplicationStatus(
+  appId: string,
+  status: VendorApplicationStatus,
+  reason?: string
+): VendorApplication[] {
+  const current = getVendorApplications()
+  const updated = current.map((app) =>
+    app.id === appId
+      ? {
+          ...app,
+          status,
+          reviewedAt: new Date().toISOString(),
+          rejectionReason: reason || app.rejectionReason,
+        }
+      : app
+  )
+  saveVendorApplications(updated)
+  return updated
+}
+
+export function getUserVendorApplication(
+  telegramUsername?: string
+): VendorApplication | null {
+  if (!telegramUsername) return null
+  const cleanUsername = telegramUsername.toLowerCase().replace(/^@/, '')
+  const apps = getVendorApplications()
+  return (
+    apps.find(
+      (a) => a.telegramUsername?.toLowerCase().replace(/^@/, '') === cleanUsername
+    ) || null
+  )
+}
+

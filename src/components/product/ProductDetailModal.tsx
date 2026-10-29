@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { X, Heart, Star, Clock, Check, MapPin, Minus, Plus } from 'lucide-react'
 import { Product } from '../../types'
 import { Button } from '../common/Button'
@@ -6,6 +6,7 @@ import { Badge } from '../common/Badge'
 import { triggerHaptic } from '../../utils/telegram'
 import { useLanguage } from '../../context/LanguageContext'
 import { localizeCategoryName } from '../../i18n/productData'
+import { FALLBACK_PRODUCT_IMAGE } from './ProductCard'
 
 export interface ProductDetailModalProps {
   product: Product | null
@@ -27,9 +28,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [quantity, setQuantity] = useState(1)
   const { t, locale, getLocalizedProduct } = useLanguage()
 
-  if (!isOpen || !rawProduct) return null
+  const product = rawProduct ? getLocalizedProduct(rawProduct) : null
+  const [imgSrc, setImgSrc] = useState(product?.imageUrl || FALLBACK_PRODUCT_IMAGE)
 
-  const product = getLocalizedProduct(rawProduct)
+  useEffect(() => {
+    if (product?.imageUrl) {
+      setImgSrc(product.imageUrl)
+    }
+  }, [product?.imageUrl])
+
+  if (!isOpen || !rawProduct || !product) return null
 
   const handleAdd = () => {
     triggerHaptic('medium')
@@ -77,16 +85,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               triggerHaptic('light')
               onToggleFavorite(product.id)
             }}
-            className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md border border-[#E6DED5] shadow-xs pointer-events-auto active:scale-95 transition-transform ${
+            className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md border border-[#E6DED5] shadow-xs pointer-events-auto active:scale-95 transition-all ${
               isFavorite
-                ? 'bg-[#FFFDF9] text-[#C85A32]'
-                : 'bg-[#FFFDF9]/90 text-[#6F574E]'
+                ? 'bg-[#FFFDF9] text-red-500'
+                : 'bg-[#FFFDF9]/90 text-[#6F574E] hover:text-red-500'
             }`}
             aria-label="Toggle favorite"
           >
             <Heart
               className={`w-5 h-5 transition-colors ${
-                isFavorite ? 'fill-[#C85A32] text-[#C85A32]' : 'text-[#6F574E]'
+                isFavorite ? 'fill-red-500 text-red-500' : 'text-[#6F574E]'
               }`}
             />
           </button>
@@ -97,8 +105,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           {/* Main Hero Photo */}
           <div className="relative w-full h-[260px] bg-[#EFE9E1]">
             <img
-              src={product.imageUrl}
+              src={imgSrc}
               alt={product.title}
+              onError={() => setImgSrc(FALLBACK_PRODUCT_IMAGE)}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#FAF6F0] via-transparent to-black/20 pointer-events-none" />

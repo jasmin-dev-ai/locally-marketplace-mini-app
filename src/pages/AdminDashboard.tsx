@@ -14,9 +14,25 @@ import {
   addAdminProduct,
   computeAdminMetrics,
   AdminMetrics,
+  getVendorApplications,
+  updateVendorApplicationStatus,
+  VendorApplication,
 } from '../services/adminService'
 import { Order, OrderStatus, Product } from '../types'
 import { triggerHaptic } from '../utils/telegram'
+import {
+  Package,
+  Tag,
+  Store,
+  BarChart3,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  ShieldCheck,
+  User,
+  Phone,
+  FileText,
+} from 'lucide-react'
 
 interface AdminDashboardProps {
   onClose: () => void
@@ -29,11 +45,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
   // State
   const [isAdmin, setIsAdmin] = useState<boolean>(() => isAdminUser(tgUser))
   const [devOverride, setDevOverride] = useState<boolean>(() => isDevAdminOverride())
-  const [activeTab, setActiveTab] = useState<'orders' | 'products' | 'analytics'>('orders')
+  const [activeTab, setActiveTab] = useState<'orders' | 'products' | 'applications' | 'analytics'>('orders')
   const [orderFilter, setOrderFilter] = useState<'all' | 'active' | 'completed'>('all')
+  const [appFilter, setAppFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all')
 
   const [orders, setOrders] = useState<Order[]>(() => getAdminOrders())
   const [products, setProducts] = useState<Product[]>(() => getAdminProducts())
+  const [applications, setApplications] = useState<VendorApplication[]>(() => getVendorApplications())
   const [metrics, setMetrics] = useState<AdminMetrics>(() => computeAdminMetrics())
   const [toastMessage, setToastMessage] = useState<string | null>(null)
 
@@ -69,6 +87,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     setMetrics(computeAdminMetrics())
   }
 
+  const handleApproveApplication = (appId: string) => {
+    haptic.notification('success')
+    const updated = updateVendorApplicationStatus(appId, 'approved')
+    setApplications(updated)
+    setMetrics(computeAdminMetrics())
+    showToast(`Ariza #${appId} tasdiqlandi! Do'kon bozorga qo'shildi.`)
+  }
+
+  const handleRejectApplication = (appId: string) => {
+    haptic.impact('medium')
+    const updated = updateVendorApplicationStatus(appId, 'rejected', 'Hujjatlar to‘liq emas')
+    setApplications(updated)
+    setMetrics(computeAdminMetrics())
+    showToast(`Ariza #${appId} rad etildi.`)
+  }
+
   const handleAddProductSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!newTitle.trim() || !newPrice.trim()) return
@@ -76,20 +110,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
     const parsedPrice = parseInt(newPrice.replace(/\D/g, ''), 10) || 35000
 
     const newProd: Omit<Product, 'id'> = {
-      name: newTitle.trim(),
+      title: newTitle.trim(),
       description: 'Artisanal local delicacy crafted with natural ingredients.',
       price: parsedPrice,
       category: newCategory,
-      image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80',
+      categoryId: newCategory,
+      imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80',
       rating: 5.0,
       reviewsCount: 1,
       seller: {
         id: 'seller-new',
         name: newSellerName,
         rating: 5.0,
-        avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&auto=format&fit=crop&q=80',
+        reviewsCount: 1,
+        location: 'Tashkent',
+        isVerified: true,
       },
-      prepTimeMinutes: 30,
+      prepTime: '30 mins',
       inStock: true,
       tags: ['halal', 'freshDaily'],
     }
@@ -254,20 +291,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
         </div>
 
         {/* Tab Navigation Pill Bar */}
-        <div className="flex bg-[#EFE9E1] p-1 rounded-[18px]">
+        <div className="flex bg-[#EFE9E1] p-1 rounded-[18px] text-[11px] font-extrabold font-['Manrope']">
           <button
             type="button"
             onClick={() => {
               haptic.selection()
               setActiveTab('orders')
             }}
-            className={`flex-1 py-2 text-xs font-extrabold rounded-[14px] transition-all ${
+            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
               activeTab === 'orders'
                 ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
                 : 'text-[#6F574E] hover:text-[#3B2219]'
             }`}
           >
-            📦 {t.admin.tabs.orders} ({orders.length})
+            <Package className="w-3.5 h-3.5" />
+            <span>Buyurtmalar ({orders.length})</span>
           </button>
           <button
             type="button"
@@ -275,13 +313,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('products')
             }}
-            className={`flex-1 py-2 text-xs font-extrabold rounded-[14px] transition-all ${
+            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
               activeTab === 'products'
                 ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
                 : 'text-[#6F574E] hover:text-[#3B2219]'
             }`}
           >
-            🏷️ {t.admin.tabs.products} ({products.length})
+            <Tag className="w-3.5 h-3.5" />
+            <span>Mahsulot ({products.length})</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              haptic.selection()
+              setActiveTab('applications')
+            }}
+            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
+              activeTab === 'applications'
+                ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
+                : 'text-[#6F574E] hover:text-[#3B2219]'
+            }`}
+          >
+            <Store className="w-3.5 h-3.5" />
+            <span>Arizalar ({applications.length})</span>
+            {metrics.pendingApplicationsCount > 0 && (
+              <span className="w-4 h-4 rounded-full bg-[#C85A32] text-white text-[9px] font-black flex items-center justify-center shrink-0">
+                {metrics.pendingApplicationsCount}
+              </span>
+            )}
           </button>
           <button
             type="button"
@@ -289,13 +348,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
               haptic.selection()
               setActiveTab('analytics')
             }}
-            className={`flex-1 py-2 text-xs font-extrabold rounded-[14px] transition-all ${
+            className={`flex-1 py-2 rounded-[14px] flex items-center justify-center gap-1 transition-all ${
               activeTab === 'analytics'
                 ? 'bg-[#FFFDF9] text-[#3B2219] shadow-xs'
                 : 'text-[#6F574E] hover:text-[#3B2219]'
             }`}
           >
-            📊 {t.admin.tabs.analytics}
+            <BarChart3 className="w-3.5 h-3.5" />
+            <span>Statistika</span>
           </button>
         </div>
 
@@ -563,14 +623,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                     className="p-3.5 rounded-[20px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs flex items-center justify-between gap-3"
                   >
                     <img
-                      src={p.image}
-                      alt={loc.name}
+                      src={p.imageUrl}
+                      alt={loc.title}
                       className="w-12 h-12 rounded-[14px] object-cover border border-[#E6DED5]"
                     />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         <h4 className="text-xs font-extrabold text-[#3B2219] font-['Manrope'] truncate">
-                          {loc.name}
+                          {loc.title}
                         </h4>
                       </div>
                       <p className="text-[10px] text-[#6F574E] truncate">
@@ -596,6 +656,160 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onClose }) => {
                   </div>
                 )
               })}
+            </div>
+          </section>
+        )}
+
+        {/* ─────────────────────────────────────────────────────────────────── */}
+        {/* TAB 3: VENDOR APPLICATIONS & STORE ONBOARDING */}
+        {/* ─────────────────────────────────────────────────────────────────── */}
+        {activeTab === 'applications' && (
+          <section className="space-y-3 animate-in fade-in duration-200">
+            {/* Filter Pills */}
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setAppFilter('all')}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                  appFilter === 'all'
+                    ? 'bg-[#3B2219] text-white shadow-xs'
+                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                }`}
+              >
+                Barchasi ({applications.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setAppFilter('pending')}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                  appFilter === 'pending'
+                    ? 'bg-[#C85A32] text-white shadow-xs'
+                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                }`}
+              >
+                Kutilmoqda ({metrics.pendingApplicationsCount})
+              </button>
+              <button
+                type="button"
+                onClick={() => setAppFilter('approved')}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                  appFilter === 'approved'
+                    ? 'bg-[#2E7D32] text-white shadow-xs'
+                    : 'bg-[#FFFDF9] text-[#6F574E] border border-[#E6DED5]'
+                }`}
+              >
+                Tasdiqlangan
+              </button>
+            </div>
+
+            {/* Applications List */}
+            <div className="space-y-3">
+              {applications
+                .filter((app) => (appFilter === 'all' ? true : app.status === appFilter))
+                .map((app) => (
+                  <div
+                    key={app.id}
+                    className="p-4 rounded-[22px] bg-[#FFFDF9] border border-[#E6DED5] shadow-xs space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-[#3B2219] font-['Manrope']">
+                          #{app.id}
+                        </span>
+                        <h4 className="text-sm font-extrabold text-[#3B2219]">
+                          {app.shopName}
+                        </h4>
+                      </div>
+                      <Badge
+                        variant={
+                          app.status === 'approved'
+                            ? 'fresh'
+                            : app.status === 'rejected'
+                            ? 'secondary'
+                            : 'accent'
+                        }
+                        size="sm"
+                      >
+                        {app.status.toUpperCase()}
+                      </Badge>
+                    </div>
+
+                    <div className="bg-[#FAF6F0] p-2.5 rounded-[14px] text-xs space-y-1.5">
+                      <div className="flex items-center justify-between text-[#6F574E]">
+                        <span className="flex items-center gap-1">
+                          <User className="w-3 h-3 text-[#C85A32]" />
+                          <span>Usta / Muallif:</span>
+                        </span>
+                        <span className="font-bold text-[#3B2219]">
+                          {app.ownerName} {app.telegramUsername ? `(@${app.telegramUsername})` : ''}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-[#6F574E]">
+                        <span className="flex items-center gap-1">
+                          <Phone className="w-3 h-3 text-[#C85A32]" />
+                          <span>Aloqa:</span>
+                        </span>
+                        <span className="font-mono font-bold text-[#3B2219]">{app.phone}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-[#6F574E]">
+                        <span className="flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-[#C85A32]" />
+                          <span>Maqomi:</span>
+                        </span>
+                        <span className="font-bold text-[#3B2219]">{app.legalStatusLabel}</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-bold uppercase text-[#9B887F] block mb-0.5">
+                        Tavsif
+                      </span>
+                      <p className="text-xs text-[#3B2219] leading-relaxed italic">
+                        "{app.description}"
+                      </p>
+                    </div>
+
+                    {/* Action Bar */}
+                    <div className="pt-2 border-t border-[#EFE9E1] flex items-center justify-between">
+                      <span className="text-[10px] text-[#9B887F]">
+                        {new Date(app.createdAt).toLocaleDateString()}
+                      </span>
+
+                      <div className="flex items-center gap-2">
+                        {app.status === 'pending' && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => handleRejectApplication(app.id)}
+                              className="px-3 py-1.5 rounded-[12px] bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#6F574E] text-xs font-bold transition-colors"
+                            >
+                              Rad etish
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleApproveApplication(app.id)}
+                              className="px-3.5 py-1.5 rounded-[12px] bg-[#2E7D32] hover:bg-[#256628] text-white text-xs font-bold transition-colors shadow-xs"
+                            >
+                              Tasdiqlash (Do'kon ochish)
+                            </button>
+                          </>
+                        )}
+                        {app.status === 'approved' && (
+                          <span className="text-xs font-bold text-[#2E7D32] flex items-center gap-1">
+                            <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
+                            <span>Bozorda faol</span>
+                          </span>
+                        )}
+                        {app.status === 'rejected' && (
+                          <span className="text-xs font-bold text-[#9B887F] flex items-center gap-1">
+                            <XCircle className="w-4 h-4 text-[#9B887F]" />
+                            <span>Rad etilgan</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           </section>
         )}

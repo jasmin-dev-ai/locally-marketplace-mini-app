@@ -1,11 +1,14 @@
 import React from 'react'
+import { Search } from 'lucide-react'
 import { Product } from '../../types'
 import { ProductCard } from './ProductCard'
 
 export interface ProductGridProps {
   products: Product[]
   cartItemQuantities?: Record<string, number>
+  cartQuantities?: Record<string, number>
   favoriteIds?: string[]
+  favorites?: string[]
   onAddToCart?: (product: Product) => void
   onUpdateQuantity?: (productId: string, quantity: number) => void
   onToggleFavorite?: (productId: string) => void
@@ -16,8 +19,10 @@ export interface ProductGridProps {
 
 export const ProductGrid: React.FC<ProductGridProps> = ({
   products,
-  cartItemQuantities = {},
-  favoriteIds = [],
+  cartItemQuantities,
+  cartQuantities,
+  favoriteIds,
+  favorites,
   onAddToCart,
   onUpdateQuantity,
   onToggleFavorite,
@@ -25,11 +30,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   emptyMessage = 'No local artisan goods found in this section.',
   className = '',
 }) => {
+  const activeFavorites = favorites || favoriteIds || []
+  const activeCartQuantities = cartQuantities || cartItemQuantities || {}
+
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 px-4 text-center bg-[#FFFDF9] border border-[#E6DED5] rounded-[24px] my-4">
-        <div className="w-14 h-14 rounded-full bg-[#EFE9E1] text-[#6F574E] flex items-center justify-center text-2xl mb-3">
-          🔍
+        <div className="w-14 h-14 rounded-full bg-[#EFE9E1] text-[#6F574E] flex items-center justify-center mb-3">
+          <Search className="w-6 h-6 text-[#6F574E]" />
         </div>
         <h4 className="text-sm font-bold text-[#3B2219] font-['Manrope'] mb-1">
           No matches found
@@ -47,8 +55,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         <ProductCard
           key={product.id}
           product={product}
-          quantityInCart={cartItemQuantities[product.id] || 0}
-          isFavorite={favoriteIds.includes(product.id)}
+          quantityInCart={activeCartQuantities[product.id] || 0}
+          isFavorite={activeFavorites.includes(product.id)}
           onAddToCart={onAddToCart}
           onUpdateQuantity={onUpdateQuantity}
           onToggleFavorite={onToggleFavorite}

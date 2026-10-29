@@ -23,13 +23,25 @@ export const KNOWN_LOCATIONS: SearchableLocation[] = [
 ]
 
 /**
+ * Cleanly formats city and district, completely stripping raw IP leakage or static dots.
+ */
+export function formatCleanCityDistrict(rawLoc?: string | null): string {
+  if (!rawLoc || typeof rawLoc !== 'string') return 'Toshkent, Mirobod tumani'
+  const trimmed = rawLoc.trim()
+  if (/^\d{1,3}\.\d{1,3}\.\d{1,3}/.test(trimmed) || /^\.+$/.test(trimmed) || trimmed === '...' || trimmed === '') {
+    return 'Toshkent, Mirobod tumani'
+  }
+  return trimmed
+}
+
+/**
  * Returns saved user location or null if not set yet.
  */
 export function getUserLocation(): string | null {
   try {
     const saved = localStorage.getItem(STORAGE_LOCATION_KEY)
     if (saved && saved.trim()) {
-      return saved.trim()
+      return formatCleanCityDistrict(saved)
     }
   } catch {
     // Ignore storage errors

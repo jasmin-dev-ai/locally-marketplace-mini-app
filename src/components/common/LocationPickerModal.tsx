@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MapPin, Navigation, Map, Search, Check, X, Compass } from 'lucide-react'
+import { MapPin, Navigation, Map, Search, Check, X, Compass, Info, Phone } from 'lucide-react'
 import { useLanguage } from '../../context/LanguageContext'
 import { triggerHaptic } from '../../utils/telegram'
 import {
@@ -8,6 +8,7 @@ import {
   searchLocations,
   SearchableLocation,
   KNOWN_LOCATIONS,
+  formatCleanCityDistrict,
 } from '../../services/locationService'
 
 export interface LocationPickerModalProps {
@@ -75,7 +76,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
                 {t.location.selectLocation}
               </h3>
               <p className="text-[11px] text-[#6F574E]">
-                {currentLocation || t.location.defaultPlaceholder}
+                {formatCleanCityDistrict(currentLocation)}
               </p>
             </div>
           </div>
@@ -90,6 +91,14 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
           >
             <X className="w-4 h-4" />
           </button>
+        </div>
+
+        {/* User Privacy & Delivery Information Notice */}
+        <div className="p-3.5 rounded-[18px] bg-[#FAF0DC] border border-[#E5A118]/30 flex items-start gap-2.5">
+          <Info className="w-4 h-4 text-[#C85A32] shrink-0 mt-0.5" />
+          <p className="text-[11px] text-[#3B2219] leading-relaxed font-medium">
+            Ushbu ma'lumotlar buyurtmangizni aniq manzilga yetkazib berish va kurier siz bilan bog'lanishi uchun kerak.
+          </p>
         </div>
 
         {/* 3 Main Method Tabs */}
@@ -176,6 +185,30 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
                 </>
               )}
             </button>
+
+            {/* Telegram WebApp Native Contact Prompt */}
+            {window.Telegram?.WebApp && (
+              <button
+                type="button"
+                onClick={() => {
+                  triggerHaptic('medium')
+                  const tg = window.Telegram?.WebApp
+                  if (tg?.requestContact) {
+                    tg.requestContact((granted: boolean) => {
+                      if (granted) {
+                        handleGPSDetect()
+                      }
+                    })
+                  } else {
+                    handleGPSDetect()
+                  }
+                }}
+                className="w-full py-2.5 px-3 rounded-[14px] bg-[#EFE9E1] hover:bg-[#E6DED5] text-[#3B2219] flex items-center justify-center gap-2 text-xs font-bold transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#C85A32]" />
+                <span>Telegram orqali kontakt & manzilni ulashish</span>
+              </button>
+            )}
           </div>
         )}
 

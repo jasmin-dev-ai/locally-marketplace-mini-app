@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight, Check, Star, Search } from 'lucide-react'
+import { ArrowRight, Check, Star, Search, ShoppingBag } from 'lucide-react'
 import { Header } from '../components/common/Header'
 import { SearchBar } from '../components/common/SearchBar'
 import { CategoryFilter } from '../components/product/CategoryFilter'
@@ -110,17 +110,17 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
 
               <div>
-                <Button
-                  variant="primary"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={() => {
                     triggerHaptic('medium')
                     setActiveTab('menu')
                   }}
-                  className="bg-white text-[#3B2219] hover:bg-[#FAF6F0] font-bold text-xs"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[16px] bg-[#FFFDF9] text-[#933D1C] hover:bg-[#FAF6F0] active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.22)] font-['Manrope'] font-black text-xs cursor-pointer border border-[#FFFDF9]/80"
                 >
-                  {t.home.orderNow}
-                </Button>
+                  <ShoppingBag className="w-4 h-4 text-[#C85A32] stroke-[2.4]" />
+                  <span className="tracking-wide">{t.home.orderNow}</span>
+                </button>
               </div>
             </div>
           </section>

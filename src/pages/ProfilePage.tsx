@@ -25,8 +25,14 @@ import { useTelegram } from '../context/TelegramContext'
 import { useLanguage } from '../context/LanguageContext'
 import { useCart } from '../context/CartContext'
 import { triggerHaptic } from '../utils/telegram'
-import { isAdminUser, openTelegramSupport } from '../services/adminService'
+import {
+  isAdminUser,
+  openTelegramSupport,
+  getUserVendorApplication,
+  VendorApplication,
+} from '../services/adminService'
 import { getUserRole, saveUserRole, UserRole } from '../services/roleService'
+import { VendorRegistrationModal } from '../components/vendor/VendorRegistrationModal'
 import { Product } from '../types'
 
 interface ProfilePageProps {
@@ -54,6 +60,10 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
     getUserRole() === 'seller' ? 'seller' : 'orders'
   )
   const [isLoyaltyModalOpen, setIsLoyaltyModalOpen] = useState(false)
+  const [isVendorModalOpen, setIsVendorModalOpen] = useState(false)
+  const [vendorApp, setVendorApp] = useState<VendorApplication | null>(() =>
+    getUserVendorApplication(tgUser?.username)
+  )
 
   const isAdmin = isAdminUser(tgUser)
 
@@ -354,7 +364,7 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
                 : 'text-[#6F574E] hover:text-[#3B2219]'
             }`}
           >
-            <Heart className={`w-3.5 h-3.5 ${activeTab === 'favorites' ? 'fill-[#C85A32] text-[#C85A32]' : ''}`} />
+            <Heart className={`w-3.5 h-3.5 ${activeTab === 'favorites' ? 'fill-red-500 text-red-500' : ''}`} />
             <span>{t.profile.tabs.favorites}</span>
             {favorites.length > 0 && (
               <span className="w-4 h-4 rounded-full bg-[#C85A32] text-white text-[9px] font-black flex items-center justify-center">
@@ -464,27 +474,55 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
         {/* Tab 3: Become a Seller */}
         {activeTab === 'seller' && (
           <div className="p-5 rounded-[24px] bg-[#3B2219] text-white space-y-4 animate-in fade-in duration-200">
-            <div className="w-12 h-12 rounded-[16px] bg-[#C85A32] flex items-center justify-center shadow-xs">
-              <Sparkles className="w-6 h-6 text-white" />
+            <div className="flex items-center justify-between">
+              <div className="w-12 h-12 rounded-[16px] bg-[#C85A32] flex items-center justify-center shadow-xs">
+                <Sparkles className="w-6 h-6 text-white" />
+              </div>
+              {vendorApp && (
+                <Badge
+                  variant={
+                    vendorApp.status === 'approved'
+                      ? 'fresh'
+                      : vendorApp.status === 'rejected'
+                      ? 'secondary'
+                      : 'accent'
+                  }
+                  size="sm"
+                >
+                  {vendorApp.status === 'approved'
+                    ? 'TASDIQLANGAN DO‘KON'
+                    : vendorApp.status === 'rejected'
+                    ? 'RAD ETILDI'
+                    : 'ARIZA KUTILMOQDA'}
+                </Badge>
+              )}
             </div>
+
             <div>
               <h4 className="text-base font-extrabold font-['Manrope']">
-                {t.profile.becomeSellerTitle}
+                {vendorApp ? vendorApp.shopName : t.profile.becomeSellerTitle}
               </h4>
               <p className="text-xs text-[#EFE9E1]/80 mt-1 leading-relaxed">
-                {t.profile.becomeSellerDesc}
+                {vendorApp
+                  ? vendorApp.status === 'pending'
+                    ? 'Do‘kon arizangiz ma’muriyat tomonidan ko‘rib chiqilmoqda. Tasdiqlangach, mahsulotlaringiz katalogda ko‘rinadi.'
+                    : vendorApp.status === 'approved'
+                    ? 'Do‘koningiz tasdiqlangan va faol! Yangi mahsulotlarni joylab sotuvni boshlashingiz mumkin.'
+                    : 'Arizangiz ma’muriyat tomonidan qayta ko‘rib chiqish uchun yuborildi.'
+                  : t.profile.becomeSellerDesc}
               </p>
             </div>
+
             <Button
               variant="accent"
               size="md"
               fullWidth
               onClick={() => {
                 haptic.impact('medium')
-                openTelegramSupport()
+                setIsVendorModalOpen(true)
               }}
             >
-              {t.profile.openStoreButton}
+              {vendorApp ? 'Arizani ko‘rish' : t.profile.openStoreButton}
             </Button>
           </div>
         )}
@@ -602,6 +640,16 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </div>
       )}
+
+      {/* Vendor Onboarding Modal */}
+      <VendorRegistrationModal
+        isOpen={isVendorModalOpen}
+        onClose={() => setIsVendorModalOpen(false)}
+        existingApplication={vendorApp}
+        onApplicationSubmitted={(app) => {
+          setVendorApp(app)
+        }}
+      />
     </div>
   )
 }

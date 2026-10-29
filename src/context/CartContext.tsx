@@ -73,6 +73,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [favorites])
 
+  useEffect(() => {
+    const handleFavUpdated = (e: any) => {
+      if (Array.isArray(e.detail)) {
+        setFavorites(e.detail)
+      }
+    }
+    window.addEventListener('locally_favorites_updated', handleFavUpdated)
+    return () => window.removeEventListener('locally_favorites_updated', handleFavUpdated)
+  }, [])
+
   const addItem = (product: Product, quantity = 1) => {
     triggerHaptic('medium')
     setItems((prev) => {

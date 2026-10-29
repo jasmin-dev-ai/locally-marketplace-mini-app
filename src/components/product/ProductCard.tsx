@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Heart, Star, Check, Plus, Minus } from 'lucide-react'
 import { Product } from '../../types'
 import { triggerHaptic } from '../../utils/telegram'
 import { useLanguage } from '../../context/LanguageContext'
+
+export const FALLBACK_PRODUCT_IMAGE =
+  'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=900&q=85'
 
 export interface ProductCardProps {
   product: Product
@@ -27,6 +30,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const { t, getLocalizedProduct } = useLanguage()
   const product = getLocalizedProduct(rawProduct)
+
+  const [imgSrc, setImgSrc] = useState(product.imageUrl || FALLBACK_PRODUCT_IMAGE)
+
+  useEffect(() => {
+    setImgSrc(product.imageUrl || FALLBACK_PRODUCT_IMAGE)
+  }, [product.imageUrl])
 
   const handleCardClick = () => {
     onClick?.(product)
@@ -64,8 +73,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Top Image Section */}
       <div className="relative w-full h-[148px] overflow-hidden bg-[#EFE9E1]">
         <img
-          src={product.imageUrl}
+          src={imgSrc}
           alt={product.title}
+          onError={() => setImgSrc(FALLBACK_PRODUCT_IMAGE)}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
@@ -77,16 +87,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <button
           type="button"
           onClick={handleFavoriteClick}
-          className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-transform duration-150 active:scale-90 ${
+          className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-150 active:scale-90 ${
             isFavorite
-              ? 'bg-[#FFFDF9] text-[#C85A32] shadow-sm'
-              : 'bg-[#FFFDF9]/90 text-[#6F574E] hover:text-[#C85A32]'
+              ? 'bg-[#FFFDF9] text-red-500 shadow-sm'
+              : 'bg-[#FFFDF9]/90 text-[#6F574E] hover:text-red-500'
           }`}
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
           <Heart
             className={`w-4 h-4 transition-colors ${
-              isFavorite ? 'fill-[#C85A32] text-[#C85A32]' : 'text-[#6F574E]'
+              isFavorite ? 'fill-red-500 text-red-500' : 'text-[#6F574E]'
             }`}
           />
         </button>
@@ -138,22 +148,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Bottom Price & Add Action with Strict Overflow Prevention */}
         <div className="mt-auto pt-2 flex items-center justify-between border-t border-[#EFE9E1] gap-1.5 min-w-0">
           <div className="flex flex-col min-w-0 flex-1">
-            <div className="flex items-baseline gap-1 truncate">
-              <span className="text-xs sm:text-sm font-extrabold text-[#3B2219] font-['Manrope'] truncate">
-                {product.price.toLocaleString()}
+            <div className="flex items-baseline gap-1 whitespace-nowrap">
+              <span className="text-xs sm:text-sm font-extrabold text-[#3B2219] font-['Manrope'] whitespace-nowrap">
+                {product.price.toLocaleString('ru-RU').replace(/,/g, ' ')}
               </span>
-              <span className="text-[9px] font-bold text-[#6F574E] shrink-0">
+              <span className="text-[10px] font-bold text-[#6F574E] shrink-0 whitespace-nowrap">
                 {t.common.currency}
               </span>
             </div>
             {product.unit && (
-              <span className="text-[8px] text-[#9B887F] -mt-0.5 truncate">
+              <span className="text-[8px] text-[#9B887F] -mt-0.5 truncate block">
                 {product.unit}
               </span>
             )}
           </div>
 
-          {/* "+Add" or Quantity Controls */}
+          {/* "+Add" Square Icon Button or Quantity Controls */}
           {quantityInCart > 0 ? (
             <div
               className="flex items-center bg-[#EFE9E1] border border-[#E6DED5] rounded-[10px] p-0.5 shrink-0"
@@ -183,10 +193,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <button
               type="button"
               onClick={handleAddClick}
-              className="inline-flex items-center justify-center gap-1 h-7 px-2 rounded-[10px] bg-[#F5D6C9] hover:bg-[#F0C5B3] text-[#C85A32] active:scale-95 font-extrabold text-[11px] transition-all duration-150 shrink-0 max-w-[90px] min-w-0"
+              className="w-8 h-8 rounded-[12px] bg-[#C85A32] hover:bg-[#B64F2A] text-white flex items-center justify-center active:scale-90 transition-all shadow-[0_2px_8px_rgba(200,90,50,0.25)] shrink-0"
+              aria-label={t.product.addToBasket}
+              title={t.product.addToBasket}
             >
-              <Plus className="w-3 h-3 shrink-0" />
-              <span className="truncate">{t.product.addToBasket}</span>
+              <Plus className="w-4 h-4 stroke-[2.5]" />
             </button>
           )}
         </div>
