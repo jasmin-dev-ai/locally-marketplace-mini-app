@@ -3,8 +3,8 @@ import { LanguageOption, Locale, TranslationSchema } from './types'
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
   {
     code: 'uz-Latn',
-    label: "O'zbekcha",
-    nativeName: "O'zbekcha",
+    label: 'Özbekçe',
+    nativeName: 'Özbekçe',
     flag: '🇺🇿',
   },
   {
